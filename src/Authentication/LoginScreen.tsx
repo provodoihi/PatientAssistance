@@ -62,42 +62,6 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
     }
   };
 
-  const getData = async () => {
-    try {
-      const value = await AsyncStorage.getItem('token');
-      const value2 = await AsyncStorage.getItem('username');
-      const value5 = await AsyncStorage.getItem('name');
-      const value3 = await AsyncStorage.getItem('userID');
-      const value4 = await AsyncStorage.getItem('role');
-      if (value !== null) {
-        console.log('token: ' + value);
-      }
-      if (value2 !== null) {
-        console.log('username: ' + value2);
-      }
-      if (value3 !== null) {
-        console.log('id: ' + value3);
-      }
-      if (value4 !== null) {
-        console.log('role: ' + value4);
-      }
-      if (value5 !== null) {
-        console.log('name: ' + value5);
-      }
-      if (
-        value == null &&
-        value2 == null &&
-        value3 == null &&
-        value4 == null &&
-        value5 == null
-      ) {
-        console.log('No data');
-      }
-    } catch (e) {
-      console.log('Error');
-    }
-  };
-
   return (
     <View style={styles.container}>
       <Text style={styles.txtHead}>Sign In</Text>
@@ -139,30 +103,6 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         <Text style={[styles.txt, styles.txtNavigate]}>
           Don't have an account? Sign Up
         </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() =>
-          navigation.dispatch(
-            CommonActions.reset({index: 0, routes: [{name: 'Main'}]}),
-          )
-        }>
-        <Text style={[styles.txt, styles.txtNavigate]}>Magic: Home Screen</Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('SignupSuccess')}>
-        <Text style={[styles.txt, styles.txtNavigate]}>
-          Magic: SignUp Success Screen
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        onPress={() => navigation.navigate('Welcome')}>
-        <Text style={[styles.txt, styles.txtNavigate]}>Magic: Welcome</Text>
-      </TouchableOpacity>
-      <TouchableOpacity activeOpacity={0.8} onPress={getData}>
-        <Text style={[styles.txt, styles.txtNavigate]}>Async Storage</Text>
       </TouchableOpacity>
     </View>
   );

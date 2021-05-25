@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import {API_List} from '../API/apiList';
+// import {API_List_Company} from '../API/apiListForCompany';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {AuthNavigationProps} from '../navigation/Routes';
 import {Picker} from '@react-native-picker/picker';
