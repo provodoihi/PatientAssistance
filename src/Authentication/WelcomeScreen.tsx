@@ -122,15 +122,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  buttonNew: {
-    backgroundColor: '#00BFFF',
-    margin: '3%',
-    borderRadius: 25,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
   shadow: {
     shadowColor: '#00BFFF',
     shadowOffset: {

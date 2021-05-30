@@ -53,7 +53,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
               <TouchableOpacity
                 style={styles.buttonSmall}
                 activeOpacity={0.8}
-                onPress={() => Alert.alert('Will be move to user profile')}>
+                onPress={() => navigation.navigate('Profile')}>
                 <Text style={[styles.txt, styles.txtButtonSmall]}>
                   View my profile
                 </Text>
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '30%',
+    marginLeft: '29%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },

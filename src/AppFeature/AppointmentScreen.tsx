@@ -8,14 +8,10 @@ import {
   Image,
   TextInput,
   Alert,
-  FlatList,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../API/apiList';
-// import {API_List_Company} from '../API/apiListForCompany';
-import axios from 'axios';
 
 export const Notfound = () => {
   return (
@@ -35,26 +31,11 @@ export const Init = () => {
   );
 };
 
-const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
+const AppointmentScreen = ({navigation}: AppNavigationProps<'Appointment'>) => {
   const [keyword, setKeyword] = useState('');
-  const [data, setData] = useState([]);
-  const [status, setStatus] = useState(0);
 
-  const editdone = async () => {
-    try {
-      let response = await axios.get(API_List.filter + keyword);
-      console.log(response.status);
-      setStatus(response.status);
-      setData(response.data);
-    } catch (error) {
-      Alert.alert('Notification', 'Something Went Wrong', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
-    }
+  const editdone = () => {
+    Alert.alert('a');
   };
 
   return (
@@ -66,7 +47,9 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
           onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
           <Icon name="menu" size={24} />
         </TouchableOpacity>
-        <Text style={[styles.txt, styles.txtHeader]}>Find Hospital Clinic</Text>
+        <Text style={[styles.txt, styles.txtHeader]}>
+          Find Hospital Clinic Test
+        </Text>
       </View>
       <View style={styles.container2}>
         <View style={styles.topScreen}>
@@ -82,39 +65,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
             multiline={false}
           />
         </View>
-        {status === 200 ? (
-          <View style={styles.midScreen}>
-            <FlatList
-              data={data}
-              renderItem={({item}: any) => {
-                return (
-                  <TouchableOpacity
-                    style={[styles.button, styles.shadow]}
-                    activeOpacity={0.8}
-                    onPress={() => console.log(item.id)}>
-                    <View style={styles.rowButton}>
-                      <Image
-                        style={styles.iconButton}
-                        source={require('../../assets/hospital.png')}
-                      />
-
-                      <View style={styles.col}>
-                        <Text style={styles.txtName}>{item.name}</Text>
-                        <Text style={styles.txtNormal2}>{item.address}</Text>
-                        <Text style={styles.txtNormal2}>{item.phone}</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
-              keyExtractor={item => item.id}
-            />
-          </View>
-        ) : status === 204 ? (
-          <Notfound />
-        ) : (
-          <Init />
-        )}
+        {keyword === 'null' ? <Notfound /> : <Init />}
       </View>
     </View>
   );
@@ -146,6 +97,8 @@ const styles = StyleSheet.create({
 
   midScreen: {
     flex: 0.9,
+    // width: '100%',
+    // height: 400,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
@@ -184,7 +137,7 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '20%',
+    marginLeft: '10%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
@@ -220,23 +173,7 @@ const styles = StyleSheet.create({
     fontSize: rf(2),
     fontWeight: 'bold',
     color: '#ffffff',
-    // alignSelf: 'center',
-  },
-
-  txtNormal2: {
-    padding: '1.5%',
-    margin: '1%',
-    fontSize: rf(1.6),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-  },
-
-  txtName: {
-    padding: '1.5%',
-    margin: '1%',
-    fontSize: rf(1.8),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
+    alignSelf: 'center',
   },
 
   txtButton: {
@@ -245,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: rf(2),
     fontWeight: 'normal',
     color: '#4c4c4c',
-    // alignSelf: 'center',
+    alignSelf: 'center',
   },
 
   txtButtonSmall: {
@@ -257,11 +194,9 @@ const styles = StyleSheet.create({
 
   button: {
     margin: '2.5%',
-    marginBottom: '5%',
-    width: '90%',
+    width: '80%',
     borderRadius: 24,
     justifyContent: 'center',
-    alignSelf: 'center',
     backgroundColor: '#ffffff',
   },
 
@@ -280,9 +215,10 @@ const styles = StyleSheet.create({
 
   row: {
     flexDirection: 'row',
+    // flex: 1,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'space-evenly',
   },
 
   rowButton: {
@@ -294,10 +230,9 @@ const styles = StyleSheet.create({
 
   col: {
     flexDirection: 'column',
-    margin: '1%',
+    margin: 5,
+    flex: 0.7,
     justifyContent: 'flex-start',
-    alignContent: 'flex-start',
-    maxWidth: '80%',
   },
 
   shadow: {
@@ -318,16 +253,12 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 
-  row2: {
-    flex: 0.75,
-  },
-
   iconButton: {
-    width: '16%',
-    height: '60%',
+    width: '20%',
+    height: '75%',
     margin: '1.5%',
     resizeMode: 'contain',
   },
 });
 
-export default LocationScreen;
+export default AppointmentScreen;

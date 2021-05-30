@@ -21,6 +21,8 @@ export type AppRoutes = {
   Location: undefined;
   Admin: undefined;
   Signout: undefined;
+  Appointment: undefined;
+  Profile: undefined;
 };
 
 export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {

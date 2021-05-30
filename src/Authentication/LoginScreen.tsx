@@ -29,8 +29,6 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         },
       ]);
     } else {
-      console.log('User: ' + username);
-      console.log('Pass: ' + pass);
       axios
         .post(API_List.login, {
           username: username,
@@ -43,6 +41,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
           AsyncStorage.setItem('username', response.data.username);
           AsyncStorage.setItem('userID', id);
           AsyncStorage.setItem('name', response.data.fullname);
+          AsyncStorage.setItem('phone', response.data.phone);
           AsyncStorage.setItem('role', response.data.roles[0]);
         })
         .then(() =>
@@ -114,10 +113,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  img: {
-    margin: 15,
   },
 
   txt: {

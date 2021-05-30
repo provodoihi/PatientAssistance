@@ -9,9 +9,11 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
+  Image,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
+import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
 const data = [
   {
@@ -46,7 +48,7 @@ const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
   });
   if (userRole === 'ROLE_ADMIN') {
     return (
-      <View style={styles.container2}>
+      <View style={styles.container}>
         <View style={styles.headerBar}>
           <TouchableOpacity
             style={styles.button2}
@@ -330,8 +332,20 @@ const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
     );
   } else {
     return (
-      <View>
-        <Text>This function is only for admin ^^</Text>
+      <View style={styles.container}>
+        <View style={styles.headerBar}>
+          <TouchableOpacity
+            style={styles.button2}
+            activeOpacity={0.8}
+            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
+            <Icon name="menu" size={24} />
+          </TouchableOpacity>
+          <Text style={[styles.txt, styles.txtHeader]}>Admin</Text>
+        </View>
+        <View style={[styles.roll, styles.container2]}>
+          <Image source={require('../../assets/oops.png')} style={styles.img} />
+          <Text style={styles.txtOops}>This function for admin only</Text>
+        </View>
       </View>
     );
   }
@@ -371,20 +385,22 @@ const styles = StyleSheet.create({
     flex: 0.7,
   },
 
-  img: {
-    margin: 5,
-    resizeMode: 'contain',
-  },
-
   txt: {
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'center',
   },
 
+  txtOops: {
+    margin: '1%',
+    color: '#4c4c4c',
+    fontWeight: 'bold',
+    fontSize: rf(2.5),
+  },
+
   txtHeader: {
     margin: '1%',
-    marginLeft: '30%',
+    marginLeft: '32%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
@@ -438,8 +454,10 @@ const styles = StyleSheet.create({
     margin: '1%',
   },
 
-  img2: {
+  img: {
     resizeMode: 'contain',
+    width: '35%',
+    height: '35%',
   },
 });
 
