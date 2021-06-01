@@ -1,6 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DrawerActions} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   StyleSheet,
   Text,
@@ -31,21 +30,7 @@ const data = [
 export {data};
 
 const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
-  const [userRole, setUserRole] = useState('');
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem('role');
-        if (value !== null) {
-          setUserRole(value);
-        }
-        console.log(value);
-      } catch (e) {
-        console.log('Error');
-      }
-    };
-    getData();
-  });
+  let userRole = '';
   if (userRole === 'ROLE_ADMIN') {
     return (
       <View style={styles.container}>
@@ -98,7 +83,6 @@ const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
                       Location
                     </Text>
                   </TouchableOpacity>
-                  <View></View>
                 </View>
               </View>
             </View>

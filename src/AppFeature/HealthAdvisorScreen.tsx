@@ -1,5 +1,5 @@
 import {DrawerActions} from '@react-navigation/routers';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,48 +13,72 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions} from '@react-navigation/native';
 
-export const Notfound = () => {
-  return (
-    <View style={styles.midScreen}>
-      <Image style={styles.img} source={require('../../assets/notfound.png')} />
-      <Text style={styles.txtNotfound}>Not found</Text>
-    </View>
-  );
-};
-
-export const Init = () => {
-  return (
-    <View style={styles.midScreen}>
-      <Image style={styles.img} source={require('../../assets/search.png')} />
-      <Text style={styles.txtMid}>Search hospitals and clinics</Text>
-    </View>
-  );
-};
-
-const AppointmentScreen = ({
+const HealthAdvisorScreen = ({
   navigation,
   route,
-}: AppNavigationProps<'Appointment'>) => {
-  const [keyword, setKeyword] = useState('');
-  const userRole = route.params.role;
+}: AppNavigationProps<'HealthAdvisor'>) => {
+  const [question, setQuestion] = useState('');
+  const [userID, setUserID] = useState('');
+  const [phone, setPhone] = useState('');
+  const [token, setToken] = useState(route.params.token);
+  const [fullname, setFullName] = useState(route.params.name);
+  const [userRole, setUserRole] = useState(route.params.role);
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        if (token === '' || fullname === '' || userRole === '') {
+          const value = await AsyncStorage.getItem('token');
+          const value2 = await AsyncStorage.getItem('name');
+          const value3 = await AsyncStorage.getItem('role');
+          if (value !== null) {
+            setToken(value);
+          }
+          if (value2 !== null) {
+            setFullName(value2);
+          }
+          if (value3 !== null) {
+            setUserRole(value3);
+          }
+          console.log('note');
+        }
+        const value4 = await AsyncStorage.getItem('userID');
+        const value5 = await AsyncStorage.getItem('phone');
+        if (value4 !== null) {
+          setUserID(value4);
+        }
+        if (value5 !== null) {
+          setPhone(value5);
+        }
+      } catch (e) {
+        console.log('Error');
+      }
+    };
+    getData();
+  }, [fullname, token, userRole]);
 
   const editdone = () => {
     Alert.alert('a');
   };
 
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-      navigation.dispatch(
-        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
-      );
-    } catch (e) {
-      // clear error
-    }
-    console.log('Done.');
-  };
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const value = await AsyncStorage.getItem('userID');
+        const value2 = await AsyncStorage.getItem('phone');
+        if (value !== null) {
+          setUserID(value);
+        }
+        if (value2 !== null) {
+          setPhone(value2);
+        }
+      } catch (e) {
+        console.log('Error');
+      }
+    };
+    getData();
+  }, []);
 
   if (userRole === 'ROLE_PATIENT') {
     return (
@@ -66,38 +90,22 @@ const AppointmentScreen = ({
             onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
             <Icon name="menu" size={24} />
           </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Appointment</Text>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() =>
-              Alert.alert('Notification', 'Are you sure to exit the app?', [
-                {
-                  text: 'Cancel',
-                  onPress: () => null,
-                  style: 'cancel',
-                },
-                {text: 'YES', onPress: clearAll},
-              ])
-            }>
-            <Icon name="logout" size={24} />
-          </TouchableOpacity>
+          <Text style={[styles.txt, styles.txtHeader]}>Health Advisor</Text>
         </View>
         <View style={styles.container2}>
           <View style={styles.topScreen}>
             <TextInput
               style={styles.txtInput}
-              onChangeText={keyword => {
-                setKeyword(keyword);
+              onChangeText={question => {
+                setQuestion(question);
               }}
-              value={keyword}
+              value={question}
               onSubmitEditing={editdone}
               placeholder="Search here"
               placeholderTextColor="#9FA5AA"
               multiline={false}
             />
           </View>
-          {keyword === 'null' ? <Notfound /> : <Init />}
         </View>
       </View>
     );
@@ -111,22 +119,7 @@ const AppointmentScreen = ({
             onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
             <Icon name="menu" size={24} />
           </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Appointment</Text>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() =>
-              Alert.alert('Notification', 'Are you sure to exit the app?', [
-                {
-                  text: 'Cancel',
-                  onPress: () => null,
-                  style: 'cancel',
-                },
-                {text: 'YES', onPress: clearAll},
-              ])
-            }>
-            <Icon name="logout" size={24} />
-          </TouchableOpacity>
+          <Text style={[styles.txt, styles.txtHeader]}>Admin</Text>
         </View>
         <View style={[styles.container2]}>
           <Image source={require('../../assets/oops.png')} style={styles.img} />
@@ -147,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 0.07,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
   },
 
   container2: {
@@ -165,8 +158,6 @@ const styles = StyleSheet.create({
 
   midScreen: {
     flex: 0.9,
-    // width: '100%',
-    // height: 400,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
@@ -205,6 +196,7 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
+    marginLeft: '10%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
@@ -335,4 +327,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentScreen;
+export default HealthAdvisorScreen;

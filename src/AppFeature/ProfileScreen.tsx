@@ -1,4 +1,3 @@
-import {DrawerActions} from '@react-navigation/routers';
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -12,15 +11,14 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
-import {API_List} from '../API/apiList';
-// import {API_List_Company} from '../API/apiListForCompany';
+// import {API_List} from '../API/apiList';
+import {API_List_Company} from '../API/apiListForCompany';
 
-const ProfileScreen = ({navigation}: AppNavigationProps<'Profile'>) => {
-  const [fullname, setFullname] = useState('');
-  const [role, setRole] = useState('');
-  const [token, setToken] = useState('');
+const ProfileScreen = ({navigation, route}: AppNavigationProps<'Profile'>) => {
+  const fullname = route.params.name;
+  const token = route.params.token;
+  const role = route.params.role;
 
   // init data for placeholder
   const [firstnameInit, setFirstname] = useState('');
@@ -47,31 +45,9 @@ const ProfileScreen = ({navigation}: AppNavigationProps<'Profile'>) => {
   };
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const value2 = await AsyncStorage.getItem('token');
-        const value5 = await AsyncStorage.getItem('name');
-        const value = await AsyncStorage.getItem('role');
-        if (value !== null) {
-          setRole(value);
-        }
-        if (value2 !== null) {
-          setToken(value2);
-        }
-        if (value5 !== null) {
-          setFullname(value5);
-        }
-      } catch (e) {
-        console.log('Error');
-      }
-    };
-    getData();
-  });
-
-  useEffect(() => {
     const getProfile = async () => {
       try {
-        let response = await axios.get(API_List.myProfile, {
+        let response = await axios.get(API_List_Company.myProfile, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -104,19 +80,23 @@ const ProfileScreen = ({navigation}: AppNavigationProps<'Profile'>) => {
       ]);
     } else {
       axios
-        .put(API_List.myProfile, updateProfileData, {
+        .put(API_List_Company.myProfile, updateProfileData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then(() => {
-          Alert.alert('Notification', 'Upload profile successfully', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          Alert.alert(
+            'Notification',
+            'Upload profile successfully. The change will effect in the next time you use the app',
+            [
+              {
+                text: 'OK',
+                onPress: () => null,
+                style: 'cancel',
+              },
+            ],
+          );
         })
         .catch(() => {
           Alert.alert('Notification', 'Something Went Wrong', [
@@ -136,8 +116,8 @@ const ProfileScreen = ({navigation}: AppNavigationProps<'Profile'>) => {
         <TouchableOpacity
           style={styles.button2}
           activeOpacity={0.8}
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Icon name="menu" size={24} />
+          onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back" size={24} />
         </TouchableOpacity>
         <Text style={[styles.txt, styles.txtHeader]}>Profile</Text>
       </View>

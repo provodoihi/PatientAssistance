@@ -13,9 +13,11 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../API/apiList';
-// import {API_List_Company} from '../API/apiListForCompany';
+// import {API_List} from '../API/apiList';
+import {API_List_Company} from '../API/apiListForCompany';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {CommonActions} from '@react-navigation/native';
 
 export const Notfound = () => {
   return (
@@ -42,7 +44,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
 
   const editdone = async () => {
     try {
-      let response = await axios.get(API_List.filter + keyword);
+      let response = await axios.get(API_List_Company.filter + keyword);
       console.log(response.status);
       setStatus(response.status);
       setData(response.data);
@@ -57,6 +59,18 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
     }
   };
 
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear();
+      navigation.dispatch(
+        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
+      );
+    } catch (e) {
+      // clear error
+    }
+    console.log('Done.');
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.headerBar}>
@@ -67,6 +81,21 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
           <Icon name="menu" size={24} />
         </TouchableOpacity>
         <Text style={[styles.txt, styles.txtHeader]}>Find Hospital Clinic</Text>
+        <TouchableOpacity
+          style={styles.button2}
+          activeOpacity={0.8}
+          onPress={() =>
+            Alert.alert('Notification', 'Are you sure to exit the app?', [
+              {
+                text: 'Cancel',
+                onPress: () => null,
+                style: 'cancel',
+              },
+              {text: 'YES', onPress: clearAll},
+            ])
+          }>
+          <Icon name="logout" size={24} />
+        </TouchableOpacity>
       </View>
       <View style={styles.container2}>
         <View style={styles.topScreen}>
@@ -130,7 +159,7 @@ const styles = StyleSheet.create({
     flex: 0.07,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   container2: {
@@ -149,6 +178,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
+    backgroundColor: '#ffffff',
   },
 
   div1: {
@@ -184,7 +214,6 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '20%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },

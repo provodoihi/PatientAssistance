@@ -9,8 +9,8 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import {AuthNavigationProps} from '../navigation/Routes';
-import {API_List} from '../API/apiList';
-// import {API_List_Company} from '../API/apiListForCompany';
+// import {API_List} from '../API/apiList';
+import {API_List_Company} from '../API/apiListForCompany';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {CommonActions} from '@react-navigation/routers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -30,7 +30,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
       ]);
     } else {
       axios
-        .post(API_List.login, {
+        .post(API_List_Company.login, {
           username: username,
           password: pass,
         })

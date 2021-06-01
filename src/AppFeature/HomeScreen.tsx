@@ -5,29 +5,52 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Alert,
   Image,
+  Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {CommonActions} from '@react-navigation/native';
 
 const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
   const [fullname, setFullname] = useState('');
+  const [token, setToken] = useState('');
+  const [role, setRole] = useState('');
   useEffect(() => {
     const getData = async () => {
       try {
-        const value5 = await AsyncStorage.getItem('name');
-        if (value5 !== null) {
-          setFullname(value5);
+        const value = await AsyncStorage.getItem('token');
+        const value2 = await AsyncStorage.getItem('name');
+        const value3 = await AsyncStorage.getItem('role');
+        if (value !== null) {
+          setToken(value);
+        }
+        if (value2 !== null) {
+          setFullname(value2);
+        }
+        if (value3 !== null) {
+          setRole(value3);
         }
       } catch (e) {
         console.log('Error');
       }
     };
     getData();
-  });
+  }, []);
+
+  const clearAll = async () => {
+    try {
+      await AsyncStorage.clear();
+      navigation.dispatch(
+        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
+      );
+    } catch (e) {
+      // clear error
+    }
+    console.log('Done.');
+  };
 
   return (
     <View style={styles.container}>
@@ -39,6 +62,21 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           <Icon name="menu" size={24} />
         </TouchableOpacity>
         <Text style={[styles.txt, styles.txtHeader]}>Dashboard</Text>
+        <TouchableOpacity
+          style={styles.button2}
+          activeOpacity={0.8}
+          onPress={() =>
+            Alert.alert('Notification', 'Are you sure to exit the app?', [
+              {
+                text: 'Cancel',
+                onPress: () => null,
+                style: 'cancel',
+              },
+              {text: 'YES', onPress: clearAll},
+            ])
+          }>
+          <Icon name="logout" size={24} />
+        </TouchableOpacity>
       </View>
       <View style={styles.container2}>
         <View style={styles.topScreen}>
@@ -53,7 +91,13 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
               <TouchableOpacity
                 style={styles.buttonSmall}
                 activeOpacity={0.8}
-                onPress={() => navigation.navigate('Profile')}>
+                onPress={() =>
+                  navigation.navigate('Profile', {
+                    token: token,
+                    name: fullname,
+                    role: role,
+                  })
+                }>
                 <Text style={[styles.txt, styles.txtButtonSmall]}>
                   View my profile
                 </Text>
@@ -83,7 +127,9 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           <TouchableOpacity
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
-            onPress={() => Alert.alert('usr')}>
+            onPress={() =>
+              navigation.navigate('Appointment', {token: token, role: role})
+            }>
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
@@ -95,7 +141,13 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           <TouchableOpacity
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
-            onPress={() => Alert.alert('usr')}>
+            onPress={() =>
+              navigation.navigate('HealthAdvisor', {
+                token: token,
+                name: fullname,
+                role: role,
+              })
+            }>
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
@@ -107,7 +159,13 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           <TouchableOpacity
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
-            onPress={() => Alert.alert('usr')}>
+            onPress={() =>
+              navigation.navigate('HealthAdvisor', {
+                token: token,
+                name: fullname,
+                role: role,
+              })
+            }>
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
@@ -132,7 +190,7 @@ const styles = StyleSheet.create({
     flex: 0.07,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   container2: {
@@ -171,7 +229,6 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '29%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
@@ -244,7 +301,6 @@ const styles = StyleSheet.create({
 
   row: {
     flexDirection: 'row',
-    // flex: 1,
     margin: '1%',
     alignItems: 'center',
     justifyContent: 'space-evenly',
