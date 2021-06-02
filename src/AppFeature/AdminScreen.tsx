@@ -1,4 +1,3 @@
-import {DrawerActions} from '@react-navigation/native';
 import React from 'react';
 import {
   StyleSheet,
@@ -8,11 +7,12 @@ import {
   TouchableOpacity,
   Alert,
   FlatList,
-  Image,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import HeaderBar from '../components/HeaderBar';
+import Oops from '../components/Oops';
 
 const data = [
   {
@@ -31,18 +31,11 @@ export {data};
 
 const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
   let userRole = '';
+
   if (userRole === 'ROLE_ADMIN') {
     return (
       <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Icon name="menu" size={24} />
-          </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Dashboard</Text>
-        </View>
+        <HeaderBar text="For Admin" />
         <ScrollView
           style={styles.roll}
           contentContainerStyle={styles.container2}
@@ -315,23 +308,7 @@ const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
       </View>
     );
   } else {
-    return (
-      <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Icon name="menu" size={24} />
-          </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Admin</Text>
-        </View>
-        <View style={[styles.roll, styles.container2]}>
-          <Image source={require('../../assets/oops.png')} style={styles.img} />
-          <Text style={styles.txtOops}>This function for admin only</Text>
-        </View>
-      </View>
-    );
+    return <Oops text="Admin" />;
   }
 };
 
@@ -345,7 +322,7 @@ const styles = StyleSheet.create({
     flex: 0.07,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   roll: {
@@ -384,7 +361,6 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '32%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },

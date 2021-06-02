@@ -8,14 +8,14 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 // import {API_List} from '../API/apiList';
 import {API_List_Company} from '../API/apiListForCompany';
+import HeaderBarBack from '../components/HeaderBarBack';
 
-const ProfileScreen = ({navigation, route}: AppNavigationProps<'Profile'>) => {
+const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
   const fullname = route.params.name;
   const token = route.params.token;
   const role = route.params.role;
@@ -112,15 +112,7 @@ const ProfileScreen = ({navigation, route}: AppNavigationProps<'Profile'>) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerBar}>
-        <TouchableOpacity
-          style={styles.button2}
-          activeOpacity={0.8}
-          onPress={() => navigation.goBack()}>
-          <Icon name="arrow-back" size={24} />
-        </TouchableOpacity>
-        <Text style={[styles.txt, styles.txtHeader]}>Profile</Text>
-      </View>
+      <HeaderBarBack text="Profile" />
       <View style={styles.container2}>
         <Image style={styles.img} source={require('../../assets/user.png')} />
         <Text style={[styles.txt, styles.txtName]}>{fullname}</Text>
@@ -188,7 +180,7 @@ const styles = StyleSheet.create({
     flex: 0.07,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   container2: {
@@ -233,7 +225,6 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '33%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
@@ -254,11 +245,12 @@ const styles = StyleSheet.create({
   },
 
   button: {
-    margin: '2%',
-    width: '80%',
-    borderRadius: 24,
-    justifyContent: 'center',
     backgroundColor: '#00BFFF',
+    margin: '2%',
+    borderRadius: 25,
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   button2: {

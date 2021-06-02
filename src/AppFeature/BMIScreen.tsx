@@ -1,4 +1,3 @@
-import {DrawerActions} from '@react-navigation/routers';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -7,30 +6,156 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import HeaderBar from '../components/HeaderBar';
+import Modal from 'react-native-modal';
 
-const BMIScreen = ({navigation}: AppNavigationProps<'HealthAdvisor'>) => {
+export const Normal = () => {
+  return (
+    <View style={styles.modalOptional}>
+      <Text style={styles.txtModal}>You are Normal</Text>
+      <Image
+        style={styles.imgModal}
+        source={require('../../assets/fireworks.png')}
+      />
+      <Text style={styles.txtModal}>Congratulation</Text>
+    </View>
+  );
+};
+
+export const Underweight = () => {
+  return (
+    <View style={styles.modalOptional}>
+      <Text style={styles.txtModal}>You are Underweight</Text>
+      <Text style={styles.txtModal}>Some Guidelines</Text>
+      <View style={[styles.buttonModal, styles.shadowGray]}>
+        <View style={styles.rowButton}>
+          <Image
+            style={styles.iconButton}
+            source={require('../../assets/diet.png')}
+          />
+          <Text style={styles.txtName}>
+            Eat more and choose nutrient-rich foods
+          </Text>
+        </View>
+      </View>
+      <View style={[styles.buttonModal, styles.shadowGray]}>
+        <View style={styles.rowButton}>
+          <Image
+            style={styles.iconButton}
+            source={require('../../assets/exercise.png')}
+          />
+          <Text style={styles.txtName}>Excercise to build up your muscles</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+export const Overweight = () => {
+  return (
+    <View style={styles.modalOptional}>
+      <Text style={styles.txtModal}>You are Overweight</Text>
+      <Text style={styles.txtModal}>Some Guidelines</Text>
+      <View style={[styles.buttonModal, styles.shadowGray]}>
+        <View style={styles.rowButton}>
+          <Image
+            style={styles.iconButton}
+            source={require('../../assets/diet.png')}
+          />
+          <Text style={styles.txtName}>Choose healthy eating plan</Text>
+        </View>
+      </View>
+      <View style={[styles.buttonModal, styles.shadowGray]}>
+        <View style={styles.rowButton}>
+          <Image
+            style={styles.iconButton}
+            source={require('../../assets/exercise.png')}
+          />
+          <Text style={styles.txtName}>Excercise more to lose weight</Text>
+        </View>
+      </View>
+    </View>
+  );
+};
+
+const BMIScreen = () => {
+  const [isVisible, setVisible] = useState(false);
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-  const [result, setResult] = useState('');
+  const [result, setResult] = useState(0);
+
+  const toggleModal = () => {
+    setVisible(false);
+  };
+
+  const editdone = () => {
+    setResult(
+      (weight as unknown as number) /
+        Math.pow((height as unknown as number) / 100, 2),
+    );
+    setVisible(true);
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerBar}>
-        <TouchableOpacity
-          style={styles.button2}
-          activeOpacity={0.8}
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Icon name="menu" size={24} />
-        </TouchableOpacity>
-        <Text style={[styles.txt, styles.txtHeader]}>BMI Calculator</Text>
-      </View>
+      <HeaderBar text="BMI Calculator" />
       <View style={styles.container2}>
-        <View style={styles.topScreen}></View>
+        <Image
+          style={styles.img}
+          source={require('../../assets/bmi_big.png')}
+        />
+        <Text style={[styles.txt, styles.txtTitle]}>
+          Calculate your BMI Metric
+        </Text>
+        <TextInput
+          style={styles.txtInput}
+          onChangeText={weight => {
+            setWeight(weight);
+          }}
+          value={weight}
+          placeholder="Weight (kilograms)"
+          placeholderTextColor="#9FA5AA"
+          keyboardType="numeric"
+          multiline={false}
+        />
+        <TextInput
+          style={styles.txtInput}
+          onChangeText={height => {
+            setHeight(height);
+          }}
+          value={height}
+          placeholder="Height (centimeters)"
+          placeholderTextColor="#9FA5AA"
+          keyboardType="numeric"
+          multiline={false}
+        />
+
+        <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
+          <View style={styles.modal}>
+            <Text style={styles.txtModal}>BMI: {result.toFixed(2)}</Text>
+            {result <= 18.4 ? (
+              <Underweight />
+            ) : result >= 25 ? (
+              <Overweight />
+            ) : (
+              <Normal />
+            )}
+            <TouchableOpacity
+              style={[styles.button, styles.shadow]}
+              activeOpacity={0.8}
+              onPress={toggleModal}>
+              <Text style={[styles.txt, styles.txtButton]}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        <TouchableOpacity
+          style={[styles.button, styles.shadow]}
+          activeOpacity={0.8}
+          onPress={editdone}>
+          <Text style={[styles.txt, styles.txtButton]}>Calulate Now</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -41,14 +166,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  headerBar: {
-    flexDirection: 'row',
-    flex: 0.07,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-
   container2: {
     flex: 0.93,
     backgroundColor: '#fff',
@@ -56,28 +173,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  topScreen: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0.1,
-  },
-
-  midScreen: {
-    flex: 0.9,
+  modal: {
+    backgroundColor: '#ffffff',
+    flex: 0.7,
     justifyContent: 'center',
     alignItems: 'center',
-    alignContent: 'center',
   },
 
-  div1: {
-    flexDirection: 'column',
-    margin: '1.5%',
-    alignContent: 'center',
+  modalOptional: {
     justifyContent: 'center',
-  },
-
-  div2: {
-    flex: 0.3,
+    alignItems: 'center',
   },
 
   txtInput: {
@@ -100,38 +205,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  txtHeader: {
-    margin: '1%',
-    marginLeft: '10%',
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-
-  txtOops: {
-    margin: '1%',
-    color: '#4c4c4c',
-    fontWeight: 'bold',
-    fontSize: rf(2.5),
-  },
-
-  txtWelcome: {
-    margin: '2%',
-    marginLeft: '4%',
-    fontSize: rf(2.7),
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'left',
-  },
-
-  txtMid: {
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#8B959E',
-    textAlign: 'center',
-  },
-
-  txtNotfound: {
+  txtTitle: {
     margin: '2%',
     fontSize: rf(2.5),
     fontWeight: 'bold',
@@ -139,58 +213,61 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 
-  txtNormal: {
-    padding: '1.5%',
+  txtModal: {
     margin: '2%',
-    fontSize: rf(2),
+    fontSize: rf(2.2),
     fontWeight: 'bold',
-    color: '#ffffff',
-    alignSelf: 'center',
+    color: '#4c4c4c',
+    textAlign: 'center',
   },
 
   txtButton: {
-    padding: '4%',
+    padding: '2.5%',
     margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
+    color: '#ffffff',
     alignSelf: 'center',
   },
 
-  txtButtonSmall: {
+  txtName: {
+    padding: '1.5%',
+    margin: '1%',
     fontSize: rf(1.8),
-    padding: '5%',
-    fontWeight: 'normal',
-    color: '#ffffff',
+    fontWeight: 'bold',
+    color: '#4c4c4c',
   },
 
   button: {
-    margin: '2.5%',
+    backgroundColor: '#00BFFF',
+    margin: '3%',
+    borderRadius: 25,
     width: '80%',
-    borderRadius: 24,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    alignItems: 'center',
   },
 
-  buttonSmall: {
-    margin: '1.5%',
-    width: '100%',
+  buttonModal: {
+    backgroundColor: '#FFFFFF',
+    margin: '3.5%',
+    borderRadius: 24,
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+  },
+
+  buttonWhite: {
+    margin: '2.5%',
+    width: '75%',
     borderRadius: 24,
     justifyContent: 'center',
     alignSelf: 'center',
-    backgroundColor: '#59ADFF',
+    backgroundColor: '#ffffff',
   },
 
   button2: {
     margin: '1%',
-  },
-
-  row: {
-    flexDirection: 'row',
-    // flex: 1,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
   },
 
   rowButton: {
@@ -200,14 +277,19 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  col: {
-    flexDirection: 'column',
-    margin: 5,
-    flex: 0.7,
-    justifyContent: 'flex-start',
+  shadow: {
+    shadowColor: '#00BFFF',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
   },
 
-  shadow: {
+  shadowGray: {
     shadowColor: '#a2a2a2',
     shadowOffset: {
       width: 0,
@@ -220,14 +302,21 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '35%',
-    height: '35%',
+    width: '30%',
+    height: '30%',
+    resizeMode: 'contain',
+  },
+
+  imgModal: {
+    width: 128,
+    height: 128,
+    margin: '5%',
     resizeMode: 'contain',
   },
 
   iconButton: {
-    width: '20%',
-    height: '75%',
+    width: '40%',
+    height: '70%',
     margin: '1.5%',
     resizeMode: 'contain',
   },

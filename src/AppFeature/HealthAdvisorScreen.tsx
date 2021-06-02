@@ -1,4 +1,3 @@
-import {DrawerActions} from '@react-navigation/routers';
 import React, {useEffect, useState} from 'react';
 import {
   StyleSheet,
@@ -7,12 +6,12 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import HeaderBar from '../components/HeaderBar';
+import Oops from '../components/Oops';
 
 const HealthAdvisorScreen = ({
   navigation,
@@ -59,74 +58,55 @@ const HealthAdvisorScreen = ({
   }, [fullname, token, userRole]);
 
   const editdone = () => {
-    Alert.alert('a');
+    console.log(token);
+    console.log(fullname);
+    console.log(userRole);
+    console.log(userID);
+    console.log(phone);
   };
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        const value = await AsyncStorage.getItem('userID');
-        const value2 = await AsyncStorage.getItem('phone');
-        if (value !== null) {
-          setUserID(value);
-        }
-        if (value2 !== null) {
-          setPhone(value2);
-        }
-      } catch (e) {
-        console.log('Error');
-      }
-    };
-    getData();
-  }, []);
 
   if (userRole === 'ROLE_PATIENT') {
     return (
       <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Icon name="menu" size={24} />
-          </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Health Advisor</Text>
-        </View>
+        <HeaderBar text="Health Advisor" />
         <View style={styles.container2}>
-          <View style={styles.topScreen}>
-            <TextInput
-              style={styles.txtInput}
-              onChangeText={question => {
-                setQuestion(question);
-              }}
-              value={question}
-              onSubmitEditing={editdone}
-              placeholder="Search here"
-              placeholderTextColor="#9FA5AA"
-              multiline={false}
-            />
-          </View>
+          <Image
+            style={styles.img}
+            source={require('../../assets/qa_color.png')}
+          />
+          <Text style={[styles.txt, styles.txtTitle]}>
+            Ask questions to our health experts
+          </Text>
+          <TextInput
+            style={styles.txtInput}
+            onChangeText={question => {
+              setQuestion(question);
+            }}
+            value={question}
+            placeholder="Question"
+            placeholderTextColor="#9FA5AA"
+            multiline={false}
+          />
+          <TouchableOpacity
+            style={[styles.button, styles.shadow]}
+            activeOpacity={0.8}
+            onPress={editdone}>
+            <Text style={[styles.txt, styles.txtButton]}>Submit Question</Text>
+          </TouchableOpacity>
+          <Text style={[styles.txt, styles.txtTitle]}>OR</Text>
+          <TouchableOpacity
+            style={[styles.button, styles.shadow]}
+            activeOpacity={0.8}
+            onPress={editdone}>
+            <Text style={[styles.txt, styles.txtButton]}>
+              View answers of my questions
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
     );
   } else {
-    return (
-      <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Icon name="menu" size={24} />
-          </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Admin</Text>
-        </View>
-        <View style={[styles.container2]}>
-          <Image source={require('../../assets/oops.png')} style={styles.img} />
-          <Text style={styles.txtOops}>This function for patient only</Text>
-        </View>
-      </View>
-    );
+    return <Oops text="Patient" />;
   }
 };
 
@@ -140,7 +120,7 @@ const styles = StyleSheet.create({
     flex: 0.07,
     margin: '1%',
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
   },
 
   container2: {
@@ -148,30 +128,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  topScreen: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0.1,
-  },
-
-  midScreen: {
-    flex: 0.9,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-  },
-
-  div1: {
-    flexDirection: 'column',
-    margin: '1.5%',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-
-  div2: {
-    flex: 0.3,
   },
 
   txtInput: {
@@ -196,7 +152,6 @@ const styles = StyleSheet.create({
 
   txtHeader: {
     margin: '1%',
-    marginLeft: '10%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
@@ -208,20 +163,11 @@ const styles = StyleSheet.create({
     fontSize: rf(2.5),
   },
 
-  txtWelcome: {
+  txtTitle: {
     margin: '2%',
-    marginLeft: '4%',
-    fontSize: rf(2.7),
+    fontSize: rf(2.5),
     fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'left',
-  },
-
-  txtMid: {
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#8B959E',
+    color: '#4c4c4c',
     textAlign: 'center',
   },
 
@@ -243,66 +189,29 @@ const styles = StyleSheet.create({
   },
 
   txtButton: {
-    padding: '4%',
+    padding: '2.5%',
     margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    alignSelf: 'center',
-  },
-
-  txtButtonSmall: {
-    fontSize: rf(1.8),
-    padding: '5%',
-    fontWeight: 'normal',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
     color: '#ffffff',
+    alignSelf: 'center',
   },
 
   button: {
-    margin: '2.5%',
+    backgroundColor: '#00BFFF',
+    margin: '3%',
+    borderRadius: 25,
     width: '80%',
-    borderRadius: 24,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-
-  buttonSmall: {
-    margin: '1.5%',
-    width: '100%',
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#59ADFF',
+    alignItems: 'center',
   },
 
   button2: {
     margin: '1%',
   },
 
-  row: {
-    flexDirection: 'row',
-    // flex: 1,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-
-  rowButton: {
-    flexDirection: 'row',
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-
-  col: {
-    flexDirection: 'column',
-    margin: 5,
-    flex: 0.7,
-    justifyContent: 'flex-start',
-  },
-
   shadow: {
-    shadowColor: '#a2a2a2',
+    shadowColor: '#00BFFF',
     shadowOffset: {
       width: 0,
       height: 5,
@@ -314,15 +223,8 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '35%',
-    height: '35%',
-    resizeMode: 'contain',
-  },
-
-  iconButton: {
-    width: '20%',
-    height: '75%',
-    margin: '1.5%',
+    width: '30%',
+    height: '30%',
     resizeMode: 'contain',
   },
 });

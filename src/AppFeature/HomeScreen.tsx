@@ -1,18 +1,9 @@
-import {DrawerActions} from '@react-navigation/routers';
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {CommonActions} from '@react-navigation/native';
+import HeaderBar from '../components/HeaderBar';
 
 const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
   const [fullname, setFullname] = useState('');
@@ -40,44 +31,9 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
     getData();
   }, []);
 
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-      navigation.dispatch(
-        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
-      );
-    } catch (e) {
-      // clear error
-    }
-    console.log('Done.');
-  };
-
   return (
     <View style={styles.container}>
-      <View style={styles.headerBar}>
-        <TouchableOpacity
-          style={styles.button2}
-          activeOpacity={0.8}
-          onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-          <Icon name="menu" size={24} />
-        </TouchableOpacity>
-        <Text style={[styles.txt, styles.txtHeader]}>Dashboard</Text>
-        <TouchableOpacity
-          style={styles.button2}
-          activeOpacity={0.8}
-          onPress={() =>
-            Alert.alert('Notification', 'Are you sure to exit the app?', [
-              {
-                text: 'Cancel',
-                onPress: () => null,
-                style: 'cancel',
-              },
-              {text: 'YES', onPress: clearAll},
-            ])
-          }>
-          <Icon name="logout" size={24} />
-        </TouchableOpacity>
-      </View>
+      <HeaderBar text="Dashboard" />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Text style={[styles.txt, styles.txtWelcome]}>
@@ -159,13 +115,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           <TouchableOpacity
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
-            onPress={() =>
-              navigation.navigate('HealthAdvisor', {
-                token: token,
-                name: fullname,
-                role: role,
-              })
-            }>
+            onPress={() => navigation.navigate('BMI')}>
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}

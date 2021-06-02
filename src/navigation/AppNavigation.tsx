@@ -15,6 +15,7 @@ import {
 } from '@react-navigation/drawer';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 const CustomDrawerContent = props => {
@@ -45,7 +46,7 @@ const AppNavigation = () => {
         name={'Location'}
         component={LocationScreen}
         options={{
-          title: 'Find Hospitals Clinics',
+          title: 'Find Location',
           drawerIcon: () => <MaterialIcon name="location-on" size={24} />,
         }}
       />
@@ -68,6 +69,14 @@ const AppNavigation = () => {
         }}
       />
       <Drawer.Screen
+        name={'BMI'}
+        component={BMIScreen}
+        options={{
+          title: 'BMI Calculation',
+          drawerIcon: () => <FontAwesome5 name="weight" size={24} />,
+        }}
+      />
+      <Drawer.Screen
         name={'Admin'}
         component={AdminScreen}
         options={{
@@ -81,11 +90,6 @@ const AppNavigation = () => {
         name={'Profile'}
         component={ProfileScreen}
         options={{gestureEnabled: false}}
-      />
-      <Drawer.Screen
-        name={'BMI'}
-        component={BMIScreen}
-        options={{title: 'BMI Calculation'}}
       />
     </Drawer.Navigator>
   );

@@ -1,4 +1,3 @@
-import {DrawerActions} from '@react-navigation/routers';
 import React, {useState} from 'react';
 import {
   StyleSheet,
@@ -9,11 +8,11 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
 import {AppNavigationProps} from '../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions} from '@react-navigation/native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import HeaderBar from '../components/HeaderBar';
+import Oops from '../components/Oops';
 
 export const Notfound = () => {
   return (
@@ -44,45 +43,10 @@ const AppointmentScreen = ({
     Alert.alert('a');
   };
 
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-      navigation.dispatch(
-        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
-      );
-    } catch (e) {
-      // clear error
-    }
-    console.log('Done.');
-  };
-
   if (userRole === 'ROLE_PATIENT') {
     return (
       <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Icon name="menu" size={24} />
-          </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Appointment</Text>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() =>
-              Alert.alert('Notification', 'Are you sure to exit the app?', [
-                {
-                  text: 'Cancel',
-                  onPress: () => null,
-                  style: 'cancel',
-                },
-                {text: 'YES', onPress: clearAll},
-              ])
-            }>
-            <Icon name="logout" size={24} />
-          </TouchableOpacity>
-        </View>
+        <HeaderBar text="Appointment" />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
             <TextInput
@@ -102,38 +66,7 @@ const AppointmentScreen = ({
       </View>
     );
   } else {
-    return (
-      <View style={styles.container}>
-        <View style={styles.headerBar}>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-            <Icon name="menu" size={24} />
-          </TouchableOpacity>
-          <Text style={[styles.txt, styles.txtHeader]}>Appointment</Text>
-          <TouchableOpacity
-            style={styles.button2}
-            activeOpacity={0.8}
-            onPress={() =>
-              Alert.alert('Notification', 'Are you sure to exit the app?', [
-                {
-                  text: 'Cancel',
-                  onPress: () => null,
-                  style: 'cancel',
-                },
-                {text: 'YES', onPress: clearAll},
-              ])
-            }>
-            <Icon name="logout" size={24} />
-          </TouchableOpacity>
-        </View>
-        <View style={[styles.container2]}>
-          <Image source={require('../../assets/oops.png')} style={styles.img} />
-          <Text style={styles.txtOops}>This function for patient only</Text>
-        </View>
-      </View>
-    );
+    return <Oops text="Patient" />;
   }
 };
 
@@ -165,8 +98,6 @@ const styles = StyleSheet.create({
 
   midScreen: {
     flex: 0.9,
-    // width: '100%',
-    // height: 400,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
@@ -310,7 +241,7 @@ const styles = StyleSheet.create({
   },
 
   shadow: {
-    shadowColor: '#a2a2a2',
+    shadowColor: '#00BFFF',
     shadowOffset: {
       width: 0,
       height: 5,
