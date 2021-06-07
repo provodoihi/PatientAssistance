@@ -6,12 +6,16 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import HeaderBar from '../components/HeaderBar';
-import Oops from '../components/Oops';
+import HeaderBar from '../../components/HeaderBar';
+import Oops from '../../components/Oops';
+import axios from 'axios';
+import {API_List_Company} from '../../API/apiListForCompany';
+// import {API_List} from '../API/apiList';
 
 const HealthAdvisorScreen = ({
   navigation,
@@ -57,12 +61,52 @@ const HealthAdvisorScreen = ({
     getData();
   }, [fullname, token, userRole]);
 
-  const editdone = () => {
-    console.log(token);
-    console.log(fullname);
-    console.log(userRole);
-    console.log(userID);
-    console.log(phone);
+  const questionData = {
+    userId: userID,
+    fullname: fullname,
+    phone: phone,
+    questionDetail: question,
+  };
+
+  const submitQuestion = () => {
+    if (question === '') {
+      Alert.alert('Notification', 'Please write the question', [
+        {
+          text: 'OK',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ]);
+    } else {
+      axios
+        .post(API_List_Company.question, questionData, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          Alert.alert(
+            'Notification',
+            'Successfully. Your question will be answer soon',
+            [
+              {
+                text: 'OK',
+                onPress: () => null,
+                style: 'cancel',
+              },
+            ],
+          );
+        })
+        .catch(() => {
+          Alert.alert('Notification', 'Something went wrong', [
+            {
+              text: 'OK',
+              onPress: () => null,
+              style: 'cancel',
+            },
+          ]);
+        });
+    }
   };
 
   if (userRole === 'ROLE_PATIENT') {
@@ -72,7 +116,7 @@ const HealthAdvisorScreen = ({
         <View style={styles.container2}>
           <Image
             style={styles.img}
-            source={require('../../assets/qa_color.png')}
+            source={require('../../../assets/Image_Icon/qa_color.png')}
           />
           <Text style={[styles.txt, styles.txtTitle]}>
             Ask questions to our health experts
@@ -90,14 +134,14 @@ const HealthAdvisorScreen = ({
           <TouchableOpacity
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
-            onPress={editdone}>
+            onPress={submitQuestion}>
             <Text style={[styles.txt, styles.txtButton]}>Submit Question</Text>
           </TouchableOpacity>
           <Text style={[styles.txt, styles.txtTitle]}>OR</Text>
           <TouchableOpacity
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
-            onPress={editdone}>
+            onPress={() => navigation.navigate('QAList', {token: token})}>
             <Text style={[styles.txt, styles.txtButton]}>
               View answers of my questions
             </Text>
@@ -106,7 +150,7 @@ const HealthAdvisorScreen = ({
       </View>
     );
   } else {
-    return <Oops text="Patient" />;
+    return <Oops text="For Patient" />;
   }
 };
 
@@ -223,7 +267,7 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '30%',
+    width: '35%',
     height: '30%',
     resizeMode: 'contain',
   },

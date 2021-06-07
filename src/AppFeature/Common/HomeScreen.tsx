@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
-import {AppNavigationProps} from '../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import HeaderBar from '../components/HeaderBar';
+import HeaderBar from '../../components/HeaderBar';
 
 const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
   const [fullname, setFullname] = useState('');
@@ -61,7 +61,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             </View>
             <Image
               style={styles.img}
-              source={require('../../assets/healthcare256.png')}
+              source={require('../../../assets/Image_Icon/healthcare256.png')}
             />
           </View>
         </View>
@@ -75,7 +75,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
-                source={require('../../assets/Location_icon.png')}
+                source={require('../../../assets/Image_Icon/Location_icon.png')}
               />
               <Text style={styles.txtButton}>Find Hospital Clinic</Text>
             </View>
@@ -84,12 +84,16 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             style={[styles.button, styles.shadow]}
             activeOpacity={0.8}
             onPress={() =>
-              navigation.navigate('Appointment', {token: token, role: role})
+              navigation.navigate('Appointment', {
+                token: token,
+                name: fullname,
+                role: role,
+              })
             }>
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
-                source={require('../../assets/Timesheet_icon.png')}
+                source={require('../../../assets/Image_Icon/Timesheet_icon.png')}
               />
               <Text style={styles.txtButton}>Appointment</Text>
             </View>
@@ -107,7 +111,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
-                source={require('../../assets/HealthBook_icon.png')}
+                source={require('../../../assets/Image_Icon/HealthBook_icon.png')}
               />
               <Text style={styles.txtButton}>Health Advisor</Text>
             </View>
@@ -119,7 +123,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             <View style={styles.rowButton}>
               <Image
                 style={styles.iconButton}
-                source={require('../../assets/bmi.png')}
+                source={require('../../../assets/Image_Icon/bmi.png')}
               />
               <Text style={styles.txtButton}>BMI Calculator</Text>
             </View>
@@ -133,14 +137,6 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-
-  headerBar: {
-    flexDirection: 'row',
-    flex: 0.07,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
 
   container2: {

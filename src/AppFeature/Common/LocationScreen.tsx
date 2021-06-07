@@ -9,20 +9,20 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import {AppNavigationProps} from '../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../API/apiList';
-import {API_List_Company} from '../API/apiListForCompany';
+// import {API_List} from '../../API/apiList';
+import {API_List_Company} from '../../API/apiListForCompany';
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {CommonActions, DrawerActions} from '@react-navigation/native';
-import HeaderBar from '../components/HeaderBar';
+import HeaderBar from '../../components/HeaderBar';
 
 export const Notfound = () => {
   return (
     <View style={styles.midScreen}>
-      <Image style={styles.img} source={require('../../assets/notfound.png')} />
+      <Image
+        style={styles.img}
+        source={require('../../../assets/Image_Icon/notfound.png')}
+      />
       <Text style={styles.txtNotfound}>Not found</Text>
     </View>
   );
@@ -31,7 +31,10 @@ export const Notfound = () => {
 export const Init = () => {
   return (
     <View style={styles.midScreen}>
-      <Image style={styles.img} source={require('../../assets/search.png')} />
+      <Image
+        style={styles.img}
+        source={require('../../../assets/Image_Icon/search.png')}
+      />
       <Text style={styles.txtMid}>Search hospitals and clinics</Text>
     </View>
   );
@@ -57,18 +60,6 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
         },
       ]);
     }
-  };
-
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-      navigation.dispatch(
-        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
-      );
-    } catch (e) {
-      // clear error
-    }
-    console.log('Done.');
   };
 
   return (
@@ -101,7 +92,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
-                        source={require('../../assets/hospital.png')}
+                        source={require('../../../assets/Image_Icon/hospital.png')}
                       />
 
                       <View style={styles.col}>
@@ -129,14 +120,6 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-
-  headerBar: {
-    flexDirection: 'row',
-    flex: 0.07,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
 
   container2: {

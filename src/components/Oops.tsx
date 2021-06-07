@@ -10,10 +10,13 @@ interface Props {
 const Oops = ({text}: Props) => {
   return (
     <View style={styles.container}>
-      <HeaderBar text="For Admin" />
+      <HeaderBar text={text} />
       <View style={[styles.container2]}>
-        <Image source={require('../../assets/oops.png')} style={styles.img} />
-        <Text style={styles.txtOops}>This function for {text} only</Text>
+        <Image
+          source={require('../../assets/Image_Icon/oops.png')}
+          style={styles.img}
+        />
+        <Text style={styles.txtOops}>This function {text} only</Text>
       </View>
     </View>
   );
@@ -58,7 +61,7 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '30%',
+    width: '35%',
     height: '30%',
     resizeMode: 'contain',
   },

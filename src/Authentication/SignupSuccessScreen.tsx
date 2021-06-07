@@ -8,7 +8,10 @@ const SignupSuccessScreen = ({
 }: AuthNavigationProps<'SignupSuccess'>) => {
   return (
     <View style={styles.container}>
-      <Image style={styles.img} source={require('../../assets/check.png')} />
+      <Image
+        style={styles.img}
+        source={require('../../assets/Image_Icon/check.png')}
+      />
       <Text style={styles.txt}>Sign Up Success</Text>
       <TouchableOpacity
         style={[styles.button, styles.shadow]}

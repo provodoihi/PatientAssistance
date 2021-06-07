@@ -14,7 +14,7 @@ const SplashScreen = ({navigation}: AuthNavigationProps<'Splash'>) => {
     <View style={styles.container}>
       <Image
         style={styles.img}
-        source={require('../../assets/healthcare256.png')}
+        source={require('../../assets/Image_Icon/healthcare256.png')}
       />
       <Text style={styles.txt}>Patient Assistance</Text>
       <ActivityIndicator

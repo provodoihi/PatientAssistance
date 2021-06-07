@@ -8,12 +8,12 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../API/apiList';
-import {API_List_Company} from '../API/apiListForCompany';
-import HeaderBarBack from '../components/HeaderBarBack';
+// import {API_List} from '../../API/apiList';
+import {API_List_Company} from '../../API/apiListForCompany';
+import HeaderBarBack from '../../components/HeaderBarBack';
 
 const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
   const fullname = route.params.name;
@@ -114,7 +114,10 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
     <View style={styles.container}>
       <HeaderBarBack text="Profile" />
       <View style={styles.container2}>
-        <Image style={styles.img} source={require('../../assets/user.png')} />
+        <Image
+          style={styles.img}
+          source={require('../../../assets/Image_Icon/user.png')}
+        />
         <Text style={[styles.txt, styles.txtName]}>{fullname}</Text>
         <Text style={[styles.txt, styles.txtRole]}>{role}</Text>
         <TextInput

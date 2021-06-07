@@ -49,7 +49,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
       lastname === '' ||
       phone === '' ||
       address === '' ||
-      age === ''
+      age === '' ||
+      sex === ''
     ) {
       Alert.alert('Notification', 'Please fill sign up details', [
         {

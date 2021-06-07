@@ -21,9 +21,13 @@ export type AppRoutes = {
   Location: undefined;
   HealthAdvisor: {token: string; name: string; role: string};
   Admin: undefined;
+  Clinic: undefined;
+  Advisor: undefined;
   BMI: undefined;
-  Appointment: {token: string; role: string};
+  Appointment: {token: string; name: string; role: string};
   Profile: {token: string; name: string; role: string};
+  QAList: {token: string};
+  AppointmentList: {token: string; userID: string};
 };
 
 export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {

@@ -1,12 +1,16 @@
 import React from 'react';
 
-import HomeScreen from '../AppFeature/HomeScreen';
-import LocationScreen from '../AppFeature/LocationScreen';
-import AdminScreen from '../AppFeature/AdminScreen';
-import BMIScreen from '../AppFeature/BMIScreen';
-import AppointmentScreen from '../AppFeature/AppointmentScreen';
-import ProfileScreen from '../AppFeature/ProfileScreen';
-import HealthAdvisorScreen from '../AppFeature/HealthAdvisorScreen';
+import HomeScreen from '../AppFeature/Common/HomeScreen';
+import LocationScreen from '../AppFeature/Common/LocationScreen';
+import AdminScreen from '../AppFeature/Admin/AdminScreen';
+import BMIScreen from '../AppFeature/Common/BMIScreen';
+import AppointmentScreen from '../AppFeature/Patient/AppointmentScreen';
+import ProfileScreen from '../AppFeature/Common/ProfileScreen';
+import HealthAdvisorScreen from '../AppFeature/Patient/HealthAdvisorScreen';
+import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
+import AppointmentListScreen from '../AppFeature/Patient/AppointmentList';
+import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
+import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
 import {AppRoutes} from '../navigation/Routes';
 import {
   createDrawerNavigator,
@@ -16,12 +20,19 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 const CustomDrawerContent = props => {
   const {state, ...rest} = props;
   const newState = {...state};
-  newState.routes = newState.routes.filter(item => item.name !== 'Profile');
+  // filter the screen to not showing in drawer menu
+  newState.routes = newState.routes.filter(
+    item =>
+      item.name !== 'Profile' &&
+      item.name !== 'QAList' &&
+      item.name !== 'AppointmentList',
+  );
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList state={newState} {...rest} />
@@ -87,8 +98,34 @@ const AppNavigation = () => {
         }}
       />
       <Drawer.Screen
+        name={'Clinic'}
+        component={ClinicScreen}
+        options={{
+          title: 'For Clinic',
+          drawerIcon: () => <FontAwesome5 name="clinic-medical" size={24} />,
+        }}
+      />
+      <Drawer.Screen
+        name={'Advisor'}
+        component={AdvisorScreen}
+        options={{
+          title: 'For Advisor',
+          drawerIcon: () => <MaterialCommunityIcons name="doctor" size={24} />,
+        }}
+      />
+      <Drawer.Screen
         name={'Profile'}
         component={ProfileScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'QAList'}
+        component={HealthAdvisorListScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AppointmentList'}
+        component={AppointmentListScreen}
         options={{gestureEnabled: false}}
       />
     </Drawer.Navigator>

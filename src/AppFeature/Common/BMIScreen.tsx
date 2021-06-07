@@ -6,9 +6,10 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Alert,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import HeaderBar from '../components/HeaderBar';
+import HeaderBar from '../../components/HeaderBar';
 import Modal from 'react-native-modal';
 
 export const Normal = () => {
@@ -17,7 +18,7 @@ export const Normal = () => {
       <Text style={styles.txtModal}>You are Normal</Text>
       <Image
         style={styles.imgModal}
-        source={require('../../assets/fireworks.png')}
+        source={require('../../../assets/Image_Icon/fireworks.png')}
       />
       <Text style={styles.txtModal}>Congratulation</Text>
     </View>
@@ -33,7 +34,7 @@ export const Underweight = () => {
         <View style={styles.rowButton}>
           <Image
             style={styles.iconButton}
-            source={require('../../assets/diet.png')}
+            source={require('../../../assets/Image_Icon/diet.png')}
           />
           <Text style={styles.txtName}>
             Eat more and choose nutrient-rich foods
@@ -44,7 +45,7 @@ export const Underweight = () => {
         <View style={styles.rowButton}>
           <Image
             style={styles.iconButton}
-            source={require('../../assets/exercise.png')}
+            source={require('../../../assets/Image_Icon/exercise.png')}
           />
           <Text style={styles.txtName}>Excercise to build up your muscles</Text>
         </View>
@@ -62,7 +63,7 @@ export const Overweight = () => {
         <View style={styles.rowButton}>
           <Image
             style={styles.iconButton}
-            source={require('../../assets/diet.png')}
+            source={require('../../../assets/Image_Icon/diet.png')}
           />
           <Text style={styles.txtName}>Choose healthy eating plan</Text>
         </View>
@@ -71,7 +72,7 @@ export const Overweight = () => {
         <View style={styles.rowButton}>
           <Image
             style={styles.iconButton}
-            source={require('../../assets/exercise.png')}
+            source={require('../../../assets/Image_Icon/exercise.png')}
           />
           <Text style={styles.txtName}>Excercise more to lose weight</Text>
         </View>
@@ -91,11 +92,21 @@ const BMIScreen = () => {
   };
 
   const editdone = () => {
-    setResult(
-      (weight as unknown as number) /
-        Math.pow((height as unknown as number) / 100, 2),
-    );
-    setVisible(true);
+    if (height === '' || weight === '') {
+      Alert.alert('Notification', 'Please fill in weight and height', [
+        {
+          text: 'OK',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ]);
+    } else {
+      setResult(
+        (weight as unknown as number) /
+          Math.pow((height as unknown as number) / 100, 2),
+      );
+      setVisible(true);
+    }
   };
 
   return (
@@ -104,7 +115,7 @@ const BMIScreen = () => {
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../assets/bmi_big.png')}
+          source={require('../../../assets/Image_Icon/bmi_big.png')}
         />
         <Text style={[styles.txt, styles.txtTitle]}>
           Calculate your BMI Metric
@@ -302,7 +313,7 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '30%',
+    width: '35%',
     height: '30%',
     resizeMode: 'contain',
   },
