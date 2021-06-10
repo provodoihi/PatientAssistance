@@ -91,7 +91,7 @@ const AppointmentScreen = ({
       ]);
     } else {
       axios
-        .post(API_List_Company.appointmentCreate, appointmentData, {
+        .post(API_List_Company.appointmentGeneral, appointmentData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -28,6 +28,9 @@ export type AppRoutes = {
   Profile: {token: string; name: string; role: string};
   QAList: {token: string};
   AppointmentList: {token: string; userID: string};
+  AdvisorQuestionList: {token: string};
+  AdvisorAnswer: {token: string};
+  AdvisorAnswerList: {token: string};
 };
 
 export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {

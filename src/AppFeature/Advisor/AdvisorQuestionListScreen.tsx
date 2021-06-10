@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  Alert,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 // import {API_List} from '../../API/apiList';
@@ -14,86 +13,45 @@ import {API_List_Company} from '../../API/apiListForCompany';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
-import Modal from 'react-native-modal';
 
-const AppointmentListScreen = ({
+const AdvisorQuestionListScreen = ({
   route,
-}: AppNavigationProps<'AppointmentList'>) => {
+}: AppNavigationProps<'AdvisorQuestionList'>) => {
   const [data, setData] = useState([]);
-  const [statusRes, setStatusRes] = useState(0);
-  const [itemId, setItemId] = useState('');
-
-  // for modal
-  const [isVisible, setVisible] = useState(false);
-  const [clinic, setClinic] = useState('');
-  const [time, setTime] = useState('');
-  const [describe, setDescribe] = useState('');
-  const [statusAppoint, setStatusAppoint] = useState('');
+  const [status, setStatus] = useState(0);
 
   useEffect(() => {
-    const getProfile = async () => {
+    const getQuestion = async () => {
       try {
-        let response = await axios.get(
-          API_List_Company.appointmentFindPatient + route.params.userID,
-          {
-            headers: {
-              Authorization: `Bearer ${route.params.token}`,
-            },
+        let response = await axios.get(API_List_Company.questionListAdvisor, {
+          headers: {
+            Authorization: `Bearer ${route.params.token}`,
           },
-        );
+        });
         setData(response.data);
-        setStatusRes(response.status);
+        setStatus(response.status);
+        console.log(response.status);
       } catch (error) {
         console.log(error);
       }
     };
-    getProfile();
-  }, [route.params.token, route.params.userID]);
-
-  const openModal = async () => {
-    try {
-      let response = await axios.get(
-        API_List_Company.appointmentGeneral + itemId,
-        {
-          headers: {
-            Authorization: `Bearer ${route.params.token}`,
-          },
-        },
-      );
-      console.log(response.status);
-      setClinic(response.data.nameOfClinic);
-      setTime(response.data.appointmentStartTime);
-      setDescribe(response.data.description);
-      setStatusAppoint(response.data.status);
-      setVisible(true);
-    } catch (error) {
-      Alert.alert('Notification', 'Something Went Wrong', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
-    }
-  };
-
-  const toggleModal = () => {
-    setVisible(false);
-  };
+    getQuestion();
+  }, [route.params.token]);
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Find Hospital Clinic" />
+      <HeaderBarBack text="For Health Advisor" />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Image
             style={styles.img}
-            source={require('../../../assets/Image_Icon/appointment_color.png')}
+            source={require('../../../assets/Image_Icon/qa_color.png')}
           />
-          <Text style={[styles.txt, styles.txtTitle]}>Your Appointments</Text>
+          <Text style={[styles.txt, styles.txtTitle]}>
+            Questions From Patients
+          </Text>
         </View>
-
-        {statusRes === 200 ? (
+        {status === 200 ? (
           <View style={styles.midScreen}>
             <FlatList
               data={data}
@@ -101,27 +59,22 @@ const AppointmentListScreen = ({
                 return (
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
-                    activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      openModal();
-                    }}>
+                    activeOpacity={1}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
-                        source={require('../../../assets/Image_Icon/calendar.png')}
+                        source={require('../../../assets/Image_Icon/help.png')}
                       />
 
                       <View style={styles.col}>
                         <Text style={styles.txtName}>
-                          Clinic: {item.nameOfClinic}
+                          Question: {item.questionDetail}
                         </Text>
                         <Text style={styles.txtNormal2}>
-                          Time:{' '}
-                          {new Date(item.appointmentStartTime).toUTCString()}
+                          QuestionID: {item.id}
                         </Text>
                         <Text style={styles.txtNormal2}>
-                          Status: {item.status}
+                          PatientID: {item.userId}
                         </Text>
                       </View>
                     </View>
@@ -130,25 +83,6 @@ const AppointmentListScreen = ({
               }}
               keyExtractor={item => item.id}
             />
-            <Modal
-              isVisible={isVisible}
-              onBackdropPress={() => setVisible(false)}>
-              <View style={styles.modal}>
-                <Text style={styles.txtModalHead}>Appointment Detail</Text>
-                <Text style={styles.txtModal}>Clinic: {clinic}</Text>
-                <Text style={styles.txtModal}>
-                  Time: {new Date(time).toUTCString()}
-                </Text>
-                <Text style={styles.txtModal}>Description: {describe}</Text>
-                <Text style={styles.txtModal}>Status: {statusAppoint}</Text>
-                <TouchableOpacity
-                  style={[styles.buttonModal, styles.shadow]}
-                  activeOpacity={0.8}
-                  onPress={toggleModal}>
-                  <Text style={[styles.txt, styles.txtButtonModal]}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </Modal>
           </View>
         ) : (
           <View style={styles.midScreen}>
@@ -169,14 +103,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  headerBar: {
-    flexDirection: 'row',
-    flex: 0.07,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
   container2: {
     flex: 0.93,
     backgroundColor: '#ffffff',
@@ -194,24 +120,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     backgroundColor: '#ffffff',
-  },
-
-  div1: {
-    flexDirection: 'column',
-    margin: '1.5%',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-
-  div2: {
-    flex: 0.3,
-  },
-
-  modal: {
-    backgroundColor: '#ffffff',
-    flex: 0.7,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   txtInput: {
@@ -307,32 +215,6 @@ const styles = StyleSheet.create({
     // alignSelf: 'center',
   },
 
-  txtButtonModal: {
-    padding: '2.5%',
-    margin: '2%',
-    fontSize: rf(2.2),
-    fontWeight: 'bold',
-    color: '#ffffff',
-    alignSelf: 'center',
-  },
-
-  txtModalHead: {
-    margin: '2%',
-    fontSize: rf(2.2),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-    textAlign: 'center',
-  },
-
-  txtModal: {
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    // textAlign: 'center',
-    alignSelf: 'flex-start',
-  },
-
   txtButtonSmall: {
     fontSize: rf(1.8),
     padding: '5%',
@@ -342,7 +224,7 @@ const styles = StyleSheet.create({
 
   button: {
     margin: '2.5%',
-    marginBottom: '6%',
+    marginBottom: '8%',
     width: '90%',
     borderRadius: 24,
     justifyContent: 'center',
@@ -357,15 +239,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     backgroundColor: '#59ADFF',
-  },
-
-  buttonModal: {
-    backgroundColor: '#00BFFF',
-    margin: '3%',
-    borderRadius: 25,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   row: {
@@ -403,7 +276,7 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '40%',
+    width: '35%',
     height: '35%',
     resizeMode: 'contain',
   },
@@ -413,11 +286,11 @@ const styles = StyleSheet.create({
   },
 
   iconButton: {
-    width: '16%',
+    width: '15%',
     height: '50%',
     margin: '1.5%',
     resizeMode: 'contain',
   },
 });
 
-export default AppointmentListScreen;
+export default AdvisorQuestionListScreen;

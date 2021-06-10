@@ -1,5 +1,6 @@
 import React from 'react';
 
+// import
 import HomeScreen from '../AppFeature/Common/HomeScreen';
 import LocationScreen from '../AppFeature/Common/LocationScreen';
 import AdminScreen from '../AppFeature/Admin/AdminScreen';
@@ -11,6 +12,11 @@ import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
 import AppointmentListScreen from '../AppFeature/Patient/AppointmentList';
 import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
 import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
+import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
+import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
+import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
+
+// other import
 import {AppRoutes} from '../navigation/Routes';
 import {
   createDrawerNavigator,
@@ -31,7 +37,10 @@ const CustomDrawerContent = props => {
     item =>
       item.name !== 'Profile' &&
       item.name !== 'QAList' &&
-      item.name !== 'AppointmentList',
+      item.name !== 'AppointmentList' &&
+      item.name !== 'AdvisorQuestionList' &&
+      item.name !== 'AdvisorAnswer' &&
+      item.name !== 'AdvisorAnswerList',
   );
   return (
     <DrawerContentScrollView {...props}>
@@ -126,6 +135,21 @@ const AppNavigation = () => {
       <Drawer.Screen
         name={'AppointmentList'}
         component={AppointmentListScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdvisorQuestionList'}
+        component={AdvisorQuestionListScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdvisorAnswer'}
+        component={AdvisorAnswerScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdvisorAnswerList'}
+        component={AdvisorAnswerListScreen}
         options={{gestureEnabled: false}}
       />
     </Drawer.Navigator>

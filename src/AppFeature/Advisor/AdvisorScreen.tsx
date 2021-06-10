@@ -1,19 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {API_List} from '../../API/apiList';
-// import {API_List_Company} from '../../API/apiListForCompany';
 
 const AdvisorScreen = ({navigation}: AppNavigationProps<'Advisor'>) => {
   const [token, setToken] = useState('');
@@ -36,7 +27,6 @@ const AdvisorScreen = ({navigation}: AppNavigationProps<'Advisor'>) => {
           if (value3 !== null) {
             setUserRole(value3);
           }
-          console.log('note');
         }
       } catch (e) {
         console.log('Error');
@@ -86,7 +76,9 @@ const AdvisorScreen = ({navigation}: AppNavigationProps<'Advisor'>) => {
             <TouchableOpacity
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={() => Alert.alert('btn')}>
+              onPress={() =>
+                navigation.navigate('AdvisorQuestionList', {token: token})
+              }>
               <View style={styles.rowButton}>
                 <Image
                   style={styles.iconButton}
@@ -98,7 +90,9 @@ const AdvisorScreen = ({navigation}: AppNavigationProps<'Advisor'>) => {
             <TouchableOpacity
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={() => Alert.alert('btn')}>
+              onPress={() =>
+                navigation.navigate('AdvisorAnswer', {token: token})
+              }>
               <View style={styles.rowButton}>
                 <Image
                   style={styles.iconButton}
@@ -110,7 +104,9 @@ const AdvisorScreen = ({navigation}: AppNavigationProps<'Advisor'>) => {
             <TouchableOpacity
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={() => Alert.alert('btn')}>
+              onPress={() =>
+                navigation.navigate('AdvisorAnswerList', {token: token})
+              }>
               <View style={styles.rowButton}>
                 <Image
                   style={styles.iconButton}

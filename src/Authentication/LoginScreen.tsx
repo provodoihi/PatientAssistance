@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
+  ActivityIndicator,
 } from 'react-native';
 import axios from 'axios';
 import {AuthNavigationProps} from '../navigation/Routes';
@@ -14,10 +15,12 @@ import {API_List_Company} from '../API/apiListForCompany';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {CommonActions} from '@react-navigation/routers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Modal from 'react-native-modal';
 
 const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const [username, setUsername] = useState('');
   const [pass, setPass] = useState('');
+  const [isVisible, setVisible] = useState(false);
 
   const signIn = () => {
     if (username === '' || pass === '') {
@@ -29,6 +32,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         },
       ]);
     } else {
+      setVisible(true);
       axios
         .post(API_List_Company.login, {
           username: username,
@@ -43,6 +47,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
           AsyncStorage.setItem('name', response.data.fullname);
           AsyncStorage.setItem('phone', response.data.phone);
           AsyncStorage.setItem('role', response.data.roles[0]);
+          setVisible(false);
         })
         .then(() =>
           navigation.dispatch(
@@ -50,6 +55,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
           ),
         )
         .catch(() => {
+          setVisible(false);
           Alert.alert('Notification', 'Invalid username or password', [
             {
               text: 'OK',
@@ -103,6 +109,12 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
           Don't have an account? Sign Up
         </Text>
       </TouchableOpacity>
+      <Modal isVisible={isVisible}>
+        <View style={styles.modal}>
+          <ActivityIndicator size="large" color="#0000ff" />
+          <Text style={styles.txt}>Loading</Text>
+        </View>
+      </Modal>
     </View>
   );
 };
@@ -111,6 +123,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modal: {
+    backgroundColor: '#ffffff',
+    flex: 0.25,
     justifyContent: 'center',
     alignItems: 'center',
   },

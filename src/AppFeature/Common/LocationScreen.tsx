@@ -47,7 +47,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
 
   const editdone = async () => {
     try {
-      let response = await axios.get(API_List_Company.filter + keyword);
+      let response = await axios.get(API_List_Company.filterLocation + keyword);
       console.log(response.status);
       setStatus(response.status);
       setData(response.data);
