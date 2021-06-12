@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  Alert,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 // import {API_List} from '../../API/apiList';
@@ -14,27 +13,19 @@ import {API_List_Company} from '../../API/apiListForCompany';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
-import Modal from 'react-native-modal';
 
-const AppointmentListScreen = ({
+const ClinicAppointmentListScreen = ({
   route,
-}: AppNavigationProps<'AppointmentList'>) => {
+  navigation,
+}: AppNavigationProps<'ClinicAppointmentList'>) => {
   const [data, setData] = useState([]);
   const [statusRes, setStatusRes] = useState(0);
-  const [itemId, setItemId] = useState('');
-
-  // for modal
-  const [isVisible, setVisible] = useState(false);
-  const [clinic, setClinic] = useState('');
-  const [time, setTime] = useState('');
-  const [describe, setDescribe] = useState('');
-  const [statusAppoint, setStatusAppoint] = useState('');
 
   useEffect(() => {
-    const getProfile = async () => {
+    const getAppointment = async () => {
       try {
         let response = await axios.get(
-          API_List_Company.appointmentFindPatient + route.params.userID,
+          API_List_Company.appointmentFindClinic + route.params.userID,
           {
             headers: {
               Authorization: `Bearer ${route.params.token}`,
@@ -47,43 +38,12 @@ const AppointmentListScreen = ({
         console.log(error);
       }
     };
-    getProfile();
+    getAppointment();
   }, [route.params.token, route.params.userID]);
-
-  const openModal = async () => {
-    try {
-      let response = await axios.get(
-        API_List_Company.appointmentGeneral + itemId,
-        {
-          headers: {
-            Authorization: `Bearer ${route.params.token}`,
-          },
-        },
-      );
-      console.log(response.status);
-      setClinic(response.data.nameOfClinic);
-      setTime(response.data.appointmentStartTime);
-      setDescribe(response.data.description);
-      setStatusAppoint(response.data.status);
-      setVisible(true);
-    } catch (error) {
-      Alert.alert('Notification', 'Something Went Wrong', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
-    }
-  };
-
-  const toggleModal = () => {
-    setVisible(false);
-  };
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Find Hospital Clinic" />
+      <HeaderBarBack text="For Clinic" />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Image
@@ -102,10 +62,12 @@ const AppointmentListScreen = ({
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      openModal();
-                    }}>
+                    onPress={() =>
+                      navigation.navigate('ClinicAppointmentManage', {
+                        token: route.params.token,
+                        userID: route.params.userID,
+                      })
+                    }>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -114,11 +76,17 @@ const AppointmentListScreen = ({
 
                       <View style={styles.col}>
                         <Text style={styles.txtName}>
-                          Clinic: {item.nameOfClinic}
+                          Patient: {item.nameOfPatient}
+                        </Text>
+                        <Text style={styles.txtNormal2}>
+                          Appointment ID: {item.id}
                         </Text>
                         <Text style={styles.txtNormal2}>
                           Time:{' '}
                           {new Date(item.appointmentStartTime).toUTCString()}
+                        </Text>
+                        <Text style={styles.txtNormal2}>
+                          Description: {item.description}
                         </Text>
                         <Text style={styles.txtNormal2}>
                           Status: {item.status}
@@ -130,25 +98,6 @@ const AppointmentListScreen = ({
               }}
               keyExtractor={item => item.id}
             />
-            <Modal
-              isVisible={isVisible}
-              onBackdropPress={() => setVisible(false)}>
-              <View style={styles.modal}>
-                <Text style={styles.txtModalHead}>Appointment Detail</Text>
-                <Text style={styles.txtModal}>Clinic: {clinic}</Text>
-                <Text style={styles.txtModal}>
-                  Time: {new Date(time).toUTCString()}
-                </Text>
-                <Text style={styles.txtModal}>Description: {describe}</Text>
-                <Text style={styles.txtModal}>Status: {statusAppoint}</Text>
-                <TouchableOpacity
-                  style={[styles.buttonModal, styles.shadow]}
-                  activeOpacity={0.8}
-                  onPress={toggleModal}>
-                  <Text style={[styles.txt, styles.txtButtonModal]}>Close</Text>
-                </TouchableOpacity>
-              </View>
-            </Modal>
           </View>
         ) : (
           <View style={styles.midScreen}>
@@ -205,28 +154,6 @@ const styles = StyleSheet.create({
 
   div2: {
     flex: 0.3,
-  },
-
-  modal: {
-    backgroundColor: '#ffffff',
-    flex: 0.65,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  txtInput: {
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-    borderColor: '#808080',
-    borderWidth: 1,
-    borderRadius: 25,
   },
 
   txt: {
@@ -420,4 +347,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppointmentListScreen;
+export default ClinicAppointmentListScreen;

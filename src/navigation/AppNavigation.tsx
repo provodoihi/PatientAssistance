@@ -15,6 +15,8 @@ import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
 import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
 import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
 import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
+import ClinicAppointmentListScreen from '../AppFeature/Clinic/ClinicAppointmentList';
+import ClinicAppointmentManageScreen from '../AppFeature/Clinic/ClinicAppointmentManageScreen';
 
 // other import
 import {AppRoutes} from '../navigation/Routes';
@@ -40,7 +42,9 @@ const CustomDrawerContent = props => {
       item.name !== 'AppointmentList' &&
       item.name !== 'AdvisorQuestionList' &&
       item.name !== 'AdvisorAnswer' &&
-      item.name !== 'AdvisorAnswerList',
+      item.name !== 'AdvisorAnswerList' &&
+      item.name !== 'ClinicAppointmentList' &&
+      item.name !== 'ClinicAppointmentManage',
   );
   return (
     <DrawerContentScrollView {...props}>
@@ -150,6 +154,17 @@ const AppNavigation = () => {
       <Drawer.Screen
         name={'AdvisorAnswerList'}
         component={AdvisorAnswerListScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'ClinicAppointmentList'}
+        component={ClinicAppointmentListScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'ClinicAppointmentManage'}
+        initialParams={{token: ''}}
+        component={ClinicAppointmentManageScreen}
         options={{gestureEnabled: false}}
       />
     </Drawer.Navigator>

@@ -1,24 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-// import {API_List} from '../../API/apiList';
-// import {API_List_Company} from '../../API/apiListForCompany';
 
 const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
   const [token, setToken] = useState('');
   const [fullname, setFullName] = useState('');
   const [userRole, setUserRole] = useState('');
+  const [userId, setUserId] = useState('');
 
   useEffect(() => {
     const getData = async () => {
@@ -27,6 +19,7 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
           const value = await AsyncStorage.getItem('token');
           const value2 = await AsyncStorage.getItem('name');
           const value3 = await AsyncStorage.getItem('role');
+          const value4 = await AsyncStorage.getItem('userID');
           if (value !== null) {
             setToken(value);
           }
@@ -36,6 +29,9 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
           if (value3 !== null) {
             setUserRole(value3);
           }
+          if (value4 !== null) {
+            setUserId(value4);
+          }
           console.log('note');
         }
       } catch (e) {
@@ -43,7 +39,7 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
       }
     };
     getData();
-  }, [fullname, token, userRole]);
+  }, [fullname, token, userId, userRole]);
 
   if (userRole === 'ROLE_CLINIC') {
     return (
@@ -86,7 +82,12 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
             <TouchableOpacity
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={() => Alert.alert('btn')}>
+              onPress={() =>
+                navigation.navigate('ClinicAppointmentList', {
+                  token: token,
+                  userID: userId,
+                })
+              }>
               <View style={styles.rowButton}>
                 <Image
                   style={styles.iconButton}
@@ -98,7 +99,12 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
             <TouchableOpacity
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={() => Alert.alert('btn')}>
+              onPress={() =>
+                navigation.navigate('ClinicAppointmentManage', {
+                  token: token,
+                  userID: userId,
+                })
+              }>
               <View style={styles.rowButton}>
                 <Image
                   style={styles.iconButton}
