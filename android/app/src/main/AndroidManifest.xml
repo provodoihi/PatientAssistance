@@ -10,6 +10,11 @@
       android:roundIcon="@mipmap/healthcare_foreground"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
+      <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCKa6_lXiK87rAzfbZGf5x8MisaqUjbcTk"/>
+      <!-- You will also only need to add this uses-library tag -->
+      <uses-library android:name="org.apache.http.legacy" android:required="false"/>
       <activity
         android:name=".MainActivity"
         android:label="@string/app_name"

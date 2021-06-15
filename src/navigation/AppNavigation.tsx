@@ -17,6 +17,11 @@ import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
 import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
 import ClinicAppointmentListScreen from '../AppFeature/Clinic/ClinicAppointmentList';
 import ClinicAppointmentManageScreen from '../AppFeature/Clinic/ClinicAppointmentManageScreen';
+import AdminUserManageScreen from '../AppFeature/Admin/AdminUserManageScreen';
+import AdminAppointmentManageScreen from '../AppFeature/Admin/AdminAppointmentManageScreen';
+import AdminAdvisorManageScreen from '../AppFeature/Admin/AdminAdvisorManageScreen';
+import AdminLocationManageScreen from '../AppFeature/Admin/AdminLocationManageScreen';
+import MapViewScreen from '../AppFeature/Common/MapViewScreen';
 
 // other import
 import {AppRoutes} from '../navigation/Routes';
@@ -39,12 +44,17 @@ const CustomDrawerContent = props => {
     item =>
       item.name !== 'Profile' &&
       item.name !== 'QAList' &&
+      item.name !== 'MapView' &&
       item.name !== 'AppointmentList' &&
       item.name !== 'AdvisorQuestionList' &&
       item.name !== 'AdvisorAnswer' &&
       item.name !== 'AdvisorAnswerList' &&
       item.name !== 'ClinicAppointmentList' &&
-      item.name !== 'ClinicAppointmentManage',
+      item.name !== 'ClinicAppointmentManage' &&
+      item.name !== 'AdminUserManage' &&
+      item.name !== 'AdminAppointmentManage' &&
+      item.name !== 'AdminAdvisorManage' &&
+      item.name !== 'AdminLocationManage',
   );
   return (
     <DrawerContentScrollView {...props}>
@@ -132,6 +142,11 @@ const AppNavigation = () => {
         options={{gestureEnabled: false}}
       />
       <Drawer.Screen
+        name={'MapView'}
+        component={MapViewScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
         name={'QAList'}
         component={HealthAdvisorListScreen}
         options={{gestureEnabled: false}}
@@ -163,8 +178,27 @@ const AppNavigation = () => {
       />
       <Drawer.Screen
         name={'ClinicAppointmentManage'}
-        initialParams={{token: ''}}
         component={ClinicAppointmentManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminUserManage'}
+        component={AdminUserManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminAppointmentManage'}
+        component={AdminAppointmentManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminAdvisorManage'}
+        component={AdminAdvisorManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminLocationManage'}
+        component={AdminLocationManageScreen}
         options={{gestureEnabled: false}}
       />
     </Drawer.Navigator>

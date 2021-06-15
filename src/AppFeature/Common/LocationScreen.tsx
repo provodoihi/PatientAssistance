@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
   FlatList,
+  ActivityIndicator,
 } from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
@@ -15,6 +16,7 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import {API_List_Company} from '../../API/apiListForCompany';
 import axios from 'axios';
 import HeaderBar from '../../components/HeaderBar';
+import Modal from 'react-native-modal';
 
 export const Notfound = () => {
   return (
@@ -44,14 +46,18 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
   const [keyword, setKeyword] = useState('');
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(0);
+  const [isVisible, setVisible] = useState(false);
 
   const editdone = async () => {
     try {
+      setVisible(true);
       let response = await axios.get(API_List_Company.filterLocation + keyword);
       console.log(response.status);
       setStatus(response.status);
       setData(response.data);
+      setVisible(false);
     } catch (error) {
+      setVisible(false);
       Alert.alert('Notification', 'Something Went Wrong', [
         {
           text: 'OK',
@@ -88,7 +94,13 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => console.log(item.id)}>
+                    onPress={() =>
+                      navigation.navigate('MapView', {
+                        name: item.name,
+                        latitude: item.latitude,
+                        longtitude: item.longtitude,
+                      })
+                    }>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -112,6 +124,12 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
         ) : (
           <Init />
         )}
+        <Modal isVisible={isVisible}>
+          <View style={styles.modal}>
+            <ActivityIndicator size="large" color="#0000ff" />
+            <Text style={styles.txt}>Loading</Text>
+          </View>
+        </Modal>
       </View>
     </View>
   );
@@ -131,6 +149,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 0.1,
+  },
+
+  modal: {
+    backgroundColor: '#ffffff',
+    flex: 0.25,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   midScreen: {
