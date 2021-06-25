@@ -1,30 +1,28 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBarBack from '../../components/HeaderBarBack';
 
-const AdminUserManageScreen = ({navigation}: AppNavigationProps<'AdminUserManage'>) => {
+const AdminUserManageScreen = ({
+  navigation,
+  route,
+}: AppNavigationProps<'AdminUserManage'>) => {
   return (
     <View style={styles.container}>
       <HeaderBarBack text="For Admin" />
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/user.png')}
+          source={require('../../../assets/Image_Icon/user_color.png')}
         />
         <Text style={[styles.txt, styles.txtName]}>User Management</Text>
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminUserFind', {token: route.params.token})
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}
@@ -36,7 +34,9 @@ const AdminUserManageScreen = ({navigation}: AppNavigationProps<'AdminUserManage
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminUserEdit', {token: route.params.token})
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}
@@ -48,7 +48,9 @@ const AdminUserManageScreen = ({navigation}: AppNavigationProps<'AdminUserManage
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminUserDelete', {token: route.params.token})
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}

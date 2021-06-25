@@ -8,36 +8,37 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
-import HeaderBarBack from '../../components/HeaderBarBack';
-import showToastFail from '../../components/ToastError';
+// import {API_List} from '../../../API/apiList';
+import {API_List_Company} from '../../../API/apiListForCompany';
+import HeaderBarBack from '../../../components/HeaderBarBack';
 
-const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
+const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
   // data for update profile submit
-  const [questionID, setQuestionID] = useState('');
-  const [question, setQuestion] = useState('');
-  const [patientID, setPatientID] = useState('');
-  const [answer, setAnswer] = useState('');
+  const [userID, setUserID] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [address, setAddress] = useState('');
+  const [age, setAge] = useState('');
 
   const answerData = {
-    questionId: questionID,
-    questionDetail: question,
-    userId: patientID,
-    answerDetail: answer,
+    firstname: firstname,
+    lastname: lastname,
+    address: address,
+    age: age,
   };
 
   const submit = () => {
     if (
-      questionID === '' ||
-      question === '' ||
-      patientID === '' ||
-      answer === ''
+      userID === '' ||
+      firstname === '' ||
+      lastname === '' ||
+      address === '' ||
+      age === ''
     ) {
-      Alert.alert('Notification', 'Please fill in answer details', [
+      Alert.alert('Notification', 'Please fill in user update details', [
         {
           text: 'OK',
           onPress: () => null,
@@ -46,13 +47,13 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
       ]);
     } else {
       axios
-        .post(API_List_Company.answerAdvisor, answerData, {
+        .post(API_List_Company.adminUserGeneral + userID, answerData, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
         })
         .then(() => {
-          Alert.alert('Notification', 'Create answer successfully', [
+          Alert.alert('Notification', 'Edit User Successfully', [
             {
               text: 'OK',
               onPress: () => null,
@@ -61,69 +62,85 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
           ]);
         })
         .catch(() => {
-          showToastFail();
+          Alert.alert('Notification', 'Something Went Wrong', [
+            {
+              text: 'OK',
+              onPress: () => null,
+              style: 'cancel',
+            },
+          ]);
         });
     }
   };
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Health Advisor" />
+      <HeaderBarBack text="User Management" />
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/qa_color.png')}
+          source={require('../../../../assets/Image_Icon/user_color.png')}
         />
         <Text style={[styles.txt, styles.txtName]}>
-          Answer Questions From Patients
+          Update User Information
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={questionID => {
-            setQuestionID(questionID);
+          onChangeText={userID => {
+            setUserID(userID);
           }}
-          value={questionID}
-          placeholder="Question ID"
+          value={userID}
+          placeholder="User ID"
           placeholderTextColor="#9FA5AA"
           keyboardType="numeric"
           multiline={false}
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={question => {
-            setQuestion(question);
+          onChangeText={firstname => {
+            setFirstname(firstname);
           }}
-          value={question}
-          placeholder="Question"
+          value={firstname}
+          placeholder="Firstname"
           placeholderTextColor="#9FA5AA"
           multiline={false}
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={patientID => {
-            setPatientID(patientID);
+          onChangeText={lastname => {
+            setLastname(lastname);
           }}
-          value={patientID}
-          placeholder="To Patient ID"
+          value={lastname}
+          placeholder="Lastname"
+          placeholderTextColor="#9FA5AA"
+          multiline={false}
+        />
+        <TextInput
+          style={styles.txtInput}
+          onChangeText={address => {
+            setAddress(address);
+          }}
+          value={address}
+          placeholder="Address"
+          placeholderTextColor="#9FA5AA"
+          multiline={false}
+        />
+        <TextInput
+          style={styles.txtInput}
+          onChangeText={age => {
+            setAge(age);
+          }}
+          value={age}
+          placeholder="Age"
           placeholderTextColor="#9FA5AA"
           keyboardType="numeric"
-          multiline={false}
-        />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={answer => {
-            setAnswer(answer);
-          }}
-          value={answer}
-          placeholder="Answer"
-          placeholderTextColor="#9FA5AA"
           multiline={false}
         />
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
           onPress={submit}>
-          <Text style={[styles.txt, styles.txtButton]}>Answer</Text>
+          <Text style={[styles.txt, styles.txtButton]}>Update</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -244,4 +261,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdvisorAnswerScreen;
+export default AdminEditUserScreen;

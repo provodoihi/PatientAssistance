@@ -1,4 +1,3 @@
-import { MapView } from 'react-native-maps';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RouteProp} from '@react-navigation/native';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
@@ -39,6 +38,14 @@ export type AppRoutes = {
   AdminAdvisorManage: {token: string};
   AdminLocationManage: {token: string};
   MapView: {name: string; latitude: number; longtitude: number};
+  AdminLocationAdd: {token: string};
+  AdminLocationSearch: {token: string};
+  AdminLocationEdit: {token: string};
+  AdminQuestionManage: {token: string};
+  AdminAnswerManage: {token: string};
+  AdminUserFind: {token: string};
+  AdminUserEdit: {token: string};
+  AdminUserDelete: {token: string};
 };
 
 export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {

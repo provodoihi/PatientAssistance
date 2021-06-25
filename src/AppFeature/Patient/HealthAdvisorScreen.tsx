@@ -15,7 +15,8 @@ import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import axios from 'axios';
 import {API_List_Company} from '../../API/apiListForCompany';
-// import {API_List} from '../API/apiList';
+// import {API_List} from '../../API/apiList';
+import showToastFail from '../../components/ToastError';
 
 const HealthAdvisorScreen = ({
   navigation,
@@ -98,13 +99,7 @@ const HealthAdvisorScreen = ({
           );
         })
         .catch(() => {
-          Alert.alert('Notification', 'Something went wrong', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          showToastFail();
         });
     }
   };

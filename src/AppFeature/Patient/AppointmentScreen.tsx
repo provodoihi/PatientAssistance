@@ -22,6 +22,7 @@ import {Picker} from '@react-native-picker/picker';
 // import {API_List} from '../../API/apiList';
 import {API_List_Company} from '../../API/apiListForCompany';
 import axios from 'axios';
+import showToastFail from '../../components/ToastError';
 
 const AppointmentScreen = ({
   navigation,
@@ -106,13 +107,7 @@ const AppointmentScreen = ({
           ]);
         })
         .catch(() => {
-          Alert.alert('Notification', 'Something went wrong', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          showToastFail();
         });
     }
   };

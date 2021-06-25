@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBarBack from '../../components/HeaderBarBack';
 
 const AdminLocationManageScreen = ({
   navigation,
+  route,
 }: AppNavigationProps<'AdminLocationManage'>) => {
   return (
     <View style={styles.container}>
@@ -20,17 +14,35 @@ const AdminLocationManageScreen = ({
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/pin.png')}
+          source={require('../../../assets/Image_Icon/location_color.png')}
         />
         <Text style={[styles.txt, styles.txtName]}>Location Management</Text>
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminLocationAdd', {token: route.params.token})
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}
               source={require('../../../assets/Image_Icon/pin.png')}
+            />
+            <Text style={styles.txtButton}>Add Location</Text>
+          </View>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.shadow]}
+          activeOpacity={0.8}
+          onPress={() =>
+            navigation.navigate('AdminLocationSearch', {
+              token: route.params.token,
+            })
+          }>
+          <View style={styles.rowButton}>
+            <Image
+              style={styles.iconButton}
+              source={require('../../../assets/Image_Icon/search.png')}
             />
             <Text style={styles.txtButton}>List Locations</Text>
           </View>
@@ -38,25 +50,17 @@ const AdminLocationManageScreen = ({
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminLocationEdit', {
+              token: route.params.token,
+            })
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}
               source={require('../../../assets/Image_Icon/edit.png')}
             />
             <Text style={styles.txtButton}>Edit Locations</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.shadow]}
-          activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
-          <View style={styles.rowButton}>
-            <Image
-              style={styles.iconButton}
-              source={require('../../../assets/Image_Icon/remove.png')}
-            />
-            <Text style={styles.txtButton}>Remove Locations</Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -110,7 +114,7 @@ const styles = StyleSheet.create({
   txtName: {
     padding: '1.5%',
     margin: '1%',
-    fontSize: rf(1.8),
+    fontSize: rf(2.5),
     fontWeight: 'bold',
     color: '#4c4c4c',
   },

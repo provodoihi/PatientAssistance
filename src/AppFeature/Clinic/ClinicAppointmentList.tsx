@@ -86,6 +86,9 @@ const ClinicAppointmentListScreen = ({
                           {new Date(item.appointmentStartTime).toUTCString()}
                         </Text>
                         <Text style={styles.txtNormal2}>
+                          Patient Phone: {item.phoneOfPatient}
+                        </Text>
+                        <Text style={styles.txtNormal2}>
                           Description: {item.description}
                         </Text>
                         <Text style={styles.txtNormal2}>

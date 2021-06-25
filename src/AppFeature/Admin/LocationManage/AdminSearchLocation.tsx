@@ -6,24 +6,24 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
+  Alert,
   FlatList,
   ActivityIndicator,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+// import {API_List} from '../../../API/apiList';
+import {API_List_Company} from '../../../API/apiListForCompany';
 import axios from 'axios';
-import HeaderBar from '../../components/HeaderBar';
 import Modal from 'react-native-modal';
-import showToastFail from '../../components/ToastError';
+import HeaderBarBack from '../../../components/HeaderBarBack';
 
 export const Notfound = () => {
   return (
     <View style={styles.midScreen}>
       <Image
         style={styles.img}
-        source={require('../../../assets/Image_Icon/notfound.png')}
+        source={require('../../../../assets/Image_Icon/notfound.png')}
       />
       <Text style={styles.txtNotfound}>Not found</Text>
     </View>
@@ -35,14 +35,17 @@ export const Init = () => {
     <View style={styles.midScreen}>
       <Image
         style={styles.img}
-        source={require('../../../assets/Image_Icon/search.png')}
+        source={require('../../../../assets/Image_Icon/search.png')}
       />
       <Text style={styles.txtMid}>Search hospitals and clinics</Text>
     </View>
   );
 };
 
-const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
+const AdminSearchLocationScreen = ({
+  navigation,
+  route,
+}: AppNavigationProps<'AdminLocationSearch'>) => {
   const [keyword, setKeyword] = useState('');
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(0);
@@ -58,13 +61,19 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
       setVisible(false);
     } catch (error) {
       setVisible(false);
-      showToastFail();
+      Alert.alert('Notification', 'Something Went Wrong', [
+        {
+          text: 'OK',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ]);
     }
   };
 
   return (
     <View style={styles.container}>
-      <HeaderBar text="Find Hospital Clinic" />
+      <HeaderBarBack text="Location Management" />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <TextInput
@@ -89,20 +98,21 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
                     onPress={() =>
-                      navigation.navigate('MapView', {
-                        name: item.name,
-                        latitude: item.latitude,
-                        longtitude: item.longtitude,
+                      navigation.navigate('AdminLocationEdit', {
+                        token: route.params.token,
                       })
                     }>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
-                        source={require('../../../assets/Image_Icon/hospital.png')}
+                        source={require('../../../../assets/Image_Icon/hospital.png')}
                       />
 
                       <View style={styles.col}>
                         <Text style={styles.txtName}>{item.name}</Text>
+                        <Text style={styles.txtName}>
+                          Hospital ID: {item.id}
+                        </Text>
                         <Text style={styles.txtNormal2}>{item.address}</Text>
                         <Text style={styles.txtNormal2}>{item.phone}</Text>
                       </View>
@@ -338,4 +348,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LocationScreen;
+export default AdminSearchLocationScreen;

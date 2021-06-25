@@ -14,6 +14,7 @@ import axios from 'axios';
 // import {API_List} from '../../API/apiList';
 import {API_List_Company} from '../../API/apiListForCompany';
 import HeaderBarBack from '../../components/HeaderBarBack';
+import showToastFail from '../../components/ToastError';
 
 const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
   const fullname = route.params.name;
@@ -99,13 +100,7 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
           );
         })
         .catch(() => {
-          Alert.alert('Notification', 'Something Went Wrong', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          showToastFail();
         });
     }
   };

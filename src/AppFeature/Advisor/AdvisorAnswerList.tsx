@@ -16,6 +16,7 @@ import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
 import Modal from 'react-native-modal';
+import showToastFail from '../../components/ToastError';
 
 const AdvisorAnswerListScreen = ({
   route,
@@ -80,13 +81,7 @@ const AdvisorAnswerListScreen = ({
           ]);
         })
         .catch(() => {
-          Alert.alert('Notification', 'Something Went Wrong', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          showToastFail();
         });
     }
   };
@@ -108,13 +103,7 @@ const AdvisorAnswerListScreen = ({
         ]);
       })
       .catch(() => {
-        Alert.alert('Notification', 'Something Went Wrong', [
-          {
-            text: 'OK',
-            onPress: () => null,
-            style: 'cancel',
-          },
-        ]);
+        showToastFail();
       });
   };
 
@@ -177,7 +166,10 @@ const AdvisorAnswerListScreen = ({
             <Text style={styles.txtNotfound}>Not found</Text>
           </View>
         )}
-        <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
+        <Modal
+          isVisible={isVisible}
+          avoidKeyboard={true}
+          onBackdropPress={() => setVisible(false)}>
           <View style={styles.modal}>
             <Text style={styles.txtModalHead}>Answer Detail</Text>
             <Text style={styles.txtModal}>Answer ID: {itemId}</Text>

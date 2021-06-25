@@ -14,6 +14,7 @@ import {API_List_Company} from '../API/apiListForCompany';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {AuthNavigationProps} from '../navigation/Routes';
 import {Picker} from '@react-native-picker/picker';
+import showToastFail from '../components/ToastError';
 
 const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
   const [username, setUsername] = useState('');
@@ -67,17 +68,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
         })
         .then(() => navigation.navigate('SignupSuccess'))
         .catch(() => {
-          Alert.alert(
-            'Notification',
-            'There is some problem in your sign up details',
-            [
-              {
-                text: 'OK',
-                onPress: () => null,
-                style: 'cancel',
-              },
-            ],
-          );
+          showToastFail();
         });
     }
   };

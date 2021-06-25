@@ -14,7 +14,8 @@ import axios from 'axios';
 import {API_List_Company} from '../../API/apiListForCompany';
 import {Picker} from '@react-native-picker/picker';
 import HeaderBarBack from '../../components/HeaderBarBack';
-// import {API_List} from '../API/apiList';
+// import {API_List} from '../../API/apiList';
+import showToastFail from '../../components/ToastError';
 
 const ClinicAppointmentManageScreen = ({
   route,
@@ -56,13 +57,7 @@ const ClinicAppointmentManageScreen = ({
           ]);
         })
         .catch(() => {
-          Alert.alert('Notification', 'Something went wrong', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          showToastFail();
         });
     }
   };
@@ -84,13 +79,7 @@ const ClinicAppointmentManageScreen = ({
         ]);
       })
       .catch(() => {
-        Alert.alert('Notification', 'Something went wrong', [
-          {
-            text: 'OK',
-            onPress: () => null,
-            style: 'cancel',
-          },
-        ]);
+        showToastFail();
       });
   };
 

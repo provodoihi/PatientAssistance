@@ -8,22 +8,23 @@ import {
   TextInput,
   FlatList,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+// import {API_List} from '../../../API/apiList';
+import {API_List_Company} from '../../../API/apiListForCompany';
 import axios from 'axios';
-import HeaderBar from '../../components/HeaderBar';
 import Modal from 'react-native-modal';
-import showToastFail from '../../components/ToastError';
+import HeaderBarBack from '../../../components/HeaderBarBack';
+import showToastFail from '../../../components/ToastError';
 
 export const Notfound = () => {
   return (
     <View style={styles.midScreen}>
       <Image
         style={styles.img}
-        source={require('../../../assets/Image_Icon/notfound.png')}
+        source={require('../../../../assets/Image_Icon/notfound.png')}
       />
       <Text style={styles.txtNotfound}>Not found</Text>
     </View>
@@ -35,36 +36,84 @@ export const Init = () => {
     <View style={styles.midScreen}>
       <Image
         style={styles.img}
-        source={require('../../../assets/Image_Icon/search.png')}
+        source={require('../../../../assets/Image_Icon/search.png')}
       />
-      <Text style={styles.txtMid}>Search hospitals and clinics</Text>
+      <Text style={styles.txtMid}>Search users</Text>
     </View>
   );
 };
 
-const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
+const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
   const [keyword, setKeyword] = useState('');
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(0);
+  const [itemId, setItemId] = useState(0);
+
+  // for modal
   const [isVisible, setVisible] = useState(false);
+  const [isVisibleLoad, setVisibleLoad] = useState(false);
+  // modal state
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [firstname, setFirstname] = useState('');
+  const [lastname, setLastname] = useState('');
+  const [address, setAddress] = useState('');
+  const [gender, setGender] = useState('');
+  const [age, setAge] = useState(0);
 
   const editdone = async () => {
     try {
-      setVisible(true);
-      let response = await axios.get(API_List_Company.filterLocation + keyword);
+      setVisibleLoad(true);
+      let response = await axios.get(API_List_Company.adminUserFind + keyword, {
+        headers: {
+          Authorization: `Bearer ${route.params.token}`,
+        },
+      });
       console.log(response.status);
       setStatus(response.status);
       setData(response.data);
-      setVisible(false);
+      setVisibleLoad(false);
     } catch (error) {
-      setVisible(false);
+      setVisibleLoad(false);
       showToastFail();
     }
   };
 
+  const openModal = async () => {
+    setVisibleLoad(true);
+    try {
+      let response = await axios.get(
+        API_List_Company.adminUserGeneral + itemId,
+        {
+          headers: {
+            Authorization: `Bearer ${route.params.token}`,
+          },
+        },
+      );
+      setUsername(response.data.username);
+      setEmail(response.data.email);
+      setPhone(response.data.phone);
+      setFirstname(response.data.firstname);
+      setLastname(response.data.lastname);
+      setAddress(response.data.address);
+      setGender(response.data.sex);
+      setAge(response.data.age);
+      setVisibleLoad(false);
+      setVisible(true);
+    } catch (error) {
+      setVisibleLoad(false);
+      showToastFail();
+    }
+  };
+
+  const toggleModal = () => {
+    setVisible(false);
+  };
+
   return (
     <View style={styles.container}>
-      <HeaderBar text="Find Hospital Clinic" />
+      <HeaderBarBack text="User Management" />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <TextInput
@@ -88,23 +137,30 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() =>
-                      navigation.navigate('MapView', {
-                        name: item.name,
-                        latitude: item.latitude,
-                        longtitude: item.longtitude,
-                      })
-                    }>
+                    onPress={() => {
+                      setItemId(item.id);
+                      openModal();
+                    }}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
-                        source={require('../../../assets/Image_Icon/hospital.png')}
+                        source={require('../../../../assets/Image_Icon/user.png')}
                       />
 
                       <View style={styles.col}>
-                        <Text style={styles.txtName}>{item.name}</Text>
-                        <Text style={styles.txtNormal2}>{item.address}</Text>
-                        <Text style={styles.txtNormal2}>{item.phone}</Text>
+                        <Text style={styles.txtName}>User ID: {item.id}</Text>
+                        <Text style={styles.txtName}>
+                          Name: {item.lastname + ' ' + item.firstname}
+                        </Text>
+                        <Text style={styles.txtNormal2}>
+                          Email: {item.email}
+                        </Text>
+                        <Text style={styles.txtNormal2}>
+                          Phone: {item.phone}
+                        </Text>
+                        <Text style={styles.txtNormal2}>
+                          {item.roles[0].name}
+                        </Text>
                       </View>
                     </View>
                   </TouchableOpacity>
@@ -118,11 +174,36 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
         ) : (
           <Init />
         )}
-        <Modal isVisible={isVisible}>
-          <View style={styles.modal}>
+        <Modal isVisible={isVisibleLoad}>
+          <View style={styles.modalLoad}>
             <ActivityIndicator size="large" color="#0000ff" />
             <Text style={styles.txt}>Loading</Text>
           </View>
+        </Modal>
+        <Modal
+          isVisible={isVisible}
+          propagateSwipe={true}
+          onBackdropPress={() => setVisible(false)}>
+          <ScrollView
+            style={styles.modal}
+            contentContainerStyle={styles.modalView}>
+            <Text style={styles.txtModalHead}>User Detail</Text>
+            <Text style={styles.txtModal}>User ID: {itemId}</Text>
+            <Text style={styles.txtModal}>Username: {username}</Text>
+            <Text style={styles.txtModal}>Phone: {phone}</Text>
+            <Text style={styles.txtModal}>Email: {email}</Text>
+            <Text style={styles.txtModal}>Firstname: {firstname}</Text>
+            <Text style={styles.txtModal}>Lastname: {lastname}</Text>
+            <Text style={styles.txtModal}>Address: {address}</Text>
+            <Text style={styles.txtModal}>Age: {age}</Text>
+            <Text style={styles.txtModal}>Gender: {gender}</Text>
+            <TouchableOpacity
+              style={[styles.buttonModal, styles.shadow]}
+              activeOpacity={0.8}
+              onPress={toggleModal}>
+              <Text style={[styles.txt, styles.txtButtonModal]}>Close</Text>
+            </TouchableOpacity>
+          </ScrollView>
         </Modal>
       </View>
     </View>
@@ -145,9 +226,20 @@ const styles = StyleSheet.create({
     flex: 0.1,
   },
 
-  modal: {
+  modalLoad: {
     backgroundColor: '#ffffff',
     flex: 0.25,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modal: {
+    backgroundColor: '#ffffff',
+    flex: 0.75,
+  },
+
+  modalView: {
+    flex: 0.9,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -189,6 +281,32 @@ const styles = StyleSheet.create({
   txt: {
     textAlign: 'center',
     justifyContent: 'center',
+  },
+
+  txtButtonModal: {
+    padding: '2.5%',
+    margin: '2%',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
+    color: '#ffffff',
+    alignSelf: 'center',
+  },
+
+  txtModalHead: {
+    margin: '2%',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
+    color: '#4c4c4c',
+    textAlign: 'center',
+  },
+
+  txtModal: {
+    margin: '2%',
+    fontSize: rf(2),
+    fontWeight: 'normal',
+    color: '#4c4c4c',
+    // textAlign: 'center',
+    alignSelf: 'flex-start',
   },
 
   txtHeader: {
@@ -273,6 +391,15 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
 
+  buttonModal: {
+    backgroundColor: '#00BFFF',
+    margin: '3%',
+    borderRadius: 25,
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   buttonSmall: {
     margin: '1.5%',
     width: '100%',
@@ -338,4 +465,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LocationScreen;
+export default AdminListUserScreen;

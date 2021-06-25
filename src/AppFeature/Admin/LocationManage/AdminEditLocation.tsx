@@ -8,35 +8,29 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
-import HeaderBarBack from '../../components/HeaderBarBack';
-import showToastFail from '../../components/ToastError';
+// import {API_List} from '../../../API/apiList';
+import {API_List_Company} from '../../../API/apiListForCompany';
+import HeaderBarBack from '../../../components/HeaderBarBack';
+import showToastFail from '../../../components/ToastError';
 
-const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
-  // data for update profile submit
-  const [questionID, setQuestionID] = useState('');
-  const [question, setQuestion] = useState('');
-  const [patientID, setPatientID] = useState('');
-  const [answer, setAnswer] = useState('');
+const AdminLocationEditScreen = ({
+  route,
+}: AppNavigationProps<'AdminLocationEdit'>) => {
+  // data for update location submit
+  const [locationID, setLocationID] = useState('');
+  const [address, setAddress] = useState('');
+  const [phone, setPhone] = useState('');
 
-  const answerData = {
-    questionId: questionID,
-    questionDetail: question,
-    userId: patientID,
-    answerDetail: answer,
+  const locationUpdateData = {
+    address: address,
+    phone: phone,
   };
 
   const submit = () => {
-    if (
-      questionID === '' ||
-      question === '' ||
-      patientID === '' ||
-      answer === ''
-    ) {
+    if (locationID === '' || address === '' || phone === '') {
       Alert.alert('Notification', 'Please fill in answer details', [
         {
           text: 'OK',
@@ -46,13 +40,54 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
       ]);
     } else {
       axios
-        .post(API_List_Company.answerAdvisor, answerData, {
+        .post(
+          API_List_Company.adminLocationGeneral + locationID,
+          locationUpdateData,
+          {
+            headers: {
+              Authorization: `Bearer ${route.params.token}`,
+            },
+          },
+        )
+        .then(() => {
+          Alert.alert('Notification', 'Update location successfully', [
+            {
+              text: 'OK',
+              onPress: () => null,
+              style: 'cancel',
+            },
+          ]);
+        })
+        .catch(() => {
+          Alert.alert('Notification', 'Something Went Wrong', [
+            {
+              text: 'OK',
+              onPress: () => null,
+              style: 'cancel',
+            },
+          ]);
+        });
+    }
+  };
+
+  const deleteLocation = () => {
+    if (locationID === '') {
+      Alert.alert('Notification', 'Please fill in Location ID', [
+        {
+          text: 'OK',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ]);
+    } else {
+      axios
+        .delete(API_List_Company.adminLocationGeneral + locationID, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
         })
         .then(() => {
-          Alert.alert('Notification', 'Create answer successfully', [
+          Alert.alert('Notification', 'Delete location successfully', [
             {
               text: 'OK',
               onPress: () => null,
@@ -68,62 +103,61 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Health Advisor" />
+      <HeaderBarBack text="Location Management" />
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/qa_color.png')}
+          source={require('../../../../assets/Image_Icon/location_color.png')}
         />
-        <Text style={[styles.txt, styles.txtName]}>
-          Answer Questions From Patients
-        </Text>
+        <Text style={[styles.txt, styles.txtName]}>Edit Location</Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={questionID => {
-            setQuestionID(questionID);
+          onChangeText={locationID => {
+            setLocationID(locationID);
           }}
-          value={questionID}
-          placeholder="Question ID"
+          value={locationID}
+          placeholder="Location ID"
           placeholderTextColor="#9FA5AA"
           keyboardType="numeric"
           multiline={false}
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={question => {
-            setQuestion(question);
+          onChangeText={address => {
+            setAddress(address);
           }}
-          value={question}
-          placeholder="Question"
+          value={address}
+          placeholder="Address"
           placeholderTextColor="#9FA5AA"
           multiline={false}
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={patientID => {
-            setPatientID(patientID);
+          onChangeText={phone => {
+            setPhone(phone);
           }}
-          value={patientID}
-          placeholder="To Patient ID"
+          value={phone}
+          placeholder="Phone"
           placeholderTextColor="#9FA5AA"
-          keyboardType="numeric"
-          multiline={false}
-        />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={answer => {
-            setAnswer(answer);
-          }}
-          value={answer}
-          placeholder="Answer"
-          placeholderTextColor="#9FA5AA"
+          keyboardType="phone-pad"
           multiline={false}
         />
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
           onPress={submit}>
-          <Text style={[styles.txt, styles.txtButton]}>Answer</Text>
+          <Text style={[styles.txt, styles.txtButton]}>
+            Update This Location
+          </Text>
+        </TouchableOpacity>
+        <Text style={[styles.txt, styles.txtName]}>OR</Text>
+        <TouchableOpacity
+          style={[styles.button, styles.shadow]}
+          activeOpacity={0.8}
+          onPress={deleteLocation}>
+          <Text style={[styles.txt, styles.txtButton]}>
+            Delete This Location
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -244,4 +278,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdvisorAnswerScreen;
+export default AdminLocationEditScreen;

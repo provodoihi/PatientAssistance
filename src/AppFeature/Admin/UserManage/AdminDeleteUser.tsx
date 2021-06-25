@@ -8,36 +8,22 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
-import HeaderBarBack from '../../components/HeaderBarBack';
-import showToastFail from '../../components/ToastError';
+// import {API_List} from '../../../API/apiList';
+import {API_List_Company} from '../../../API/apiListForCompany';
+import HeaderBarBack from '../../../components/HeaderBarBack';
 
-const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
-  // data for update profile submit
-  const [questionID, setQuestionID] = useState('');
-  const [question, setQuestion] = useState('');
-  const [patientID, setPatientID] = useState('');
-  const [answer, setAnswer] = useState('');
-
-  const answerData = {
-    questionId: questionID,
-    questionDetail: question,
-    userId: patientID,
-    answerDetail: answer,
-  };
+const AdminDeleteUserScreen = ({
+  route,
+}: AppNavigationProps<'AdminUserDelete'>) => {
+  // data for delete submit
+  const [userID, setUserID] = useState('');
 
   const submit = () => {
-    if (
-      questionID === '' ||
-      question === '' ||
-      patientID === '' ||
-      answer === ''
-    ) {
-      Alert.alert('Notification', 'Please fill in answer details', [
+    if (userID === '') {
+      Alert.alert('Notification', 'Please fill in user ID', [
         {
           text: 'OK',
           onPress: () => null,
@@ -46,13 +32,13 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
       ]);
     } else {
       axios
-        .post(API_List_Company.answerAdvisor, answerData, {
+        .delete(API_List_Company.adminUserGeneral + userID, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
         })
         .then(() => {
-          Alert.alert('Notification', 'Create answer successfully', [
+          Alert.alert('Notification', 'Delete User Successfully', [
             {
               text: 'OK',
               onPress: () => null,
@@ -61,69 +47,44 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
           ]);
         })
         .catch(() => {
-          showToastFail();
+          Alert.alert('Notification', 'Something Went Wrong', [
+            {
+              text: 'OK',
+              onPress: () => null,
+              style: 'cancel',
+            },
+          ]);
         });
     }
   };
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Health Advisor" />
+      <HeaderBarBack text="User Management" />
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/qa_color.png')}
+          source={require('../../../../assets/Image_Icon/user_color.png')}
         />
         <Text style={[styles.txt, styles.txtName]}>
-          Answer Questions From Patients
+          Delete User Information
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={questionID => {
-            setQuestionID(questionID);
+          onChangeText={userID => {
+            setUserID(userID);
           }}
-          value={questionID}
-          placeholder="Question ID"
+          value={userID}
+          placeholder="User ID"
           placeholderTextColor="#9FA5AA"
           keyboardType="numeric"
-          multiline={false}
-        />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={question => {
-            setQuestion(question);
-          }}
-          value={question}
-          placeholder="Question"
-          placeholderTextColor="#9FA5AA"
-          multiline={false}
-        />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={patientID => {
-            setPatientID(patientID);
-          }}
-          value={patientID}
-          placeholder="To Patient ID"
-          placeholderTextColor="#9FA5AA"
-          keyboardType="numeric"
-          multiline={false}
-        />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={answer => {
-            setAnswer(answer);
-          }}
-          value={answer}
-          placeholder="Answer"
-          placeholderTextColor="#9FA5AA"
           multiline={false}
         />
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
           onPress={submit}>
-          <Text style={[styles.txt, styles.txtButton]}>Answer</Text>
+          <Text style={[styles.txt, styles.txtButton]}>Delete</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -244,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdvisorAnswerScreen;
+export default AdminDeleteUserScreen;

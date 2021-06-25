@@ -22,6 +22,14 @@ import AdminAppointmentManageScreen from '../AppFeature/Admin/AdminAppointmentMa
 import AdminAdvisorManageScreen from '../AppFeature/Admin/AdminAdvisorManageScreen';
 import AdminLocationManageScreen from '../AppFeature/Admin/AdminLocationManageScreen';
 import MapViewScreen from '../AppFeature/Common/MapViewScreen';
+import AdminSearchLocationScreen from '../AppFeature/Admin/LocationManage/AdminSearchLocation';
+import AdminLocationAddScreen from '../AppFeature/Admin/LocationManage/AdminAddLocation';
+import AdminLocationEditScreen from '../AppFeature/Admin/LocationManage/AdminEditLocation';
+import AdminQuestionManageScreen from '../AppFeature/Admin/AdvisorManage/AdminQuestionManage';
+import AdminAnswerManageScreen from '../AppFeature/Admin/AdvisorManage/AdminAnswerManage';
+import AdminListUserScreen from '../AppFeature/Admin/UserManage/AdminListUser';
+import AdminEditUserScreen from '../AppFeature/Admin/UserManage/AdminEditUser';
+import AdminDeleteUserScreen from '../AppFeature/Admin/UserManage/AdminDeleteUser';
 
 // other import
 import {AppRoutes} from '../navigation/Routes';
@@ -54,7 +62,15 @@ const CustomDrawerContent = props => {
       item.name !== 'AdminUserManage' &&
       item.name !== 'AdminAppointmentManage' &&
       item.name !== 'AdminAdvisorManage' &&
-      item.name !== 'AdminLocationManage',
+      item.name !== 'AdminLocationManage' &&
+      item.name !== 'AdminLocationSearch' &&
+      item.name !== 'AdminLocationAdd' &&
+      item.name !== 'AdminLocationEdit' &&
+      item.name !== 'AdminQuestionManage' &&
+      item.name !== 'AdminAnswerManage' &&
+      item.name !== 'AdminUserFind' &&
+      item.name !== 'AdminUserEdit' &&
+      item.name !== 'AdminUserDelete',
   );
   return (
     <DrawerContentScrollView {...props}>
@@ -199,6 +215,46 @@ const AppNavigation = () => {
       <Drawer.Screen
         name={'AdminLocationManage'}
         component={AdminLocationManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminLocationSearch'}
+        component={AdminSearchLocationScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminLocationAdd'}
+        component={AdminLocationAddScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminLocationEdit'}
+        component={AdminLocationEditScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminQuestionManage'}
+        component={AdminQuestionManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminAnswerManage'}
+        component={AdminAnswerManageScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminUserFind'}
+        component={AdminListUserScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminUserEdit'}
+        component={AdminEditUserScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'AdminUserDelete'}
+        component={AdminDeleteUserScreen}
         options={{gestureEnabled: false}}
       />
     </Drawer.Navigator>

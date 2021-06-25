@@ -1,18 +1,12 @@
 import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBarBack from '../../components/HeaderBarBack';
 
 const AdminAdvisorManageScreen = ({
   navigation,
+  route,
 }: AppNavigationProps<'AdminAdvisorManage'>) => {
   return (
     <View style={styles.container}>
@@ -20,7 +14,7 @@ const AdminAdvisorManageScreen = ({
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/qa_nocolor.png')}
+          source={require('../../../assets/Image_Icon/qa_color.png')}
         />
         <Text style={[styles.txt, styles.txtName]}>
           Health Advisor Management
@@ -28,37 +22,33 @@ const AdminAdvisorManageScreen = ({
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminQuestionManage', {
+              token: route.params.token,
+            })
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}
               source={require('../../../assets/Image_Icon/help.png')}
             />
-            <Text style={styles.txtButton}>List Questions</Text>
+            <Text style={styles.txtButton}>Manage Questions</Text>
           </View>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
+          onPress={() =>
+            navigation.navigate('AdminAnswerManage', {
+              token: route.params.token,
+            })
+          }>
           <View style={styles.rowButton}>
             <Image
               style={styles.iconButton}
               source={require('../../../assets/Image_Icon/answer.png')}
             />
-            <Text style={styles.txtButton}>List Answers</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, styles.shadow]}
-          activeOpacity={0.8}
-          onPress={() => Alert.alert('btn')}>
-          <View style={styles.rowButton}>
-            <Image
-              style={styles.iconButton}
-              source={require('../../../assets/Image_Icon/remove.png')}
-            />
-            <Text style={styles.txtButton}>Remove Answers</Text>
+            <Text style={styles.txtButton}>Manage Answers</Text>
           </View>
         </TouchableOpacity>
       </View>
