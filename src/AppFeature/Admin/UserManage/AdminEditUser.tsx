@@ -11,8 +11,7 @@ import {
 import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import HeaderBarBack from '../../../components/HeaderBarBack';
 
 const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
@@ -47,7 +46,7 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
       ]);
     } else {
       axios
-        .post(API_List_Company.adminUserGeneral + userID, answerData, {
+        .post(API_List.adminUserGeneral + userID, answerData, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -86,8 +85,8 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={userID => {
-            setUserID(userID);
+          onChangeText={text => {
+            setUserID(text);
           }}
           value={userID}
           placeholder="User ID"
@@ -97,8 +96,8 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={firstname => {
-            setFirstname(firstname);
+          onChangeText={text2 => {
+            setFirstname(text2);
           }}
           value={firstname}
           placeholder="Firstname"
@@ -107,8 +106,8 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={lastname => {
-            setLastname(lastname);
+          onChangeText={text3 => {
+            setLastname(text3);
           }}
           value={lastname}
           placeholder="Lastname"
@@ -117,8 +116,8 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={address => {
-            setAddress(address);
+          onChangeText={text4 => {
+            setAddress(text4);
           }}
           value={address}
           placeholder="Address"
@@ -127,8 +126,8 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={age => {
-            setAge(age);
+          onChangeText={text5 => {
+            setAge(text5);
           }}
           value={age}
           placeholder="Age"

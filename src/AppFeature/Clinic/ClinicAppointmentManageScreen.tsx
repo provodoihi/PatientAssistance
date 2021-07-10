@@ -11,10 +11,9 @@ import {
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-import {API_List_Company} from '../../API/apiListForCompany';
 import {Picker} from '@react-native-picker/picker';
 import HeaderBarBack from '../../components/HeaderBarBack';
-// import {API_List} from '../../API/apiList';
+import {API_List} from '../../API/apiList';
 import showToastFail from '../../components/ToastError';
 
 const ClinicAppointmentManageScreen = ({
@@ -42,7 +41,7 @@ const ClinicAppointmentManageScreen = ({
       );
     } else {
       axios
-        .patch(API_List_Company.appointmentGeneral + appointmentID, Status, {
+        .patch(API_List.appointmentGeneral + appointmentID, Status, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -64,7 +63,7 @@ const ClinicAppointmentManageScreen = ({
 
   const deleteAppointment = () => {
     axios
-      .delete(API_List_Company.appointmentGeneral + appointmentID, {
+      .delete(API_List.appointmentGeneral + appointmentID, {
         headers: {
           Authorization: `Bearer ${route.params.token}`,
         },
@@ -96,8 +95,8 @@ const ClinicAppointmentManageScreen = ({
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={appointmentID => {
-            setAppointmentID(appointmentID);
+          onChangeText={text => {
+            setAppointmentID(text);
           }}
           value={appointmentID}
           placeholder="Appointment ID"
@@ -106,9 +105,7 @@ const ClinicAppointmentManageScreen = ({
           multiline={false}
         />
         <Picker
-          onValueChange={appointmentStatus =>
-            setAppointmentStatus(appointmentStatus)
-          }
+          onValueChange={value => setAppointmentStatus(value)}
           selectedValue={appointmentStatus}
           style={styles.pick}
           dropdownIconColor="#9FA5AA">

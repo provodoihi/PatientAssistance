@@ -9,8 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
-// import {API_List} from '../API/apiList';
-import {API_List_Company} from '../API/apiListForCompany';
+import {API_List} from '../API/apiList';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {AuthNavigationProps} from '../navigation/Routes';
 import {Picker} from '@react-native-picker/picker';
@@ -62,7 +61,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
       ]);
     } else {
       axios
-        .post(API_List_Company.signup, signupData)
+        .post(API_List.signup, signupData)
         .then(response => {
           console.log(JSON.stringify(response.data));
         })
@@ -83,8 +82,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
 
         <TextInput
           style={styles.txtInput}
-          onChangeText={username => {
-            setUsername(username);
+          onChangeText={text1 => {
+            setUsername(text1);
           }}
           value={username}
           placeholder="Username"
@@ -93,8 +92,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={email => {
-            setEmail(email);
+          onChangeText={text2 => {
+            setEmail(text2);
           }}
           value={email}
           placeholder="Email"
@@ -104,8 +103,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={pass => {
-            setPass(pass);
+          onChangeText={text3 => {
+            setPass(text3);
           }}
           value={pass}
           placeholder="Password"
@@ -115,8 +114,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={firstname => {
-            setFirstname(firstname);
+          onChangeText={text4 => {
+            setFirstname(text4);
           }}
           value={firstname}
           placeholder="Firstname"
@@ -125,8 +124,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={lastname => {
-            setLastname(lastname);
+          onChangeText={text5 => {
+            setLastname(text5);
           }}
           value={lastname}
           placeholder="Lastname"
@@ -136,8 +135,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
 
         <TextInput
           style={styles.txtInput}
-          onChangeText={phone => {
-            setPhone(phone);
+          onChangeText={text6 => {
+            setPhone(text6);
           }}
           value={phone}
           placeholder="Phone"
@@ -148,8 +147,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
 
         <TextInput
           style={styles.txtInput}
-          onChangeText={address => {
-            setAddress(address);
+          onChangeText={text7 => {
+            setAddress(text7);
           }}
           value={address}
           placeholder="Address"
@@ -159,8 +158,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
 
         <TextInput
           style={styles.txtInput}
-          onChangeText={age => {
-            setAge(age);
+          onChangeText={text8 => {
+            setAge(text8);
           }}
           value={age}
           placeholder="Age"

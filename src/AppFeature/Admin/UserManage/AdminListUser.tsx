@@ -7,17 +7,16 @@ import {
   Image,
   TextInput,
   FlatList,
-  ActivityIndicator,
   ScrollView,
 } from 'react-native';
 import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import HeaderBarBack from '../../../components/HeaderBarBack';
 import showToastFail from '../../../components/ToastError';
+import ModalLoad from '../../../components/ModalLoad';
 
 export const Notfound = () => {
   return (
@@ -65,7 +64,7 @@ const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
   const editdone = async () => {
     try {
       setVisibleLoad(true);
-      let response = await axios.get(API_List_Company.adminUserFind + keyword, {
+      let response = await axios.get(API_List.adminUserFind + keyword, {
         headers: {
           Authorization: `Bearer ${route.params.token}`,
         },
@@ -83,14 +82,11 @@ const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
   const openModal = async () => {
     setVisibleLoad(true);
     try {
-      let response = await axios.get(
-        API_List_Company.adminUserGeneral + itemId,
-        {
-          headers: {
-            Authorization: `Bearer ${route.params.token}`,
-          },
+      let response = await axios.get(API_List.adminUserGeneral + itemId, {
+        headers: {
+          Authorization: `Bearer ${route.params.token}`,
         },
-      );
+      });
       setUsername(response.data.username);
       setEmail(response.data.email);
       setPhone(response.data.phone);
@@ -118,8 +114,8 @@ const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
         <View style={styles.topScreen}>
           <TextInput
             style={styles.txtInput}
-            onChangeText={keyword => {
-              setKeyword(keyword);
+            onChangeText={text => {
+              setKeyword(text);
             }}
             value={keyword}
             onSubmitEditing={editdone}
@@ -137,10 +133,8 @@ const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      openModal();
-                    }}>
+                    onPressIn={() => setItemId(item.id)}
+                    onPress={openModal}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -174,12 +168,7 @@ const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
         ) : (
           <Init />
         )}
-        <Modal isVisible={isVisibleLoad}>
-          <View style={styles.modalLoad}>
-            <ActivityIndicator size="large" color="#0000ff" />
-            <Text style={styles.txt}>Loading</Text>
-          </View>
-        </Modal>
+        <ModalLoad isVisibleLoad={isVisibleLoad} />
         <Modal
           isVisible={isVisible}
           propagateSwipe={true}
@@ -224,13 +213,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flex: 0.1,
-  },
-
-  modalLoad: {
-    backgroundColor: '#ffffff',
-    flex: 0.25,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
 
   modal: {

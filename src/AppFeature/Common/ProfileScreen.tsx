@@ -11,8 +11,7 @@ import {
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import HeaderBarBack from '../../components/HeaderBarBack';
 import showToastFail from '../../components/ToastError';
 
@@ -48,7 +47,7 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        let response = await axios.get(API_List_Company.myProfile, {
+        let response = await axios.get(API_List.myProfile, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -81,23 +80,19 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
       ]);
     } else {
       axios
-        .put(API_List_Company.myProfile, updateProfileData, {
+        .put(API_List.myProfile, updateProfileData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
         .then(() => {
-          Alert.alert(
-            'Notification',
-            'Upload profile successfully. The change will effect in the next time you use the app',
-            [
-              {
-                text: 'OK',
-                onPress: () => null,
-                style: 'cancel',
-              },
-            ],
-          );
+          Alert.alert('Notification', 'Upload profile successfully', [
+            {
+              text: 'OK',
+              onPress: () => null,
+              style: 'cancel',
+            },
+          ]);
         })
         .catch(() => {
           showToastFail();
@@ -111,14 +106,14 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
       <View style={styles.container2}>
         <Image
           style={styles.img}
-          source={require('../../../assets/Image_Icon/user.png')}
+          source={require('../../../assets/Image_Icon/user_color.png')}
         />
         <Text style={[styles.txt, styles.txtName]}>{fullname}</Text>
         <Text style={[styles.txt, styles.txtRole]}>{role}</Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={firstnameEdit => {
-            setFirstnameEdit(firstnameEdit);
+          onChangeText={text1 => {
+            setFirstnameEdit(text1);
           }}
           value={firstnameEdit}
           placeholder={f1nameplace}
@@ -127,8 +122,8 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={lastnameEdit => {
-            setLastnameEdit(lastnameEdit);
+          onChangeText={text2 => {
+            setLastnameEdit(text2);
           }}
           value={lastnameEdit}
           placeholder={f2nameplace}
@@ -137,8 +132,8 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={addressEdit => {
-            setAddressEdit(addressEdit);
+          onChangeText={text3 => {
+            setAddressEdit(text3);
           }}
           value={addressEdit}
           placeholder={addressplace}
@@ -147,8 +142,8 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={ageEdit => {
-            setAgeEdit(ageEdit);
+          onChangeText={text4 => {
+            setAgeEdit(text4);
           }}
           value={ageEdit}
           placeholder={ageplace}
@@ -276,7 +271,7 @@ const styles = StyleSheet.create({
   },
 
   img: {
-    width: '25%',
+    width: '30%',
     height: '25%',
     resizeMode: 'contain',
   },

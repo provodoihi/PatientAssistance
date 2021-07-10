@@ -9,13 +9,13 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import {AppNavigationProps} from '../../../navigation/Routes';
 import HeaderBarBack from '../../../components/HeaderBarBack';
 import showToastFail from '../../../components/ToastError';
+import ModalLoad from '../../../components/ModalLoad';
 
 const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
   const [data, setData] = useState([]);
@@ -24,6 +24,7 @@ const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
 
   // for modal
   const [isVisible, setVisible] = useState(false);
+  const [isVisibleLoad, setVisibleLoad] = useState(false);
   const [userID, setUserID] = useState('');
   const [questionDetail, setQuestionDetail] = useState('');
 
@@ -34,7 +35,7 @@ const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        let response = await axios.get(API_List_Company.adminQuestion, {
+        let response = await axios.get(API_List.adminQuestion, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -49,8 +50,9 @@ const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
   }, [route.params.token]);
 
   const openModal = async () => {
+    setVisibleLoad(true);
     try {
-      let response = await axios.get(API_List_Company.adminQuestion + itemId, {
+      let response = await axios.get(API_List.adminQuestion + itemId, {
         headers: {
           Authorization: `Bearer ${route.params.token}`,
         },
@@ -58,15 +60,17 @@ const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
       console.log(response.status);
       setUserID(response.data.userId);
       setQuestionDetail(response.data.questionDetail);
+      setVisibleLoad(false);
       setVisible(true);
     } catch (error) {
+      setVisibleLoad(false);
       showToastFail();
     }
   };
 
   const deleteQuestion = async () => {
     try {
-      await axios.delete(API_List_Company.adminQuestion + itemId, {
+      await axios.delete(API_List.adminQuestion + itemId, {
         headers: {
           Authorization: `Bearer ${route.params.token}`,
         },
@@ -103,10 +107,8 @@ const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      openModal();
-                    }}>
+                    onPressIn={() => setItemId(item.id)}
+                    onPress={openModal}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -137,6 +139,7 @@ const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
             <Text style={styles.txtNotfound}>Not found</Text>
           </View>
         )}
+        <ModalLoad isVisibleLoad={isVisibleLoad} />
         <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
           <View style={styles.modal}>
             <Text style={styles.txtModalHead}>Question Detail</Text>

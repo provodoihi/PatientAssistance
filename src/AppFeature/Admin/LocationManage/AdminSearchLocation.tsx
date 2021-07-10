@@ -8,15 +8,13 @@ import {
   TextInput,
   Alert,
   FlatList,
-  ActivityIndicator,
 } from 'react-native';
 import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import axios from 'axios';
-import Modal from 'react-native-modal';
 import HeaderBarBack from '../../../components/HeaderBarBack';
+import ModalLoad from '../../../components/ModalLoad';
 
 export const Notfound = () => {
   return (
@@ -37,7 +35,7 @@ export const Init = () => {
         style={styles.img}
         source={require('../../../../assets/Image_Icon/search.png')}
       />
-      <Text style={styles.txtMid}>Search hospitals and clinics</Text>
+      <Text style={styles.txtMid}>Search locations</Text>
     </View>
   );
 };
@@ -54,7 +52,7 @@ const AdminSearchLocationScreen = ({
   const editdone = async () => {
     try {
       setVisible(true);
-      let response = await axios.get(API_List_Company.filterLocation + keyword);
+      let response = await axios.get(API_List.filterLocation + keyword);
       console.log(response.status);
       setStatus(response.status);
       setData(response.data);
@@ -78,8 +76,8 @@ const AdminSearchLocationScreen = ({
         <View style={styles.topScreen}>
           <TextInput
             style={styles.txtInput}
-            onChangeText={keyword => {
-              setKeyword(keyword);
+            onChangeText={text => {
+              setKeyword(text);
             }}
             value={keyword}
             onSubmitEditing={editdone}
@@ -128,12 +126,7 @@ const AdminSearchLocationScreen = ({
         ) : (
           <Init />
         )}
-        <Modal isVisible={isVisible}>
-          <View style={styles.modal}>
-            <ActivityIndicator size="large" color="#0000ff" />
-            <Text style={styles.txt}>Loading</Text>
-          </View>
-        </Modal>
+        <ModalLoad isVisibleLoad={isVisible} />
       </View>
     </View>
   );

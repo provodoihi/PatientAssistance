@@ -14,8 +14,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import axios from 'axios';
-import {API_List_Company} from '../../API/apiListForCompany';
-// import {API_List} from '../../API/apiList';
+import {API_List} from '../../API/apiList';
 import showToastFail from '../../components/ToastError';
 
 const HealthAdvisorScreen = ({
@@ -80,7 +79,7 @@ const HealthAdvisorScreen = ({
       ]);
     } else {
       axios
-        .post(API_List_Company.question, questionData, {
+        .post(API_List.question, questionData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -118,8 +117,8 @@ const HealthAdvisorScreen = ({
           </Text>
           <TextInput
             style={styles.txtInput}
-            onChangeText={question => {
-              setQuestion(question);
+            onChangeText={text => {
+              setQuestion(text);
             }}
             value={question}
             placeholder="Question"

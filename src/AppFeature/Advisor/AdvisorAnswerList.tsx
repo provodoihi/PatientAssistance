@@ -10,8 +10,7 @@ import {
   Alert,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
@@ -32,7 +31,7 @@ const AdvisorAnswerListScreen = ({
   useEffect(() => {
     const getAnswer = async () => {
       try {
-        let response = await axios.get(API_List_Company.answerAdvisor, {
+        let response = await axios.get(API_List.answerAdvisor, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -48,7 +47,10 @@ const AdvisorAnswerListScreen = ({
 
   const toggleModal = () => {
     setVisible(!isVisible);
-    console.log(itemId, typeof itemId);
+  };
+
+  const openModal = () => {
+    setVisible(true);
   };
 
   const answerNew = {
@@ -66,7 +68,7 @@ const AdvisorAnswerListScreen = ({
       ]);
     } else {
       axios
-        .put(API_List_Company.answerAdvisor + itemId, answerNew, {
+        .put(API_List.answerAdvisor + itemId, answerNew, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -75,7 +77,7 @@ const AdvisorAnswerListScreen = ({
           Alert.alert('Notification', 'Update answer successfully', [
             {
               text: 'OK',
-              onPress: () => null,
+              onPress: () => setVisible(false),
               style: 'cancel',
             },
           ]);
@@ -88,7 +90,7 @@ const AdvisorAnswerListScreen = ({
 
   const submitDelete = () => {
     axios
-      .delete(API_List_Company.answerAdvisor + itemId, {
+      .delete(API_List.answerAdvisor + itemId, {
         headers: {
           Authorization: `Bearer ${route.params.token}`,
         },
@@ -97,7 +99,7 @@ const AdvisorAnswerListScreen = ({
         Alert.alert('Notification', 'Delete answer successfully', [
           {
             text: 'OK',
-            onPress: () => null,
+            onPress: () => setVisible(false),
             style: 'cancel',
           },
         ]);
@@ -129,10 +131,8 @@ const AdvisorAnswerListScreen = ({
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      toggleModal();
-                    }}>
+                    onPressIn={() => setItemId(item.id)}
+                    onPress={openModal}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -175,8 +175,8 @@ const AdvisorAnswerListScreen = ({
             <Text style={styles.txtModal}>Answer ID: {itemId}</Text>
             <TextInput
               style={styles.txtInput}
-              onChangeText={answerUpdate => {
-                setAnswerUpdate(answerUpdate);
+              onChangeText={text => {
+                setAnswerUpdate(text);
               }}
               value={answerUpdate}
               placeholder="Answer Upadate"

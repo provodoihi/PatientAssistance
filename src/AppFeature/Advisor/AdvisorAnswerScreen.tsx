@@ -11,8 +11,7 @@ import {
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import HeaderBarBack from '../../components/HeaderBarBack';
 import showToastFail from '../../components/ToastError';
 
@@ -46,7 +45,7 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
       ]);
     } else {
       axios
-        .post(API_List_Company.answerAdvisor, answerData, {
+        .post(API_List.answerAdvisor, answerData, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -79,8 +78,8 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={questionID => {
-            setQuestionID(questionID);
+          onChangeText={text => {
+            setQuestionID(text);
           }}
           value={questionID}
           placeholder="Question ID"
@@ -90,8 +89,8 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={question => {
-            setQuestion(question);
+          onChangeText={text2 => {
+            setQuestion(text2);
           }}
           value={question}
           placeholder="Question"
@@ -100,8 +99,8 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={patientID => {
-            setPatientID(patientID);
+          onChangeText={text3 => {
+            setPatientID(text3);
           }}
           value={patientID}
           placeholder="To Patient ID"
@@ -111,8 +110,8 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={answer => {
-            setAnswer(answer);
+          onChangeText={text4 => {
+            setAnswer(text4);
           }}
           value={answer}
           placeholder="Answer"

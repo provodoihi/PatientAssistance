@@ -19,8 +19,7 @@ import DatePicker from 'react-native-date-picker';
 import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import {Picker} from '@react-native-picker/picker';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import axios from 'axios';
 import showToastFail from '../../components/ToastError';
 
@@ -92,7 +91,7 @@ const AppointmentScreen = ({
       ]);
     } else {
       axios
-        .post(API_List_Company.appointmentGeneral, appointmentData, {
+        .post(API_List.appointmentGeneral, appointmentData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -137,8 +136,8 @@ const AppointmentScreen = ({
             />
             <TextInput
               style={styles.txtInput}
-              onChangeText={describe => {
-                setDescribe(describe);
+              onChangeText={text => {
+                setDescribe(text);
               }}
               value={describe}
               placeholder="Description"

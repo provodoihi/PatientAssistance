@@ -8,8 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
@@ -21,7 +20,7 @@ const HealthAdvisorListScreen = ({route}: AppNavigationProps<'QAList'>) => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        let response = await axios.get(API_List_Company.answerPatient, {
+        let response = await axios.get(API_List.answerPatient, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },

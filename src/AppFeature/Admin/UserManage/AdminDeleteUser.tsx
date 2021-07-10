@@ -11,8 +11,7 @@ import {
 import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import HeaderBarBack from '../../../components/HeaderBarBack';
 
 const AdminDeleteUserScreen = ({
@@ -32,7 +31,7 @@ const AdminDeleteUserScreen = ({
       ]);
     } else {
       axios
-        .delete(API_List_Company.adminUserGeneral + userID, {
+        .delete(API_List.adminUserGeneral + userID, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -71,8 +70,8 @@ const AdminDeleteUserScreen = ({
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={userID => {
-            setUserID(userID);
+          onChangeText={text => {
+            setUserID(text);
           }}
           value={userID}
           placeholder="User ID"

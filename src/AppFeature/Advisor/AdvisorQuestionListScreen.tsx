@@ -8,14 +8,14 @@ import {
   FlatList,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
 
 const AdvisorQuestionListScreen = ({
   route,
+  navigation,
 }: AppNavigationProps<'AdvisorQuestionList'>) => {
   const [data, setData] = useState([]);
   const [status, setStatus] = useState(0);
@@ -23,7 +23,7 @@ const AdvisorQuestionListScreen = ({
   useEffect(() => {
     const getQuestion = async () => {
       try {
-        let response = await axios.get(API_List_Company.questionListAdvisor, {
+        let response = await axios.get(API_List.questionListAdvisor, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -59,7 +59,12 @@ const AdvisorQuestionListScreen = ({
                 return (
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
-                    activeOpacity={1}>
+                    activeOpacity={1}
+                    onPress={() =>
+                      navigation.navigate('AdvisorAnswer', {
+                        token: route.params.token,
+                      })
+                    }>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -71,10 +76,10 @@ const AdvisorQuestionListScreen = ({
                           Question: {item.questionDetail}
                         </Text>
                         <Text style={styles.txtNormal2}>
-                          QuestionID: {item.id}
+                          Question ID: {item.id}
                         </Text>
                         <Text style={styles.txtNormal2}>
-                          PatientID: {item.userId}
+                          Patient ID: {item.userId}
                         </Text>
                       </View>
                     </View>

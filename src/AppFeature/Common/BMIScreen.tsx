@@ -122,8 +122,8 @@ const BMIScreen = () => {
         </Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={weight => {
-            setWeight(weight);
+          onChangeText={text1 => {
+            setWeight(text1);
           }}
           value={weight}
           placeholder="Weight (kilograms)"
@@ -133,8 +133,8 @@ const BMIScreen = () => {
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={height => {
-            setHeight(height);
+          onChangeText={text2 => {
+            setHeight(text2);
           }}
           value={height}
           placeholder="Height (centimeters)"

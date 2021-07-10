@@ -8,13 +8,13 @@ import {
   FlatList,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-// import {API_List} from '../../API/apiList';
-import {API_List_Company} from '../../API/apiListForCompany';
+import {API_List} from '../../API/apiList';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBarBack';
 import Modal from 'react-native-modal';
 import showToastFail from '../../components/ToastError';
+import ModalLoad from '../../components/ModalLoad';
 
 const AppointmentListScreen = ({
   route,
@@ -24,6 +24,7 @@ const AppointmentListScreen = ({
   const [itemId, setItemId] = useState(0);
 
   // for modal
+  const [isVisibleLoad, setVisibleLoad] = useState(false);
   const [isVisible, setVisible] = useState(false);
   const [clinic, setClinic] = useState('');
   const [time, setTime] = useState('');
@@ -34,7 +35,7 @@ const AppointmentListScreen = ({
     const getProfile = async () => {
       try {
         let response = await axios.get(
-          API_List_Company.appointmentFindPatient + route.params.userID,
+          API_List.appointmentFindPatient + route.params.userID,
           {
             headers: {
               Authorization: `Bearer ${route.params.token}`,
@@ -51,22 +52,22 @@ const AppointmentListScreen = ({
   }, [route.params.token, route.params.userID]);
 
   const openModal = async () => {
+    setVisibleLoad(true);
     try {
-      let response = await axios.get(
-        API_List_Company.appointmentGeneral + itemId,
-        {
-          headers: {
-            Authorization: `Bearer ${route.params.token}`,
-          },
+      let response = await axios.get(API_List.appointmentGeneral + itemId, {
+        headers: {
+          Authorization: `Bearer ${route.params.token}`,
         },
-      );
+      });
       console.log(response.status);
       setClinic(response.data.nameOfClinic);
       setTime(response.data.appointmentStartTime);
       setDescribe(response.data.description);
       setStatusAppoint(response.data.status);
+      setVisibleLoad(false);
       setVisible(true);
     } catch (error) {
+      setVisibleLoad(false);
       showToastFail();
     }
   };
@@ -96,10 +97,8 @@ const AppointmentListScreen = ({
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      openModal();
-                    }}>
+                    onPressIn={() => setItemId(item.id)}
+                    onPress={openModal}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -124,6 +123,7 @@ const AppointmentListScreen = ({
               }}
               keyExtractor={item => item.id}
             />
+            <ModalLoad isVisibleLoad={isVisibleLoad} />
             <Modal
               isVisible={isVisible}
               onBackdropPress={() => setVisible(false)}>

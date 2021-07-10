@@ -15,8 +15,7 @@ import {
   responsiveScreenHeight as rh,
 } from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import HeaderBarBack from '../../../components/HeaderBarBack';
 import showToastFail from '../../../components/ToastError';
 
@@ -61,7 +60,7 @@ const AdminLocationAddScreen = ({
       ]);
     } else {
       axios
-        .post(API_List_Company.adminLocationGeneral, locationData, {
+        .post(API_List.adminLocationGeneral, locationData, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -93,8 +92,8 @@ const AdminLocationAddScreen = ({
           <Text style={[styles.txt, styles.txtName]}>Add Location</Text>
           <TextInput
             style={styles.txtInput}
-            onChangeText={name => {
-              setName(name);
+            onChangeText={text => {
+              setName(text);
             }}
             value={name}
             placeholder="Name"
@@ -103,8 +102,8 @@ const AdminLocationAddScreen = ({
           />
           <TextInput
             style={styles.txtInput}
-            onChangeText={address => {
-              setAddress(address);
+            onChangeText={text2 => {
+              setAddress(text2);
             }}
             value={address}
             placeholder="Address"
@@ -113,8 +112,8 @@ const AdminLocationAddScreen = ({
           />
           <TextInput
             style={styles.txtInput}
-            onChangeText={phone => {
-              setPhone(phone);
+            onChangeText={text3 => {
+              setPhone(text3);
             }}
             value={phone}
             placeholder="Phone"
@@ -124,8 +123,8 @@ const AdminLocationAddScreen = ({
           />
           <TextInput
             style={styles.txtInput}
-            onChangeText={specialty => {
-              setSpecialty(specialty);
+            onChangeText={text4 => {
+              setSpecialty(text4);
             }}
             value={specialty}
             placeholder="Specialty"
@@ -134,8 +133,8 @@ const AdminLocationAddScreen = ({
           />
           <TextInput
             style={styles.txtInput}
-            onChangeText={description => {
-              setDescription(description);
+            onChangeText={text5 => {
+              setDescription(text5);
             }}
             value={description}
             placeholder="Description"
@@ -144,8 +143,8 @@ const AdminLocationAddScreen = ({
           />
           <TextInput
             style={styles.txtInput}
-            onChangeText={latitude => {
-              setLatitude(latitude);
+            onChangeText={text6 => {
+              setLatitude(text6);
             }}
             value={latitude}
             placeholder="Latitude"
@@ -155,8 +154,8 @@ const AdminLocationAddScreen = ({
           />
           <TextInput
             style={styles.txtInput}
-            onChangeText={longitude => {
-              setLongitude(longitude);
+            onChangeText={text7 => {
+              setLongitude(text7);
             }}
             value={longitude}
             placeholder="Longitude"

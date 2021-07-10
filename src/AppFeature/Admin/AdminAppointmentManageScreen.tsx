@@ -13,9 +13,9 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import HeaderBarBack from '../../components/HeaderBarBack';
 import axios from 'axios';
 import Modal from 'react-native-modal';
-import {API_List_Company} from '../../API/apiListForCompany';
-// import {API_List} from '../../API/apiList';
+import {API_List} from '../../API/apiList';
 import showToastFail from '../../components/ToastError';
+import ModalLoad from '../../components/ModalLoad';
 
 const AdminAppointmentManageScreen = ({
   route,
@@ -26,6 +26,7 @@ const AdminAppointmentManageScreen = ({
 
   // for modal
   const [isVisible, setVisible] = useState(false);
+  const [isVisibleLoad, setVisibleLoad] = useState(false);
   const [clinic, setClinic] = useState('');
   const [time, setTime] = useState('');
   const [patient, setPatient] = useState('');
@@ -40,7 +41,7 @@ const AdminAppointmentManageScreen = ({
   useEffect(() => {
     const getAppointment = async () => {
       try {
-        let response = await axios.get(API_List_Company.appointmentAll, {
+        let response = await axios.get(API_List.appointmentAll, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -55,15 +56,13 @@ const AdminAppointmentManageScreen = ({
   }, [route.params.token]);
 
   const openModal = async () => {
+    setVisibleLoad(true);
     try {
-      let response = await axios.get(
-        API_List_Company.appointmentGeneral + itemId,
-        {
-          headers: {
-            Authorization: `Bearer ${route.params.token}`,
-          },
+      let response = await axios.get(API_List.appointmentGeneral + itemId, {
+        headers: {
+          Authorization: `Bearer ${route.params.token}`,
         },
-      );
+      });
       console.log(response.status);
       setClinic(response.data.nameOfClinic);
       setTime(response.data.appointmentStartTime);
@@ -71,15 +70,17 @@ const AdminAppointmentManageScreen = ({
       setPatient(response.data.nameOfPatient);
       setPhone(response.data.phoneOfPatient);
       setStatusAppoint(response.data.status);
+      setVisibleLoad(false);
       setVisible(true);
     } catch (error) {
+      setVisibleLoad(false);
       showToastFail();
     }
   };
 
   const deleteAppointment = async () => {
     try {
-      await axios.delete(API_List_Company.appointmentGeneral + itemId, {
+      await axios.delete(API_List.appointmentGeneral + itemId, {
         headers: {
           Authorization: `Bearer ${route.params.token}`,
         },
@@ -117,10 +118,8 @@ const AdminAppointmentManageScreen = ({
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
-                    onPress={() => {
-                      setItemId(item.id);
-                      openModal();
-                    }}>
+                    onPressIn={() => setItemId(item.id)}
+                    onPress={openModal}>
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
@@ -158,6 +157,7 @@ const AdminAppointmentManageScreen = ({
             <Text style={styles.txtNotfound}>Not found</Text>
           </View>
         )}
+        <ModalLoad isVisibleLoad={isVisibleLoad} />
         <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
           <View style={styles.modal}>
             <Text style={styles.txtModalHead}>Appointment Detail</Text>

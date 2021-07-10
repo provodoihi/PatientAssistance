@@ -11,8 +11,7 @@ import {
 import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
-// import {API_List} from '../../../API/apiList';
-import {API_List_Company} from '../../../API/apiListForCompany';
+import {API_List} from '../../../API/apiList';
 import HeaderBarBack from '../../../components/HeaderBarBack';
 import showToastFail from '../../../components/ToastError';
 
@@ -40,15 +39,11 @@ const AdminLocationEditScreen = ({
       ]);
     } else {
       axios
-        .post(
-          API_List_Company.adminLocationGeneral + locationID,
-          locationUpdateData,
-          {
-            headers: {
-              Authorization: `Bearer ${route.params.token}`,
-            },
+        .post(API_List.adminLocationGeneral + locationID, locationUpdateData, {
+          headers: {
+            Authorization: `Bearer ${route.params.token}`,
           },
-        )
+        })
         .then(() => {
           Alert.alert('Notification', 'Update location successfully', [
             {
@@ -81,7 +76,7 @@ const AdminLocationEditScreen = ({
       ]);
     } else {
       axios
-        .delete(API_List_Company.adminLocationGeneral + locationID, {
+        .delete(API_List.adminLocationGeneral + locationID, {
           headers: {
             Authorization: `Bearer ${route.params.token}`,
           },
@@ -112,8 +107,8 @@ const AdminLocationEditScreen = ({
         <Text style={[styles.txt, styles.txtName]}>Edit Location</Text>
         <TextInput
           style={styles.txtInput}
-          onChangeText={locationID => {
-            setLocationID(locationID);
+          onChangeText={text => {
+            setLocationID(text);
           }}
           value={locationID}
           placeholder="Location ID"
@@ -123,8 +118,8 @@ const AdminLocationEditScreen = ({
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={address => {
-            setAddress(address);
+          onChangeText={text2 => {
+            setAddress(text2);
           }}
           value={address}
           placeholder="Address"
@@ -133,8 +128,8 @@ const AdminLocationEditScreen = ({
         />
         <TextInput
           style={styles.txtInput}
-          onChangeText={phone => {
-            setPhone(phone);
+          onChangeText={text3 => {
+            setPhone(text3);
           }}
           value={phone}
           placeholder="Phone"
