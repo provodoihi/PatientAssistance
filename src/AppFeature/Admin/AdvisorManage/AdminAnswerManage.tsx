@@ -133,6 +133,32 @@ const AdminAnswerManageScreen = ({
               }}
               keyExtractor={item => item.id}
             />
+            <ModalLoad isVisibleLoad={isVisibleLoad} />
+            <Modal
+              isVisible={isVisible}
+              onBackdropPress={() => setVisible(false)}>
+              <View style={styles.modal}>
+                <Text style={styles.txtModalHead}>Answer Detail</Text>
+                <Text style={styles.txtModal}>Answer ID: {itemId}</Text>
+                <Text style={styles.txtModal}>Answer: {answerDetail}</Text>
+                <Text style={styles.txtModal}>Question: {questionDetail}</Text>
+                <Text style={styles.txtModal}>To Patient ID: {userID}</Text>
+                <TouchableOpacity
+                  style={[styles.buttonModal, styles.shadow]}
+                  activeOpacity={0.8}
+                  onPress={deleteAnswer}>
+                  <Text style={[styles.txt, styles.txtButtonModal]}>
+                    Delete This Answer
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.buttonModal, styles.shadow]}
+                  activeOpacity={0.8}
+                  onPress={toggleModal}>
+                  <Text style={[styles.txt, styles.txtButtonModal]}>Close</Text>
+                </TouchableOpacity>
+              </View>
+            </Modal>
           </View>
         ) : (
           <View style={styles.midScreen}>
@@ -143,30 +169,6 @@ const AdminAnswerManageScreen = ({
             <Text style={styles.txtNotfound}>Not found</Text>
           </View>
         )}
-        <ModalLoad isVisibleLoad={isVisibleLoad} />
-        <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
-          <View style={styles.modal}>
-            <Text style={styles.txtModalHead}>Answer Detail</Text>
-            <Text style={styles.txtModal}>Answer ID: {itemId}</Text>
-            <Text style={styles.txtModal}>Answer: {answerDetail}</Text>
-            <Text style={styles.txtModal}>Question: {questionDetail}</Text>
-            <Text style={styles.txtModal}>To Patient ID: {userID}</Text>
-            <TouchableOpacity
-              style={[styles.buttonModal, styles.shadow]}
-              activeOpacity={0.8}
-              onPress={deleteAnswer}>
-              <Text style={[styles.txt, styles.txtButtonModal]}>
-                Delete This Answer
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[styles.buttonModal, styles.shadow]}
-              activeOpacity={0.8}
-              onPress={toggleModal}>
-              <Text style={[styles.txt, styles.txtButtonModal]}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
       </View>
     </View>
   );

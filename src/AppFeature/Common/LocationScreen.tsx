@@ -7,6 +7,7 @@ import {
   Image,
   TextInput,
   FlatList,
+  ListRenderItemInfo,
 } from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
@@ -39,6 +40,15 @@ export const Init = () => {
     </View>
   );
 };
+
+interface ListItem {
+  id: number | string;
+  name: string;
+  latitude: number;
+  longtitude: number;
+  address: string;
+  phone: string;
+}
 
 const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
   const [keyword, setKeyword] = useState('');
@@ -81,7 +91,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
           <View style={styles.midScreen}>
             <FlatList
               data={data}
-              renderItem={({item}: any) => {
+              renderItem={({item}: ListRenderItemInfo<ListItem>) => {
                 return (
                   <TouchableOpacity
                     style={[styles.button, styles.shadow]}
@@ -108,7 +118,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
                   </TouchableOpacity>
                 );
               }}
-              keyExtractor={item => item.id}
+              keyExtractor={item => `row-${item.id}`}
             />
           </View>
         ) : status === 204 ? (

@@ -86,6 +86,7 @@ const AdminSearchLocationScreen = ({
             multiline={false}
           />
         </View>
+        <ModalLoad isVisibleLoad={isVisible} />
         {status === 200 ? (
           <View style={styles.midScreen}>
             <FlatList
@@ -126,7 +127,6 @@ const AdminSearchLocationScreen = ({
         ) : (
           <Init />
         )}
-        <ModalLoad isVisibleLoad={isVisible} />
       </View>
     </View>
   );

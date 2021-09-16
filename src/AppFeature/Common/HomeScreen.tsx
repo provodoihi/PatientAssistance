@@ -113,7 +113,7 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
                 style={styles.iconButton}
                 source={require('../../../assets/Image_Icon/HealthBook_icon.png')}
               />
-              <Text style={styles.txtButton}>Health Advisor</Text>
+              <Text style={styles.txtButton}>Health Advice</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity

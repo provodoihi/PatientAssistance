@@ -179,7 +179,7 @@ const AdvisorAnswerListScreen = ({
                 setAnswerUpdate(text);
               }}
               value={answerUpdate}
-              placeholder="Answer Upadate"
+              placeholder="Answer Update"
               placeholderTextColor="#9FA5AA"
               multiline={false}
             />

@@ -152,6 +152,13 @@ android {
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+
+        release {
+            storeFile file('react_proj.keystore')
+            storePassword '123456'
+            keyAlias 'react_proj'
+            keyPassword '123456'
+        }
     }
     buildTypes {
         debug {

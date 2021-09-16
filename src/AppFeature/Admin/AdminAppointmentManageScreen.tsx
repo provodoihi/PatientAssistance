@@ -99,14 +99,16 @@ const AdminAppointmentManageScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Clinic" />
+      <HeaderBarBack text="Appointment Management" />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Image
             style={styles.img}
             source={require('../../../assets/Image_Icon/appointment_color.png')}
           />
-          <Text style={[styles.txt, styles.txtTitle]}>Your Appointments</Text>
+          <Text style={[styles.txt, styles.txtTitle]}>
+            Appointment Management
+          </Text>
         </View>
 
         {statusRes === 200 ? (
