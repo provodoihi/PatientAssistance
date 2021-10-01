@@ -1,13 +1,13 @@
 # Patient Assistance application using React Native
 ## Project Overview
 
-This application is aimed at providing a fast and simple healthcare solution
-for people of all ages. In particular, the main objectives are:
-- Provide a user-friendly interface for users.
-- Allow users to search for the health facilities’ information and location.
-- Allow patients to make appointments to clinics and to ask questions to health advisors.
-- Allow users to look for knowleadge about common diseases. (Coming soon)
-- Visualize the COVID-19 statistic. (Coming soon)
+This project is aimed at providing a fast and simple healthcare solution
+for people of all ages. Application main features:
+- Health facilities search and map view.
+- Booking appointments to clinics.
+- Health advice: asking questions to health advisors.
+- Common diseases knowledge. (Coming soon)
+- COVID-19 statistic real-time visualization. (Coming soon)
 
 ### Built With
 * [React Native](https://reactnative.dev)
@@ -50,5 +50,5 @@ Distributed under the [MIT](https://choosealicense.com/licenses/mit/) License
 
 <!-- CONTACT -->
 ## Contact
-- Project Link: [PatientAssistance](hhttps://github.com/provodoihi/PatientAssistance)
+- Project Link: [PatientAssistance](https://github.com/provodoihi/PatientAssistance)
 - The server-side application of this project can be found here:  [Patient-Assistance-Spring-Boot](https://github.com/provodoihi/Patient-Assistance-Spring-Boot)
