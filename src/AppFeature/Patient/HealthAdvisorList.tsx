@@ -11,7 +11,7 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import {API_List} from '../../API/apiList';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
-import HeaderBarBack from '../../components/HeaderBarBack';
+import HeaderBar from '../../components/HeaderBar';
 
 const HealthAdvisorListScreen = ({route}: AppNavigationProps<'QAList'>) => {
   const [data, setData] = useState([]);
@@ -36,7 +36,7 @@ const HealthAdvisorListScreen = ({route}: AppNavigationProps<'QAList'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Health Advisor" />
+      <HeaderBar text="Health Advisor" isBack={true} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Image

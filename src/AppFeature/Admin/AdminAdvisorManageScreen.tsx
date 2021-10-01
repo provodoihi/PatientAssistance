@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import HeaderBarBack from '../../components/HeaderBarBack';
+import HeaderBar from '../../components/HeaderBar';
 
 const AdminAdvisorManageScreen = ({
   navigation,
@@ -10,7 +10,7 @@ const AdminAdvisorManageScreen = ({
 }: AppNavigationProps<'AdminAdvisorManage'>) => {
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Admin" />
+      <HeaderBar text="For Admin" isBack={true} />
       <View style={styles.container2}>
         <Image
           style={styles.img}

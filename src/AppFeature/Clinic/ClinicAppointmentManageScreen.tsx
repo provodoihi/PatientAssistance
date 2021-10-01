@@ -12,7 +12,7 @@ import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {Picker} from '@react-native-picker/picker';
-import HeaderBarBack from '../../components/HeaderBarBack';
+import HeaderBar from '../../components/HeaderBar';
 import {API_List} from '../../API/apiList';
 import showToastFail from '../../components/ToastError';
 
@@ -84,7 +84,7 @@ const ClinicAppointmentManageScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Clinic" />
+      <HeaderBar text="For Clinic" isBack={true} />
       <View style={styles.container2}>
         <Image
           style={styles.img}

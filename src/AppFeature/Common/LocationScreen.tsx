@@ -60,7 +60,6 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
     try {
       setVisible(true);
       let response = await axios.get(API_List.filterLocation + keyword);
-      console.log(response.status);
       setStatus(response.status);
       setData(response.data);
       setVisible(false);
@@ -72,7 +71,7 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBar text="Find Hospital Clinic" />
+      <HeaderBar text="Find Hospital Clinic" isBack={false} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <TextInput

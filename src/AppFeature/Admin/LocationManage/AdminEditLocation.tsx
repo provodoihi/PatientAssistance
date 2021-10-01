@@ -12,7 +12,7 @@ import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {API_List} from '../../../API/apiList';
-import HeaderBarBack from '../../../components/HeaderBarBack';
+import HeaderBar from '../../../components/HeaderBar';
 import showToastFail from '../../../components/ToastError';
 
 const AdminLocationEditScreen = ({
@@ -98,7 +98,7 @@ const AdminLocationEditScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Location Management" />
+      <HeaderBar text="Location Management" isBack={true} />
       <View style={styles.container2}>
         <Image
           style={styles.img}

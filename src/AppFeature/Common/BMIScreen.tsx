@@ -111,7 +111,7 @@ const BMIScreen = () => {
 
   return (
     <View style={styles.container}>
-      <HeaderBar text="BMI Calculator" />
+      <HeaderBar text="BMI Calculator" isBack={false} />
       <View style={styles.container2}>
         <Image
           style={styles.img}

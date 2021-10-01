@@ -44,7 +44,7 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
   if (userRole === 'ROLE_CLINIC') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="For Clinic" />
+        <HeaderBar text="For Clinic" isBack={false} />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
             <Text style={[styles.txt, styles.txtWelcome]}>

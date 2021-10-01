@@ -10,7 +10,7 @@ interface Props {
 const Oops = ({text}: Props) => {
   return (
     <View style={styles.container}>
-      <HeaderBar text={text} />
+      <HeaderBar text={text} isBack={false} />
       <View style={[styles.container2]}>
         <Image
           source={require('../../assets/Image_Icon/oops.png')}

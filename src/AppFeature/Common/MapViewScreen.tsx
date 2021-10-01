@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import HeaderBarBack from '../../components/HeaderBarBack';
+import HeaderBar from '../../components/HeaderBar';
 import MapView, {Marker} from 'react-native-maps';
 import {AppNavigationProps} from '../../navigation/Routes';
 
@@ -15,7 +15,7 @@ const MapViewScreen = ({route}: AppNavigationProps<'MapView'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="MapView" />
+      <HeaderBar text="MapView" isBack={true} />
       <MapView region={region} style={styles.container2}>
         <Marker
           title={route.params.name}

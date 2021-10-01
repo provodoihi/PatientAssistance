@@ -12,7 +12,7 @@ import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {API_List} from '../../../API/apiList';
-import HeaderBarBack from '../../../components/HeaderBarBack';
+import HeaderBar from '../../../components/HeaderBar';
 
 const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
   // data for update profile submit
@@ -74,7 +74,7 @@ const AdminEditUserScreen = ({route}: AppNavigationProps<'AdminUserEdit'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="User Management" />
+      <HeaderBar text="User Management" isBack={true} />
       <View style={styles.container2}>
         <Image
           style={styles.img}

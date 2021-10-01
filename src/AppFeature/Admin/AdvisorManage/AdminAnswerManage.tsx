@@ -13,7 +13,7 @@ import {API_List} from '../../../API/apiList';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import {AppNavigationProps} from '../../../navigation/Routes';
-import HeaderBarBack from '../../../components/HeaderBarBack';
+import HeaderBar from '../../../components/HeaderBar';
 import showToastFail from '../../../components/ToastError';
 import ModalLoad from '../../../components/ModalLoad';
 
@@ -92,7 +92,7 @@ const AdminAnswerManageScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Advisor Management" />
+      <HeaderBar text="Advisor Management" isBack={true} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Image

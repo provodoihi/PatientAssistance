@@ -16,7 +16,7 @@ import {
 } from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {API_List} from '../../../API/apiList';
-import HeaderBarBack from '../../../components/HeaderBarBack';
+import HeaderBar from '../../../components/HeaderBar';
 import showToastFail from '../../../components/ToastError';
 
 const AdminLocationAddScreen = ({
@@ -82,7 +82,7 @@ const AdminLocationAddScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Location Management" />
+      <HeaderBar text="Location Management" isBack={true} />
       <ScrollView style={styles.scroll}>
         <View style={styles.container2}>
           <Image

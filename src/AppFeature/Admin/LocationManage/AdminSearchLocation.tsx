@@ -13,7 +13,7 @@ import {AppNavigationProps} from '../../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {API_List} from '../../../API/apiList';
 import axios from 'axios';
-import HeaderBarBack from '../../../components/HeaderBarBack';
+import HeaderBar from '../../../components/HeaderBar';
 import ModalLoad from '../../../components/ModalLoad';
 
 export const Notfound = () => {
@@ -71,7 +71,7 @@ const AdminSearchLocationScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Location Management" />
+      <HeaderBar text="Location Management" isBack={true} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <TextInput

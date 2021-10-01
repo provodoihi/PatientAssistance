@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import HeaderBarBack from '../../components/HeaderBarBack';
+import HeaderBar from '../../components/HeaderBar';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import {API_List} from '../../API/apiList';
@@ -99,7 +99,7 @@ const AdminAppointmentManageScreen = ({
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Appointment Management" />
+      <HeaderBar text="Appointment Management" isBack={true} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Image

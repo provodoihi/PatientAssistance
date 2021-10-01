@@ -14,7 +14,7 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import {API_List} from '../../../API/apiList';
 import axios from 'axios';
 import Modal from 'react-native-modal';
-import HeaderBarBack from '../../../components/HeaderBarBack';
+import HeaderBar from '../../../components/HeaderBar';
 import showToastFail from '../../../components/ToastError';
 import ModalLoad from '../../../components/ModalLoad';
 
@@ -109,7 +109,7 @@ const AdminListUserScreen = ({route}: AppNavigationProps<'AdminUserFind'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="User Management" />
+      <HeaderBar text="User Management" isBack={true} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <TextInput

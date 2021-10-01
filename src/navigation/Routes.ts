@@ -9,7 +9,6 @@ export type MainRoutes = {
 };
 
 export type AuthRoutes = {
-  Splash: undefined;
   Welcome: undefined;
   Login: undefined;
   Register: undefined;
@@ -20,19 +19,19 @@ export type AppRoutes = {
   Home: undefined;
   Location: undefined;
   HealthAdvisor: {token: string; name: string; role: string};
-  Admin: undefined;
-  Clinic: undefined;
-  Advisor: undefined;
+  Admin: {token: string; name: string; role: string; userID: string | number};
+  Clinic: {token: string; name: string; role: string; userID: string | number};
+  Advisor: {token: string; name: string; role: string; userID: string | number};
   BMI: undefined;
   Appointment: {token: string; name: string; role: string};
   Profile: {token: string; name: string; role: string};
   QAList: {token: string};
-  AppointmentList: {token: string; userID: string};
+  AppointmentList: {token: string; userID: string | number};
   AdvisorQuestionList: {token: string};
   AdvisorAnswer: {token: string};
   AdvisorAnswerList: {token: string};
-  ClinicAppointmentList: {token: string; userID: string};
-  ClinicAppointmentManage: {token: string; userID: string};
+  ClinicAppointmentList: {token: string; userID: string | number};
+  ClinicAppointmentManage: {token: string; userID: string | number};
   AdminUserManage: {token: string};
   AdminAppointmentManage: {token: string};
   AdminAdvisorManage: {token: string};

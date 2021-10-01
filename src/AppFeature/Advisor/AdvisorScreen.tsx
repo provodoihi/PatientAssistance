@@ -38,7 +38,7 @@ const AdvisorScreen = ({navigation}: AppNavigationProps<'Advisor'>) => {
   if (userRole === 'ROLE_ADVISOR') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="For Health Advisor" />
+        <HeaderBar text="For Health Advisor" isBack={false} />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
             <Text style={[styles.txt, styles.txtWelcome]}>

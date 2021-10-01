@@ -106,7 +106,7 @@ const HealthAdvisorScreen = ({
   if (userRole === 'ROLE_PATIENT') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="Health Advisor" />
+        <HeaderBar text="Health Advisor" isBack={false} />
         <View style={styles.container2}>
           <Image
             style={styles.img}

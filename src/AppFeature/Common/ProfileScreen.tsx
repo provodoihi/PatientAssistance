@@ -12,13 +12,13 @@ import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {API_List} from '../../API/apiList';
-import HeaderBarBack from '../../components/HeaderBarBack';
+import HeaderBarBack from '../../components/HeaderBar';
 import showToastFail from '../../components/ToastError';
 
-const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
-  const fullname = route.params.name;
-  const token = route.params.token;
-  const role = route.params.role;
+const ProfileScreen = ({navigation, route}: AppNavigationProps<'Profile'>) => {
+  const fullname: string = route.params.name;
+  const token: string = route.params.token;
+  const role: string = route.params.role;
 
   // init data for placeholder
   const [firstnameInit, setFirstname] = useState('');
@@ -37,7 +37,14 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
   const addressplace = `Address: ${addressInit}`;
   const ageplace = `Age: ${ageInit}`;
 
-  const updateProfileData = {
+  interface ProfileDataType {
+    firstname: string;
+    lastname: string;
+    address: string;
+    age: number | string;
+  }
+
+  const updateProfileData: ProfileDataType = {
     firstname: firstnameEdit,
     lastname: lastnameEdit,
     address: addressEdit,
@@ -52,7 +59,6 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log(response.data);
         setFirstname(response.data.firstname);
         setLastname(response.data.lastname);
         setAddress(response.data.address);
@@ -102,7 +108,7 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="Profile" />
+      <HeaderBarBack text="Profile" isBack={true} />
       <View style={styles.container2}>
         <Image
           style={styles.img}
@@ -157,6 +163,12 @@ const ProfileScreen = ({route}: AppNavigationProps<'Profile'>) => {
           activeOpacity={0.8}
           onPress={submit}>
           <Text style={[styles.txt, styles.txtButton]}>Update My Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, styles.shadow]}
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate('BMI')}>
+          <Text style={[styles.txt, styles.txtButton]}>My BMI</Text>
         </TouchableOpacity>
       </View>
     </View>

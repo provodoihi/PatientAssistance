@@ -1,20 +1,30 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  BackHandler,
+  Alert,
+} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBar from '../../components/HeaderBar';
 
 const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
-  const [fullname, setFullname] = useState('');
-  const [token, setToken] = useState('');
-  const [role, setRole] = useState('');
+  const [fullname, setFullname] = useState<string>('');
+  const [token, setToken] = useState<string>('');
+  const [role, setRole] = useState<string>('');
+  const [uid, setUid] = useState<string | number>('');
   useEffect(() => {
     const getData = async () => {
       try {
         const value = await AsyncStorage.getItem('token');
         const value2 = await AsyncStorage.getItem('name');
         const value3 = await AsyncStorage.getItem('role');
+        const value4 = await AsyncStorage.getItem('userID');
         if (value !== null) {
           setToken(value);
         }
@@ -24,16 +34,66 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
         if (value3 !== null) {
           setRole(value3);
         }
+        if (value4 !== null) {
+          setUid(value4);
+        }
       } catch (e) {
-        console.log('Error');
+        console.log(e);
       }
     };
     getData();
   }, []);
 
+  useEffect(() => {
+    if (role === 'ROLE_PATIENT') {
+    } else if (role === 'ROLE_CLINIC') {
+      navigation.navigate('Clinic', {
+        token: token,
+        name: fullname,
+        role: role,
+        userID: uid,
+      });
+    } else if (role === 'ROLE_ADMIN') {
+      navigation.navigate('Admin', {
+        token: token,
+        name: fullname,
+        role: role,
+        userID: uid,
+      });
+    } else if (role === 'ROLE_ADVISOR') {
+      navigation.navigate('Advisor', {
+        token: token,
+        name: fullname,
+        role: role,
+        userID: uid,
+      });
+    }
+  }, [fullname, navigation, role, token, uid]);
+
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Notification', 'Are you sure to exit the app?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()},
+      ]);
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
+
   return (
     <View style={styles.container}>
-      <HeaderBar text="Dashboard" />
+      <HeaderBar text="Dashboard" isBack={false} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
           <Text style={[styles.txt, styles.txtWelcome]}>

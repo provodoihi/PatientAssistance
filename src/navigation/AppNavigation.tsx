@@ -3,15 +3,12 @@ import React from 'react';
 // import
 import HomeScreen from '../AppFeature/Common/HomeScreen';
 import LocationScreen from '../AppFeature/Common/LocationScreen';
-import AdminScreen from '../AppFeature/Admin/AdminScreen';
 import BMIScreen from '../AppFeature/Common/BMIScreen';
 import AppointmentScreen from '../AppFeature/Patient/AppointmentScreen';
 import ProfileScreen from '../AppFeature/Common/ProfileScreen';
 import HealthAdvisorScreen from '../AppFeature/Patient/HealthAdvisorScreen';
 import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
 import AppointmentListScreen from '../AppFeature/Patient/AppointmentList';
-import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
-import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
 import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
 import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
 import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
@@ -41,18 +38,27 @@ import {
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
+import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
+import AdminScreen from '../AppFeature/Admin/AdminScreen';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
-const CustomDrawerContent = props => {
+type Item = {
+  name: string;
+};
+
+const CustomDrawerContent = (props: any) => {
   const {state, ...rest} = props;
   const newState = {...state};
   // filter the screen to not showing in drawer menu
   newState.routes = newState.routes.filter(
-    item =>
+    (item: Item) =>
       item.name !== 'Profile' &&
       item.name !== 'QAList' &&
       item.name !== 'MapView' &&
+      item.name !== 'Admin' &&
+      item.name !== 'Clinic' &&
+      item.name !== 'Advisor' &&
       item.name !== 'AppointmentList' &&
       item.name !== 'AdvisorQuestionList' &&
       item.name !== 'AdvisorAnswer' &&
@@ -110,6 +116,21 @@ const AppNavigation = () => {
         }}
       />
       <Drawer.Screen
+        name={'Admin'}
+        component={AdminScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'Clinic'}
+        component={ClinicScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
+        name={'Advisor'}
+        component={AdvisorScreen}
+        options={{gestureEnabled: false}}
+      />
+      <Drawer.Screen
         name={'HealthAdvisor'}
         component={HealthAdvisorScreen}
         initialParams={{token: '', name: '', role: ''}}
@@ -124,32 +145,6 @@ const AppNavigation = () => {
         options={{
           title: 'BMI Calculation',
           drawerIcon: () => <FontAwesome5 name="weight" size={24} />,
-        }}
-      />
-      <Drawer.Screen
-        name={'Admin'}
-        component={AdminScreen}
-        options={{
-          title: 'For Admin',
-          drawerIcon: () => (
-            <MaterialIcon name="admin-panel-settings" size={24} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name={'Clinic'}
-        component={ClinicScreen}
-        options={{
-          title: 'For Clinic',
-          drawerIcon: () => <FontAwesome5 name="clinic-medical" size={24} />,
-        }}
-      />
-      <Drawer.Screen
-        name={'Advisor'}
-        component={AdvisorScreen}
-        options={{
-          title: 'For Advisor',
-          drawerIcon: () => <MaterialCommunityIcons name="doctor" size={24} />,
         }}
       />
       <Drawer.Screen

@@ -1,15 +1,17 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation} from '@react-navigation/core';
-import {CommonActions, DrawerActions} from '@react-navigation/native';
+import {CommonActions} from '@react-navigation/native';
 import React from 'react';
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
   text: string;
+  isBack: boolean;
 }
 
-const HeaderBar = ({text}: Props) => {
+const HeaderBarBack = ({text, isBack}: Props) => {
   const navigation = useNavigation();
 
   const clearAll = async () => {
@@ -21,17 +23,22 @@ const HeaderBar = ({text}: Props) => {
     } catch (e) {
       // clear error
     }
-    console.log('Done.');
   };
 
   return (
     <View style={styles.headerBar}>
-      <TouchableOpacity
-        style={styles.button2}
-        activeOpacity={0.8}
-        onPress={() => navigation.dispatch(DrawerActions.toggleDrawer())}>
-        <Icon name="menu" size={24} />
-      </TouchableOpacity>
+      {isBack === true ? (
+        <TouchableOpacity
+          style={styles.button2}
+          activeOpacity={0.8}
+          onPress={() => navigation.goBack()}>
+          <Icon name="arrow-back" size={24} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity style={styles.button2} activeOpacity={0.8}>
+          <MaterialCommunityIcons name="home-plus" size={28} />
+        </TouchableOpacity>
+      )}
       <Text style={[styles.txt, styles.txtHeader]}>{text}</Text>
       <TouchableOpacity
         style={styles.button2}
@@ -88,4 +95,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HeaderBar;
+export default HeaderBarBack;

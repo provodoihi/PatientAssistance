@@ -1,45 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const AdminScreen = ({navigation}: AppNavigationProps<'Admin'>) => {
-  const [token, setToken] = useState('');
-  const [fullname, setFullName] = useState('');
-  const [userRole, setUserRole] = useState('');
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        if (token === '' || fullname === '' || userRole === '') {
-          const value = await AsyncStorage.getItem('token');
-          const value2 = await AsyncStorage.getItem('name');
-          const value3 = await AsyncStorage.getItem('role');
-          if (value !== null) {
-            setToken(value);
-          }
-          if (value2 !== null) {
-            setFullName(value2);
-          }
-          if (value3 !== null) {
-            setUserRole(value3);
-          }
-          console.log('note');
-        }
-      } catch (e) {
-        console.log('Error');
-      }
-    };
-    getData();
-  }, [fullname, token, userRole]);
+const AdminScreen = ({navigation, route}: AppNavigationProps<'Admin'>) => {
+  const token: string = route.params.token;
+  const fullname: string = route.params.name;
+  const userRole: string = route.params.role;
 
   if (userRole === 'ROLE_ADMIN') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="For Admin" />
+        <HeaderBar text="For Admin" isBack={false} />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
             <Text style={[styles.txt, styles.txtWelcome]}>
