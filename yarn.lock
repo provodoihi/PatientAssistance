@@ -990,9 +990,13 @@
   version "0.1.11"
   resolved "https://registry.npmjs.org/@react-native-community/masked-view/-/masked-view-0.1.11.tgz"
 
-"@react-native-picker/picker@^1.16.0", "@react-native-picker/picker@^1.8.3":
+"@react-native-picker/picker@^1.8.3":
   version "1.16.0"
   resolved "https://registry.npmjs.org/@react-native-picker/picker/-/picker-1.16.0.tgz"
+
+"@react-native-picker/picker@^2.2.1":
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-2.2.1.tgz#32b9f540d8e88a73d8856f73cca88251cecb9614"
 
 "@react-native/assets@1.0.0":
   version "1.0.0"
