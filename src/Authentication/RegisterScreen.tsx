@@ -4,8 +4,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  TextInput,
-  Alert,
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
@@ -14,62 +12,46 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import {AuthNavigationProps} from '../navigation/Routes';
 import {Picker} from '@react-native-picker/picker';
 import showToastFail from '../components/ToastError';
+import TextInputField from '../components/TextInputField';
+import {useForm} from 'react-hook-form';
+import {SignUpSchema} from '../components/SchemaValidate';
 
 const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [phone, setPhone] = useState('');
-  const [address, setAddress] = useState('');
-  const [sex, setSex] = useState('');
-  const [age, setAge] = useState('');
-  const role = 'patient';
+  const [sex, setSex] = useState<String>('');
+  const role: string[] = ['patient'];
+  interface SignUpDataProps {
+    username: string;
+    email: string;
+    password: string;
+    firstname: string;
+    lastname: string;
+    phone: string;
+    address: string;
+    age: string | number;
+  }
 
-  const signupData = {
-    username: username,
-    email: email,
-    password: pass,
-    firstname: firstname,
-    lastname: lastname,
-    phone: phone,
-    address: address,
-    sex: sex,
-    age: age,
-    role: [role],
-  };
+  const {control, handleSubmit} = useForm<SignUpDataProps>({
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+      firstname: '',
+      lastname: '',
+      phone: '',
+      address: '',
+      age: '',
+    },
+    resolver: SignUpSchema,
+  });
 
-  const signUp = () => {
-    if (
-      email === '' ||
-      pass === '' ||
-      username === '' ||
-      firstname === '' ||
-      lastname === '' ||
-      phone === '' ||
-      address === '' ||
-      age === '' ||
-      sex === ''
-    ) {
-      Alert.alert('Notification', 'Please fill sign up details', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
-    } else {
-      axios
-        .post(API_List.signup, signupData)
-        .then(response => {
-          console.log(JSON.stringify(response.data));
-        })
-        .then(() => navigation.navigate('SignupSuccess'))
-        .catch(() => {
-          showToastFail();
-        });
-    }
+  const onSubmit = (data: SignUpDataProps) => {
+    let signUpData = {...data, sex, role};
+    axios
+      .post(API_List.signup, signUpData)
+      .then(() => navigation.navigate('SignupSuccess'))
+      .catch(() => {
+        showToastFail();
+      });
   };
 
   return (
@@ -80,93 +62,66 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           Enter your sign up details to register your new account
         </Text>
 
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text1 => {
-            setUsername(text1);
-          }}
-          value={username}
+        <TextInputField
           placeholder="Username"
           placeholderTextColor="#9FA5AA"
           multiline={false}
+          controller={control}
+          name="username"
         />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text2 => {
-            setEmail(text2);
-          }}
-          value={email}
+        <TextInputField
           placeholder="Email"
           placeholderTextColor="#9FA5AA"
           keyboardType="email-address"
           multiline={false}
+          controller={control}
+          name="email"
         />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text3 => {
-            setPass(text3);
-          }}
-          value={pass}
+        <TextInputField
           placeholder="Password"
           placeholderTextColor="#9FA5AA"
           secureTextEntry={true}
           multiline={false}
+          controller={control}
+          name="password"
         />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text4 => {
-            setFirstname(text4);
-          }}
-          value={firstname}
+        <TextInputField
           placeholder="Firstname"
           placeholderTextColor="#9FA5AA"
           multiline={false}
+          controller={control}
+          name="firstname"
         />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text5 => {
-            setLastname(text5);
-          }}
-          value={lastname}
+        <TextInputField
           placeholder="Lastname"
           placeholderTextColor="#9FA5AA"
           multiline={false}
+          controller={control}
+          name="lastname"
         />
-
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text6 => {
-            setPhone(text6);
-          }}
-          value={phone}
+        <TextInputField
           placeholder="Phone"
           placeholderTextColor="#9FA5AA"
           keyboardType="phone-pad"
           multiline={false}
+          controller={control}
+          name="phone"
         />
-
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text7 => {
-            setAddress(text7);
-          }}
-          value={address}
+        <TextInputField
           placeholder="Address"
           placeholderTextColor="#9FA5AA"
           multiline={false}
+          controller={control}
+          name="address"
         />
-
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text8 => {
-            setAge(text8);
-          }}
-          value={age}
+        <TextInputField
           placeholder="Age"
           placeholderTextColor="#9FA5AA"
           multiline={false}
+          controller={control}
           maxLength={3}
           keyboardType="number-pad"
+          name="age"
         />
         <Picker
           onValueChange={value => setSex(value)}
@@ -181,7 +136,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
         <TouchableOpacity
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={signUp}>
+          onPress={handleSubmit(onSubmit)}>
           <Text style={[styles.txt, styles.txtButton]}>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -244,21 +199,6 @@ const styles = StyleSheet.create({
     padding: '2.5%',
     fontWeight: 'bold',
     color: '#ffffff',
-  },
-
-  txtInput: {
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-    borderColor: '#808080',
-    borderWidth: 1,
-    borderRadius: 25,
   },
 
   pick: {

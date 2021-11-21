@@ -78,7 +78,13 @@ const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           onPress: () => null,
           style: 'cancel',
         },
-        {text: 'YES', onPress: () => BackHandler.exitApp()},
+        {
+          text: 'YES',
+          onPress: async () => {
+            await AsyncStorage.clear();
+            BackHandler.exitApp();
+          },
+        },
       ]);
       return true;
     };

@@ -82,10 +82,10 @@ export const Overweight = () => {
 };
 
 const BMIScreen = () => {
-  const [isVisible, setVisible] = useState(false);
+  const [isVisible, setVisible] = useState<boolean>(false);
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
-  const [result, setResult] = useState(0);
+  const [result, setResult] = useState<number>(0);
 
   const toggleModal = () => {
     setVisible(false);

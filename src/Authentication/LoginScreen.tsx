@@ -1,12 +1,5 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  TextInput,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import axios from 'axios';
 import {AuthNavigationProps} from '../navigation/Routes';
 import {API_List} from '../API/apiList';
@@ -14,55 +7,55 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import {CommonActions} from '@react-navigation/routers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import ModalLoad from '../components/ModalLoad';
+import TextInputField from '../components/TextInputField';
+import {useForm} from 'react-hook-form';
+import {SignInSchema} from '../components/SchemaValidate';
 
 const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
-  const [username, setUsername] = useState('');
-  const [pass, setPass] = useState('');
-  const [isVisibleLoad, setVisibleLoad] = useState(false);
+  const [isVisibleLoad, setVisibleLoad] = useState<boolean>(false);
 
-  const signIn = () => {
-    if (username === '' || pass === '') {
-      Alert.alert('Notification', 'Please fill in account and password', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
-    } else {
-      setVisibleLoad(true);
-      axios
-        .post(API_List.login, {
-          username: username,
-          password: pass,
-        })
-        .then(response => {
-          console.log(JSON.stringify(response.data));
-          const id = JSON.stringify(response.data.id);
-          AsyncStorage.setItem('token', response.data.accessToken);
-          AsyncStorage.setItem('username', response.data.username);
-          AsyncStorage.setItem('userID', id);
-          AsyncStorage.setItem('name', response.data.fullname);
-          AsyncStorage.setItem('phone', response.data.phone);
-          AsyncStorage.setItem('role', response.data.roles[0]);
-          setVisibleLoad(false);
-        })
-        .then(() =>
-          navigation.dispatch(
-            CommonActions.reset({index: 0, routes: [{name: 'Main'}]}),
-          ),
-        )
-        .catch(() => {
-          setVisibleLoad(false);
-          Alert.alert('Notification', 'Invalid username or password', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
-        });
-    }
+  interface SignInDataProps {
+    username: string;
+    password: string;
+  }
+
+  const {control, handleSubmit} = useForm<SignInDataProps>({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+    resolver: SignInSchema,
+  });
+
+  const onSubmit = (data: SignInDataProps) => {
+    setVisibleLoad(true);
+    axios
+      .post(API_List.login, data)
+      .then(response => {
+        const id = JSON.stringify(response.data.id);
+        AsyncStorage.setItem('token', response.data.accessToken);
+        AsyncStorage.setItem('username', response.data.username);
+        AsyncStorage.setItem('userID', id);
+        AsyncStorage.setItem('name', response.data.fullname);
+        AsyncStorage.setItem('phone', response.data.phone);
+        AsyncStorage.setItem('role', response.data.roles[0]);
+        setVisibleLoad(false);
+      })
+      .then(() =>
+        navigation.dispatch(
+          CommonActions.reset({index: 0, routes: [{name: 'Main'}]}),
+        ),
+      )
+      .catch(() => {
+        setVisibleLoad(false);
+        Alert.alert('Error', 'Invalid username or password', [
+          {
+            text: 'OK',
+            onPress: () => null,
+            style: 'cancel',
+          },
+        ]);
+      });
   };
 
   return (
@@ -72,32 +65,26 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         Enter your sign in details to access your account
       </Text>
 
-      <TextInput
-        style={styles.txtInput}
-        onChangeText={text1 => {
-          setUsername(text1);
-        }}
-        value={username}
+      <TextInputField
         placeholder="Username"
         placeholderTextColor="#9FA5AA"
         multiline={false}
+        controller={control}
+        name="username"
       />
-      <TextInput
-        style={styles.txtInput}
-        onChangeText={text2 => {
-          setPass(text2);
-        }}
-        value={pass}
+      <TextInputField
         placeholder="Password"
         placeholderTextColor="#9FA5AA"
         secureTextEntry={true}
         multiline={false}
+        controller={control}
+        name="password"
       />
 
       <TouchableOpacity
         style={[styles.button, styles.shadow]}
         activeOpacity={0.8}
-        onPress={signIn}>
+        onPress={handleSubmit(onSubmit)}>
         <Text style={[styles.txt, styles.txtButton]}>Sign In</Text>
       </TouchableOpacity>
       <TouchableOpacity
@@ -160,21 +147,6 @@ const styles = StyleSheet.create({
     margin: '2%',
     width: '80%',
     color: '#4c4c4c',
-  },
-
-  txtInput: {
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-    borderColor: '#808080',
-    borderWidth: 1,
-    borderRadius: 25,
   },
 
   button: {

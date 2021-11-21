@@ -21,21 +21,21 @@ const ProfileScreen = ({navigation, route}: AppNavigationProps<'Profile'>) => {
   const role: string = route.params.role;
 
   // init data for placeholder
-  const [firstnameInit, setFirstname] = useState('');
-  const [lastnameInit, setLastname] = useState('');
-  const [ageInit, setAge] = useState('');
-  const [addressInit, setAddress] = useState('');
+  const [firstnameInit, setFirstname] = useState<string>('');
+  const [lastnameInit, setLastname] = useState<string>('');
+  const [ageInit, setAge] = useState<string | number>('');
+  const [addressInit, setAddress] = useState<string>('');
 
   // data for update profile submit
-  const [firstnameEdit, setFirstnameEdit] = useState('');
-  const [lastnameEdit, setLastnameEdit] = useState('');
+  const [firstnameEdit, setFirstnameEdit] = useState<string>('');
+  const [lastnameEdit, setLastnameEdit] = useState<string>('');
   const [ageEdit, setAgeEdit] = useState('');
-  const [addressEdit, setAddressEdit] = useState('');
+  const [addressEdit, setAddressEdit] = useState<string>('');
 
-  const f1nameplace = `Firstname: ${firstnameInit}`;
-  const f2nameplace = `Lastname: ${lastnameInit}`;
-  const addressplace = `Address: ${addressInit}`;
-  const ageplace = `Age: ${ageInit}`;
+  const f1nameplace: string = `Firstname: ${firstnameInit}`;
+  const f2nameplace: string = `Lastname: ${lastnameInit}`;
+  const addressplace: string = `Address: ${addressInit}`;
+  const ageplace: string = `Age: ${ageInit}`;
 
   interface ProfileDataType {
     firstname: string;
@@ -51,6 +51,7 @@ const ProfileScreen = ({navigation, route}: AppNavigationProps<'Profile'>) => {
     age: ageEdit,
   };
 
+  // get profile
   useEffect(() => {
     const getProfile = async () => {
       try {
@@ -211,9 +212,10 @@ const styles = StyleSheet.create({
     width: '80%',
     margin: '2%',
     paddingLeft: '4%',
+    paddingVertical: '1.5%',
     borderColor: '#808080',
     borderWidth: 1,
-    borderRadius: 25,
+    borderRadius: 24,
   },
 
   txt: {

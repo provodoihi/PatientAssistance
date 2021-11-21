@@ -16,7 +16,7 @@ const Oops = ({text}: Props) => {
           source={require('../../assets/Image_Icon/oops.png')}
           style={styles.img}
         />
-        <Text style={styles.txtOops}>This function {text} only</Text>
+        <Text style={styles.txtOops}>This function is {text} only</Text>
       </View>
     </View>
   );

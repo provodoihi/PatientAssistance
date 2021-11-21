@@ -114,7 +114,7 @@ const AppointmentScreen = ({
   if (userRole === 'ROLE_PATIENT') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="Appointment" />
+        <HeaderBar text="Appointment" isBack={false} />
 
         <ScrollView style={styles.container2}>
           <View style={styles.child}>

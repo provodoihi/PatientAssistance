@@ -51,10 +51,10 @@ interface ListItem {
 }
 
 const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
-  const [keyword, setKeyword] = useState('');
+  const [keyword, setKeyword] = useState<string>('');
   const [data, setData] = useState([]);
-  const [status, setStatus] = useState(0);
-  const [isVisible, setVisible] = useState(false);
+  const [status, setStatus] = useState<number>(0);
+  const [isVisible, setVisible] = useState<boolean>(false);
 
   const editdone = async () => {
     try {
