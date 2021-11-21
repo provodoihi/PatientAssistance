@@ -1,11 +1,5 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {StyleSheet, Text, View, ScrollView} from 'react-native';
 import axios from 'axios';
 import {API_List} from '../API/apiList';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
@@ -15,6 +9,8 @@ import showToastFail from '../components/ToastError';
 import TextInputField from '../components/TextInputField';
 import {useForm} from 'react-hook-form';
 import {SignUpSchema} from '../components/SchemaValidate';
+import Button from '../components/Button';
+import TextNavigation from '../components/TextNavigation';
 
 const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
   const [sex, setSex] = useState<String>('');
@@ -133,19 +129,15 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           <Picker.Item label="Female" value="Female" />
           <Picker.Item label="Other" value="Other" />
         </Picker>
-        <TouchableOpacity
-          style={[styles.button, styles.shadow]}
+        <Button
           activeOpacity={0.8}
-          onPress={handleSubmit(onSubmit)}>
-          <Text style={[styles.txt, styles.txtButton]}>Sign Up</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate('Login')}>
-          <Text style={[styles.txt, styles.txtNavigate]}>
-            Already have an account? Sign In
-          </Text>
-        </TouchableOpacity>
+          onPress={handleSubmit(onSubmit)}
+          text="Sign Up"
+        />
+        <TextNavigation
+          text="Already have an account? Sign In"
+          onPress={() => navigation.navigate('Login')}
+        />
       </ScrollView>
     </View>
   );
@@ -162,10 +154,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  img: {
-    margin: 15,
-  },
-
   txt: {
     margin: '1.5%',
     alignSelf: 'center',
@@ -180,25 +168,11 @@ const styles = StyleSheet.create({
     color: '#4c4c4c',
   },
 
-  txtNavigate: {
-    padding: '1.5%',
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#00BFFF',
-  },
-
   txtDescribe: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'normal',
     color: '#8B959E',
-  },
-
-  txtButton: {
-    fontSize: rf(2.6),
-    padding: '2.5%',
-    fontWeight: 'bold',
-    color: '#ffffff',
   },
 
   pick: {
@@ -209,27 +183,6 @@ const styles = StyleSheet.create({
     width: '80%',
     margin: '2%',
     paddingLeft: '4%',
-  },
-
-  button: {
-    backgroundColor: '#00BFFF',
-    margin: '3%',
-    borderRadius: 25,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  shadow: {
-    shadowColor: '#00BFFF',
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.41,
-    shadowRadius: 9.11,
-
-    elevation: 14,
   },
 });
 

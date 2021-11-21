@@ -5,6 +5,7 @@ import {
   TextInputProps,
   Text,
   KeyboardTypeOptions,
+  TextStyle,
 } from 'react-native';
 import {Controller, Control} from 'react-hook-form';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
@@ -12,35 +13,49 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 interface TextInputFieldProps extends TextInputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
-  onChangeText?: () => void;
   multiline?: boolean;
   maxLength?: number;
   placeholderTextColor?: string;
   keyboardType?: KeyboardTypeOptions;
   controller?: Control<any>;
   defaultValue?: string;
+  style?: TextStyle | TextStyle[];
   name: string;
 }
 
 const TextInputField = (props: TextInputFieldProps) => {
+  const {
+    placeholder,
+    secureTextEntry,
+    maxLength,
+    multiline,
+    placeholderTextColor,
+    keyboardType,
+    controller,
+    defaultValue,
+    style,
+    name,
+    ...restProps
+  } = props;
   return (
     <Controller
-      control={props.controller}
-      name={props.name}
+      control={controller}
+      name={name}
       render={({field: {onChange, value}, fieldState: {error}}) => {
         return (
           <>
             <TextInput
-              style={styles.txtInput}
+              style={StyleSheet.flatten([style, styles.txtInput])}
               onChangeText={onChange}
               value={value}
-              defaultValue={props.defaultValue}
-              placeholder={props.placeholder}
-              placeholderTextColor={props.placeholderTextColor}
-              keyboardType={props.keyboardType}
-              maxLength={props.maxLength}
-              multiline={props.multiline}
-              secureTextEntry={props.secureTextEntry}
+              defaultValue={defaultValue}
+              placeholder={placeholder}
+              placeholderTextColor={placeholderTextColor}
+              keyboardType={keyboardType}
+              maxLength={maxLength}
+              multiline={multiline}
+              secureTextEntry={secureTextEntry}
+              {...restProps}
             />
             {error && (
               <Text style={styles.txtError}>This field is required</Text>

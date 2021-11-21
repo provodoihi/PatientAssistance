@@ -1,7 +1,8 @@
 import React from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {AuthNavigationProps} from '../navigation/Routes';
 import {responsiveFontSize as rf} from 'react-native-responsive-dimensions';
+import Button from '../components/Button';
 
 const SignupSuccessScreen = ({
   navigation,
@@ -13,12 +14,11 @@ const SignupSuccessScreen = ({
         source={require('../../assets/Image_Icon/check.png')}
       />
       <Text style={styles.txt}>Sign Up Success</Text>
-      <TouchableOpacity
-        style={[styles.button, styles.shadow]}
+      <Button
         activeOpacity={0.8}
-        onPress={() => navigation.navigate('Login')}>
-        <Text style={[styles.txt, styles.txtButton]}>Sign In Now</Text>
-      </TouchableOpacity>
+        onPress={() => navigation.navigate('Login')}
+        text="Sign In Now"
+      />
     </View>
   );
 };
@@ -51,27 +51,6 @@ const styles = StyleSheet.create({
     padding: '2.5%',
     fontWeight: 'bold',
     color: '#ffffff',
-  },
-
-  button: {
-    backgroundColor: '#00BFFF',
-    margin: '3%',
-    borderRadius: 25,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  shadow: {
-    shadowColor: '#00BFFF',
-    shadowOffset: {
-      width: 0,
-      height: 7,
-    },
-    shadowOpacity: 0.41,
-    shadowRadius: 9.11,
-
-    elevation: 14,
   },
 });
 
