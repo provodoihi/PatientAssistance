@@ -12,8 +12,7 @@ import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {API_List} from '../../API/apiList';
-import HeaderBarBack from '../../components/HeaderBar';
-import showToastFail from '../../components/ToastError';
+import {HeaderBar, showToast} from '../../components';
 
 const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
   // data for update profile submit
@@ -60,14 +59,14 @@ const AdvisorAnswerScreen = ({route}: AppNavigationProps<'AdvisorAnswer'>) => {
           ]);
         })
         .catch(() => {
-          showToastFail();
+          showToast('Something went wrong');
         });
     }
   };
 
   return (
     <View style={styles.container}>
-      <HeaderBarBack text="For Health Advisor" />
+      <HeaderBar text="For Health Advisor" isBack={true}/>
       <View style={styles.container2}>
         <Image
           style={styles.img}

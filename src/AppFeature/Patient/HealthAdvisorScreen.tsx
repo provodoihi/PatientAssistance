@@ -11,11 +11,10 @@ import {
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import axios from 'axios';
-import {API_List} from '../../API/apiList';
-import showToastFail from '../../components/ToastError';
+import {API_List} from '../../API';
+import {showToastFail, HeaderBar} from '../../components';
 
 const HealthAdvisorScreen = ({
   navigation,
@@ -106,7 +105,7 @@ const HealthAdvisorScreen = ({
   if (userRole === 'ROLE_PATIENT') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="Health Advisor" isBack={false} />
+        <HeaderBar text="Health Advice" isBack={true} />
         <View style={styles.container2}>
           <Image
             style={styles.img}

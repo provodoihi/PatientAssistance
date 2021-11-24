@@ -1,25 +1,27 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, Image} from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import HeaderBar from '../../components/HeaderBar';
 import Modal from 'react-native-modal';
+import {
+  BMICalculateSchema,
+  Button,
+  TextInputField,
+  HeaderBar,
+} from '../../components';
+import {commonScreenStyle as style} from './style';
+import {
+  pic_diet,
+  pic_exercise,
+  pic_fireworks,
+  pic_bmiBig,
+} from '../../../assets';
+import {useForm} from 'react-hook-form';
 
 export const Normal = () => {
   return (
     <View style={styles.modalOptional}>
       <Text style={styles.txtModal}>You are Normal</Text>
-      <Image
-        style={styles.imgModal}
-        source={require('../../../assets/Image_Icon/fireworks.png')}
-      />
+      <Image style={styles.imgModal} source={pic_fireworks} />
       <Text style={styles.txtModal}>Congratulation</Text>
     </View>
   );
@@ -32,10 +34,7 @@ export const Underweight = () => {
       <Text style={styles.txtModal}>Some Guidelines</Text>
       <View style={[styles.buttonModal, styles.shadowGray]}>
         <View style={styles.rowButton}>
-          <Image
-            style={styles.iconButton}
-            source={require('../../../assets/Image_Icon/diet.png')}
-          />
+          <Image style={styles.iconButton} source={pic_diet} />
           <Text style={styles.txtName}>
             Eat more and choose nutrient-rich foods
           </Text>
@@ -43,10 +42,7 @@ export const Underweight = () => {
       </View>
       <View style={[styles.buttonModal, styles.shadowGray]}>
         <View style={styles.rowButton}>
-          <Image
-            style={styles.iconButton}
-            source={require('../../../assets/Image_Icon/exercise.png')}
-          />
+          <Image style={styles.iconButton} source={pic_exercise} />
           <Text style={styles.txtName}>Excercise to build up your muscles</Text>
         </View>
       </View>
@@ -61,19 +57,13 @@ export const Overweight = () => {
       <Text style={styles.txtModal}>Some Guidelines</Text>
       <View style={[styles.buttonModal, styles.shadowGray]}>
         <View style={styles.rowButton}>
-          <Image
-            style={styles.iconButton}
-            source={require('../../../assets/Image_Icon/diet.png')}
-          />
+          <Image style={styles.iconButton} source={pic_diet} />
           <Text style={styles.txtName}>Choose healthy eating plan</Text>
         </View>
       </View>
       <View style={[styles.buttonModal, styles.shadowGray]}>
         <View style={styles.rowButton}>
-          <Image
-            style={styles.iconButton}
-            source={require('../../../assets/Image_Icon/exercise.png')}
-          />
+          <Image style={styles.iconButton} source={pic_exercise} />
           <Text style={styles.txtName}>Excercise more to lose weight</Text>
         </View>
       </View>
@@ -81,66 +71,60 @@ export const Overweight = () => {
   );
 };
 
-const BMIScreen = () => {
+export const BMIScreen = () => {
   const [isVisible, setVisible] = useState<boolean>(false);
-  const [height, setHeight] = useState('');
-  const [weight, setWeight] = useState('');
   const [result, setResult] = useState<number>(0);
 
   const toggleModal = () => {
     setVisible(false);
   };
 
-  const editdone = () => {
-    if (height === '' || weight === '') {
-      Alert.alert('Notification', 'Please fill in weight and height', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
-    } else {
-      setResult(
-        (weight as unknown as number) /
-          Math.pow((height as unknown as number) / 100, 2),
-      );
-      setVisible(true);
-    }
+  interface BMICalculationProps {
+    weight: string | number;
+    height: string | number;
+  }
+
+  const {control, handleSubmit} = useForm<BMICalculationProps>({
+    defaultValues: {
+      weight: '',
+      height: '',
+    },
+    resolver: BMICalculateSchema,
+  });
+
+  const onSubmit = (data: BMICalculationProps) => {
+    setResult(
+      (data.weight as unknown as number) /
+        Math.pow((data.height as unknown as number) / 100, 2),
+    );
+    setVisible(true);
   };
 
   return (
-    <View style={styles.container}>
-      <HeaderBar text="BMI Calculator" isBack={false} />
-      <View style={styles.container2}>
-        <Image
-          style={styles.img}
-          source={require('../../../assets/Image_Icon/bmi_big.png')}
-        />
+    <View style={style.container}>
+      <HeaderBar text="BMI Calculator" isBack={true} />
+      <View style={style.container2}>
+        <Image style={style.image} source={pic_bmiBig} />
         <Text style={[styles.txt, styles.txtTitle]}>
           Calculate your BMI Metric
         </Text>
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text1 => {
-            setWeight(text1);
-          }}
-          value={weight}
+        <TextInputField
           placeholder="Weight (kilograms)"
           placeholderTextColor="#9FA5AA"
           keyboardType="numeric"
           multiline={false}
+          controller={control}
+          name="weight"
+          isErrorField={true}
         />
-        <TextInput
-          style={styles.txtInput}
-          onChangeText={text2 => {
-            setHeight(text2);
-          }}
-          value={height}
+        <TextInputField
           placeholder="Height (centimeters)"
           placeholderTextColor="#9FA5AA"
           keyboardType="numeric"
           multiline={false}
+          controller={control}
+          name="height"
+          isErrorField={true}
         />
 
         <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
@@ -153,20 +137,22 @@ const BMIScreen = () => {
             ) : (
               <Normal />
             )}
-            <TouchableOpacity
+            <Button
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={toggleModal}>
-              <Text style={[styles.txt, styles.txtButton]}>Close</Text>
-            </TouchableOpacity>
+              onPress={toggleModal}
+              text="Close"
+              textStyle={[styles.txt, styles.txtButton]}
+            />
           </View>
         </Modal>
-        <TouchableOpacity
+        <Button
           style={[styles.button, styles.shadow]}
           activeOpacity={0.8}
-          onPress={editdone}>
-          <Text style={[styles.txt, styles.txtButton]}>Calulate Now</Text>
-        </TouchableOpacity>
+          onPress={handleSubmit(onSubmit)}
+          text="Calulate Now"
+          textStyle={[styles.txt, styles.txtButton]}
+        />
       </View>
     </View>
   );
@@ -332,5 +318,3 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
-
-export default BMIScreen;

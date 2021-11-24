@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
-import {StyleSheet, Text, View, Image, Alert, BackHandler} from 'react-native';
+import {Text, View, Image, Alert, BackHandler} from 'react-native';
 import {AuthNavigationProps} from '../navigation/Routes';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import Button from '../components/Button';
-import TextNavigation from '../components/TextNavigation';
+import {Button, TextNavigation} from '../components';
+import {authScreenStyle as style} from './style';
+import {pic_healthCare256} from '../../assets';
 
-const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
+export const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
   useEffect(() => {
     const backAction = () => {
       Alert.alert('Notification', 'Are you sure to exit the app?', [
@@ -28,19 +28,18 @@ const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
   }, []);
 
   return (
-    <View style={styles.container}>
-      <Image
-        style={styles.img}
-        source={require('../../assets/Image_Icon/healthcare256.png')}
-      />
+    <View style={style.container}>
+      <Image style={style.image} source={pic_healthCare256} />
 
-      <Text style={[styles.txt, styles.txtHead]}>
+      <Text style={[style.txt, style.txtHeading]}>
         Welcome to {'\n'} Patient Assitance
       </Text>
-      <Text style={[styles.txt, styles.txtNormal]}>
+      <Text style={[style.txt, style.txtDescription]}>
         Your trustworthy healthcare solution
       </Text>
       <Button
+        style={[style.button, style.buttonShadow]}
+        textStyle={style.txtButton}
         activeOpacity={0.8}
         onPress={() => navigation.navigate('Register')}
         text="Get Started"
@@ -52,42 +51,3 @@ const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-
-  img: {
-    resizeMode: 'contain',
-    margin: '2%',
-    height: '35%',
-    width: '35%',
-  },
-
-  txt: {
-    margin: '1.5%',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    textAlign: 'center',
-  },
-
-  txtNormal: {
-    padding: '1.5%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#8B959E',
-  },
-
-  txtHead: {
-    padding: '1.5%',
-    fontSize: rf(2.7),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-});
-
-export default WelcomeScreen;

@@ -14,7 +14,7 @@ import axios from 'axios';
 import {Picker} from '@react-native-picker/picker';
 import HeaderBar from '../../components/HeaderBar';
 import {API_List} from '../../API/apiList';
-import showToastFail from '../../components/ToastError';
+import showToastFail from '../../components/ToastMessage';
 
 const ClinicAppointmentManageScreen = ({
   route,

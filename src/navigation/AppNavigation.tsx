@@ -1,11 +1,13 @@
 import React from 'react';
 
 // import
-import HomeScreen from '../AppFeature/Common/HomeScreen';
-import LocationScreen from '../AppFeature/Common/LocationScreen';
-import BMIScreen from '../AppFeature/Common/BMIScreen';
-import AppointmentScreen from '../AppFeature/Patient/AppointmentScreen';
-import ProfileScreen from '../AppFeature/Common/ProfileScreen';
+import {
+  HomeScreen,
+  LocationScreen,
+  BMIScreen,
+  ProfileScreen,
+  MapViewScreen,
+} from '../AppFeature/Common';
 import HealthAdvisorScreen from '../AppFeature/Patient/HealthAdvisorScreen';
 import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
 import AppointmentListScreen from '../AppFeature/Patient/AppointmentList';
@@ -18,7 +20,6 @@ import AdminUserManageScreen from '../AppFeature/Admin/AdminUserManageScreen';
 import AdminAppointmentManageScreen from '../AppFeature/Admin/AdminAppointmentManageScreen';
 import AdminAdvisorManageScreen from '../AppFeature/Admin/AdminAdvisorManageScreen';
 import AdminLocationManageScreen from '../AppFeature/Admin/AdminLocationManageScreen';
-import MapViewScreen from '../AppFeature/Common/MapViewScreen';
 import AdminSearchLocationScreen from '../AppFeature/Admin/LocationManage/AdminSearchLocation';
 import AdminLocationAddScreen from '../AppFeature/Admin/LocationManage/AdminAddLocation';
 import AdminLocationEditScreen from '../AppFeature/Admin/LocationManage/AdminEditLocation';
@@ -41,6 +42,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
 import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
 import AdminScreen from '../AppFeature/Admin/AdminScreen';
+import AppointmentScreen from '../AppFeature/Patient/AppointmentScreen';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 type Item = {
@@ -85,7 +87,7 @@ const CustomDrawerContent = (props: any) => {
   );
 };
 
-const AppNavigation = () => {
+export const AppNavigation = () => {
   return (
     <Drawer.Navigator
       initialRouteName={'Home'}

@@ -15,7 +15,7 @@ import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
 import HeaderBarBack from '../../components/HeaderBar';
 import Modal from 'react-native-modal';
-import showToastFail from '../../components/ToastError';
+import showToastFail from '../../components/ToastMessage';
 
 const AdvisorAnswerListScreen = ({
   route,

@@ -3,45 +3,45 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   Image,
-  TextInput,
   FlatList,
   ListRenderItemInfo,
 } from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../../API/apiList';
+import {API_List} from '../../API';
 import axios from 'axios';
-import HeaderBar from '../../components/HeaderBar';
-import showToastFail from '../../components/ToastError';
-import ModalLoad from '../../components/ModalLoad';
+import {
+  showToast,
+  ModalLoad,
+  TextInputField,
+  SearchSchema,
+  ListItem,
+  HeaderBar,
+} from '../../components';
+import {useForm} from 'react-hook-form';
+import {commonScreenStyle as style} from './style';
+import {pic_hospital, pic_notFound, pic_search} from '../../../assets';
 
-export const Notfound = () => {
+const Notfound = () => {
   return (
-    <View style={styles.midScreen}>
-      <Image
-        style={styles.img}
-        source={require('../../../assets/Image_Icon/notfound.png')}
-      />
+    <View style={style.midLocationScreen}>
+      <Image style={style.image} source={pic_notFound} />
       <Text style={styles.txtNotfound}>Not found</Text>
     </View>
   );
 };
 
-export const Init = () => {
+const Init = () => {
   return (
-    <View style={styles.midScreen}>
-      <Image
-        style={styles.img}
-        source={require('../../../assets/Image_Icon/search.png')}
-      />
+    <View style={style.midLocationScreen}>
+      <Image style={style.image} source={pic_search} />
       <Text style={styles.txtMid}>Search hospitals and clinics</Text>
     </View>
   );
 };
 
-interface ListItem {
+interface LocationListItem {
   id: number | string;
   name: string;
   latitude: number;
@@ -50,73 +50,78 @@ interface ListItem {
   phone: string;
 }
 
-const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
-  const [keyword, setKeyword] = useState<string>('');
-  const [data, setData] = useState([]);
+export const LocationScreen = ({
+  navigation,
+}: AppNavigationProps<'Location'>) => {
+  const [data, setData] = useState<Array<LocationListItem>>([]);
   const [status, setStatus] = useState<number>(0);
   const [isVisible, setVisible] = useState<boolean>(false);
 
-  const editdone = async () => {
+  interface SearchProps {
+    keyword: string;
+  }
+
+  const {control, handleSubmit} = useForm<SearchProps>({
+    defaultValues: {
+      keyword: '',
+    },
+    resolver: SearchSchema,
+  });
+
+  const onSubmit = async (search: SearchProps) => {
     try {
       setVisible(true);
-      let response = await axios.get(API_List.filterLocation + keyword);
+      let response = await axios.get(API_List.filterLocation + search.keyword);
       setStatus(response.status);
       setData(response.data);
       setVisible(false);
     } catch (error) {
       setVisible(false);
-      showToastFail();
+      showToast('Something went wrong');
     }
   };
 
+  const renderItem = ({item}: ListRenderItemInfo<LocationListItem>) => {
+    return (
+      <ListItem
+        style={[style.buttonNoColor, style.shadowGray]}
+        activeOpacity={0.8}
+        onPress={() => {
+          navigation.navigate('MapView', {
+            name: item.name,
+            latitude: item.latitude,
+            longtitude: item.longtitude,
+          });
+        }}
+        imageSource={pic_hospital}>
+        <Text style={styles.txtName}>{item.name}</Text>
+        <Text style={styles.txtNormal2}>{item.address}</Text>
+        <Text style={styles.txtNormal2}>{item.phone}</Text>
+      </ListItem>
+    );
+  };
+
   return (
-    <View style={styles.container}>
-      <HeaderBar text="Find Hospital Clinic" isBack={false} />
-      <View style={styles.container2}>
-        <View style={styles.topScreen}>
-          <TextInput
-            style={styles.txtInput}
-            onChangeText={text => {
-              setKeyword(text);
-            }}
-            value={keyword}
-            onSubmitEditing={editdone}
+    <View style={style.container}>
+      <HeaderBar text="Find Hospital Clinic" isBack={true} />
+      <View style={style.container2}>
+        <ModalLoad isVisibleLoad={isVisible} />
+        <View style={style.topLocationScreen}>
+          <TextInputField
+            onSubmitEditing={handleSubmit(onSubmit)}
             placeholder="Search here"
             placeholderTextColor="#9FA5AA"
             multiline={false}
+            controller={control}
+            isErrorField={false}
+            name="keyword"
           />
         </View>
         {status === 200 ? (
-          <View style={styles.midScreen}>
+          <View style={style.midLocationScreen}>
             <FlatList
               data={data}
-              renderItem={({item}: ListRenderItemInfo<ListItem>) => {
-                return (
-                  <TouchableOpacity
-                    style={[styles.button, styles.shadow]}
-                    activeOpacity={0.8}
-                    onPress={() =>
-                      navigation.navigate('MapView', {
-                        name: item.name,
-                        latitude: item.latitude,
-                        longtitude: item.longtitude,
-                      })
-                    }>
-                    <View style={styles.rowButton}>
-                      <Image
-                        style={styles.iconButton}
-                        source={require('../../../assets/Image_Icon/hospital.png')}
-                      />
-
-                      <View style={styles.col}>
-                        <Text style={styles.txtName}>{item.name}</Text>
-                        <Text style={styles.txtNormal2}>{item.address}</Text>
-                        <Text style={styles.txtNormal2}>{item.phone}</Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                );
-              }}
+              renderItem={renderItem}
               keyExtractor={item => `row-${item.id}`}
             />
           </View>
@@ -125,82 +130,12 @@ const LocationScreen = ({navigation}: AppNavigationProps<'Location'>) => {
         ) : (
           <Init />
         )}
-        <ModalLoad isVisibleLoad={isVisible} />
       </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  container2: {
-    flex: 0.93,
-    backgroundColor: '#fff',
-  },
-
-  topScreen: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 0.1,
-  },
-
-  midScreen: {
-    flex: 0.9,
-    justifyContent: 'center',
-    alignItems: 'center',
-    alignContent: 'center',
-    backgroundColor: '#ffffff',
-  },
-
-  div1: {
-    flexDirection: 'column',
-    margin: '1.5%',
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-
-  div2: {
-    flex: 0.3,
-  },
-
-  txtInput: {
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-    borderColor: '#808080',
-    borderWidth: 1,
-    borderRadius: 25,
-  },
-
-  txt: {
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-
-  txtHeader: {
-    margin: '1%',
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-
-  txtWelcome: {
-    margin: '2%',
-    marginLeft: '4%',
-    fontSize: rf(2.7),
-    fontWeight: 'bold',
-    color: '#ffffff',
-    textAlign: 'left',
-  },
-
   txtMid: {
     margin: '2%',
     fontSize: rf(2),
@@ -241,96 +176,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
-
-  txtButton: {
-    padding: '4%',
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    // alignSelf: 'center',
-  },
-
-  txtButtonSmall: {
-    fontSize: rf(1.8),
-    padding: '5%',
-    fontWeight: 'normal',
-    color: '#ffffff',
-  },
-
-  button: {
-    margin: '2.5%',
-    marginBottom: '5%',
-    width: '90%',
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#ffffff',
-  },
-
-  buttonSmall: {
-    margin: '1.5%',
-    width: '100%',
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignSelf: 'center',
-    backgroundColor: '#59ADFF',
-  },
-
-  button2: {
-    margin: '1%',
-  },
-
-  row: {
-    flexDirection: 'row',
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
-  rowButton: {
-    flexDirection: 'row',
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-
-  col: {
-    flexDirection: 'column',
-    margin: '1%',
-    justifyContent: 'flex-start',
-    alignContent: 'flex-start',
-    maxWidth: '80%',
-  },
-
-  shadow: {
-    shadowColor: '#a2a2a2',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-
-  img: {
-    width: '35%',
-    height: '35%',
-    resizeMode: 'contain',
-  },
-
-  row2: {
-    flex: 0.75,
-  },
-
-  iconButton: {
-    width: '16%',
-    height: '60%',
-    margin: '1.5%',
-    resizeMode: 'contain',
-  },
 });
-
-export default LocationScreen;

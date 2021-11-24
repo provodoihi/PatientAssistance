@@ -1,6 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useNavigation} from '@react-navigation/core';
-import {CommonActions} from '@react-navigation/native';
+import {useNavigation, CommonActions} from '@react-navigation/native';
 import React from 'react';
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -11,7 +10,7 @@ interface Props {
   isBack: boolean;
 }
 
-const HeaderBarBack = ({text, isBack}: Props) => {
+export const HeaderBar = ({text, isBack}: Props) => {
   const navigation = useNavigation();
 
   const clearAll = async () => {
@@ -94,5 +93,3 @@ const styles = StyleSheet.create({
     margin: '1%',
   },
 });
-
-export default HeaderBarBack;

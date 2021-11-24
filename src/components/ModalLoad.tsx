@@ -6,7 +6,7 @@ interface Props {
   isVisibleLoad: boolean;
 }
 
-const ModalLoad = ({isVisibleLoad}: Props) => {
+export const ModalLoad = ({isVisibleLoad}: Props) => {
   return (
     <Modal isVisible={isVisibleLoad}>
       <View style={styles.modalLoad}>
@@ -28,7 +28,6 @@ const styles = StyleSheet.create({
     flex: 0.25,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
   },
 });
-
-export default ModalLoad;

@@ -13,7 +13,7 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 import axios from 'axios';
 import {API_List} from '../../../API/apiList';
 import HeaderBar from '../../../components/HeaderBar';
-import showToastFail from '../../../components/ToastError';
+import showToastFail from '../../../components/ToastMessage';
 
 const AdminLocationEditScreen = ({
   route,

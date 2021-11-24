@@ -8,10 +8,10 @@ import {
   FlatList,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../../API/apiList';
+import {API_List} from '../../API';
 import axios from 'axios';
 import {AppNavigationProps} from '../../navigation/Routes';
-import HeaderBar from '../../components/HeaderBar';
+import {HeaderBar} from '../../components';
 
 const HealthAdvisorListScreen = ({route}: AppNavigationProps<'QAList'>) => {
   const [data, setData] = useState([]);

@@ -15,7 +15,7 @@ import {API_List} from '../../../API/apiList';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import HeaderBar from '../../../components/HeaderBar';
-import showToastFail from '../../../components/ToastError';
+import showToastFail from '../../../components/ToastMessage';
 import ModalLoad from '../../../components/ModalLoad';
 
 export const Notfound = () => {

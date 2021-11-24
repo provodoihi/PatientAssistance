@@ -1,18 +1,22 @@
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, ScrollView} from 'react-native';
+import {Text, View, ScrollView} from 'react-native';
 import axios from 'axios';
-import {API_List} from '../API/apiList';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {API_List} from '../API';
 import {AuthNavigationProps} from '../navigation/Routes';
 import {Picker} from '@react-native-picker/picker';
-import showToastFail from '../components/ToastError';
-import TextInputField from '../components/TextInputField';
 import {useForm} from 'react-hook-form';
-import {SignUpSchema} from '../components/SchemaValidate';
-import Button from '../components/Button';
-import TextNavigation from '../components/TextNavigation';
+import {
+  Button,
+  SignUpSchema,
+  TextInputField,
+  TextNavigation,
+  showToast,
+} from '../components';
+import {authScreenStyle as style} from './style';
 
-const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
+export const RegisterScreen = ({
+  navigation,
+}: AuthNavigationProps<'Register'>) => {
   const [sex, setSex] = useState<String>('');
   const role: string[] = ['patient'];
   interface SignUpDataProps {
@@ -46,15 +50,16 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
       .post(API_List.signup, signUpData)
       .then(() => navigation.navigate('SignupSuccess'))
       .catch(() => {
-        showToastFail();
+        showToast('Something went wrong');
       });
   };
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.roll}>
-        <Text style={styles.txtHead}>Sign Up</Text>
-        <Text style={[styles.txt, styles.txtDescribe]}>
+    // eslint-disable-next-line react-native/no-inline-styles
+    <View style={{flex: 1}}>
+      <ScrollView contentContainerStyle={style.container}>
+        <Text style={[style.txt, style.txtHeading]}>Sign Up</Text>
+        <Text style={[style.txt, style.txtDescription]}>
           Enter your sign up details to register your new account
         </Text>
 
@@ -64,6 +69,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="username"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Email"
@@ -72,6 +78,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="email"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Password"
@@ -80,6 +87,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="password"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Firstname"
@@ -87,6 +95,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="firstname"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Lastname"
@@ -94,6 +103,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="lastname"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Phone"
@@ -102,6 +112,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="phone"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Address"
@@ -109,6 +120,7 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           multiline={false}
           controller={control}
           name="address"
+          isErrorField={true}
         />
         <TextInputField
           placeholder="Age"
@@ -118,11 +130,12 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           maxLength={3}
           keyboardType="number-pad"
           name="age"
+          isErrorField={true}
         />
         <Picker
           onValueChange={value => setSex(value)}
           selectedValue={sex}
-          style={styles.pick}
+          style={style.picker}
           dropdownIconColor="#9FA5AA">
           <Picker.Item label="Choose gender" value="" />
           <Picker.Item label="Male" value="Male" />
@@ -130,6 +143,8 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
           <Picker.Item label="Other" value="Other" />
         </Picker>
         <Button
+          style={[style.button, style.buttonShadow]}
+          textStyle={style.txtButton}
           activeOpacity={0.8}
           onPress={handleSubmit(onSubmit)}
           text="Sign Up"
@@ -142,48 +157,3 @@ const LoginScreen = ({navigation}: AuthNavigationProps<'Register'>) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  roll: {
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
-
-  txt: {
-    margin: '1.5%',
-    alignSelf: 'center',
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-
-  txtHead: {
-    padding: '2%',
-    fontSize: rf(2.8),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-
-  txtDescribe: {
-    padding: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#8B959E',
-  },
-
-  pick: {
-    color: '#9FA5AA',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-  },
-});
-
-export default LoginScreen;

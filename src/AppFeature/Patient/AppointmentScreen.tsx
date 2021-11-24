@@ -16,12 +16,11 @@ import {
 } from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-date-picker';
-import HeaderBar from '../../components/HeaderBar';
 import Oops from '../../components/Oops';
 import {Picker} from '@react-native-picker/picker';
-import {API_List} from '../../API/apiList';
+import {API_List} from '../../API';
 import axios from 'axios';
-import showToastFail from '../../components/ToastError';
+import {showToastFail, HeaderBar} from '../../components';
 
 const AppointmentScreen = ({
   navigation,
@@ -114,7 +113,7 @@ const AppointmentScreen = ({
   if (userRole === 'ROLE_PATIENT') {
     return (
       <View style={styles.container}>
-        <HeaderBar text="Appointment" isBack={false} />
+        <HeaderBar text="Appointment" isBack={true} />
 
         <ScrollView style={styles.container2}>
           <View style={styles.child}>

@@ -6,11 +6,13 @@ import {
   Text,
   KeyboardTypeOptions,
   TextStyle,
+  TextInputSubmitEditingEventData,
+  NativeSyntheticEvent,
 } from 'react-native';
 import {Controller, Control} from 'react-hook-form';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
-interface TextInputFieldProps extends TextInputProps {
+export interface TextInputFieldProps extends TextInputProps {
   placeholder?: string;
   secureTextEntry?: boolean;
   multiline?: boolean;
@@ -20,10 +22,14 @@ interface TextInputFieldProps extends TextInputProps {
   controller?: Control<any>;
   defaultValue?: string;
   style?: TextStyle | TextStyle[];
+  onSubmitEditing?: (
+    e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
+  ) => void;
   name: string;
+  isErrorField?: boolean;
 }
 
-const TextInputField = (props: TextInputFieldProps) => {
+export const TextInputField = (props: TextInputFieldProps) => {
   const {
     placeholder,
     secureTextEntry,
@@ -33,7 +39,9 @@ const TextInputField = (props: TextInputFieldProps) => {
     keyboardType,
     controller,
     defaultValue,
+    onSubmitEditing,
     style,
+    isErrorField,
     name,
     ...restProps
   } = props;
@@ -55,9 +63,10 @@ const TextInputField = (props: TextInputFieldProps) => {
               maxLength={maxLength}
               multiline={multiline}
               secureTextEntry={secureTextEntry}
+              onSubmitEditing={onSubmitEditing}
               {...restProps}
             />
-            {error && (
+            {isErrorField && error && (
               <Text style={styles.txtError}>This field is required</Text>
             )}
           </>
@@ -89,9 +98,7 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: rf(1.5),
     color: '#ff6666',
-    paddingVertical: '1.5%',
+    paddingVertical: '1%',
     marginRight: '12%',
   },
 });
-
-export default TextInputField;

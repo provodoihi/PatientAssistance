@@ -1,6 +1,6 @@
 import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import HeaderBar from './HeaderBar';
+import {HeaderBar} from './HeaderBar';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
 interface Props {
@@ -11,7 +11,7 @@ const Oops = ({text}: Props) => {
   return (
     <View style={styles.container}>
       <HeaderBar text={text} isBack={false} />
-      <View style={[styles.container2]}>
+      <View style={styles.container2}>
         <Image
           source={require('../../assets/Image_Icon/oops.png')}
           style={styles.img}
@@ -42,17 +42,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  txt: {
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-
-  txtHeader: {
-    margin: '1%',
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-
   txtOops: {
     margin: '1%',
     color: '#4c4c4c',
@@ -64,10 +53,6 @@ const styles = StyleSheet.create({
     width: '35%',
     height: '30%',
     resizeMode: 'contain',
-  },
-
-  button2: {
-    margin: '1%',
   },
 });
 

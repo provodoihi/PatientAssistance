@@ -9,14 +9,14 @@ import {
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
-interface TextNavigationProps extends TouchableOpacityProps, TextProps {
+export interface TextNavigationProps extends TouchableOpacityProps, TextProps {
   onPress?: () => void;
   style?: ViewStyle;
   children?: React.ReactNode;
   text?: string;
 }
 
-const TextNavigation = (props: TextNavigationProps) => {
+export const TextNavigation = (props: TextNavigationProps) => {
   const {onPress, style, text, ...restProps} = props;
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress} {...restProps}>
@@ -41,5 +41,3 @@ const styles = StyleSheet.create({
     color: '#00BFFF',
   },
 });
-
-export default TextNavigation;

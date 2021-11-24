@@ -14,7 +14,7 @@ import axios from 'axios';
 import Modal from 'react-native-modal';
 import {AppNavigationProps} from '../../../navigation/Routes';
 import HeaderBar from '../../../components/HeaderBar';
-import showToastFail from '../../../components/ToastError';
+import showToastFail from '../../../components/ToastMessage';
 import ModalLoad from '../../../components/ModalLoad';
 
 const AdminQuestionManageScreen = ({route}: AppNavigationProps<'QAList'>) => {
