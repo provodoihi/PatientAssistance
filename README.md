@@ -38,7 +38,7 @@ To run the application, you need to install the latest `npm` package manager
    ```sh
    npx react-native run-android
    ```
-   or for IOS devices:
+   or for IOS devices (The application has not been optimized for IOS devices yet):
    ```sh
    npx react-native run-ios
    ```
