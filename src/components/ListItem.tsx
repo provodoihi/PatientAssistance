@@ -15,11 +15,19 @@ interface ListItemProps extends TouchableOpacityProps {
   onPress?: () => void;
   children?: React.ReactNode;
   imageSource: ImageSourcePropType;
+  isMultipleAtrribute?: boolean;
 }
 
 export const ListItem = (props: ListItemProps) => {
-  const {style, activeOpacity, onPress, children, imageSource, ...restProps} =
-    props;
+  const {
+    style,
+    activeOpacity,
+    onPress,
+    children,
+    imageSource,
+    isMultipleAtrribute,
+    ...restProps
+  } = props;
   return (
     <TouchableOpacity
       style={style}
@@ -28,7 +36,8 @@ export const ListItem = (props: ListItemProps) => {
       {...restProps}>
       <View style={styles.row}>
         <Image style={styles.iconButton} source={imageSource} />
-        <View style={styles.column}>{children}</View>
+        {isMultipleAtrribute && <View style={styles.column}>{children}</View>}
+        {children}
       </View>
     </TouchableOpacity>
   );

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Text, View, Alert} from 'react-native';
 import axios from 'axios';
-import {AuthNavigationProps} from '../navigation/Routes';
-import {API_List} from '../API';
+import {AuthNavigationProps} from '../../navigation/Routes';
+import {API_List} from '../../API';
 import {CommonActions} from '@react-navigation/routers';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useForm} from 'react-hook-form';
@@ -12,8 +12,8 @@ import {
   ModalLoad,
   TextNavigation,
   TextInputField,
-} from '../components';
-import {authScreenStyle as style} from './style';
+} from '../../components';
+import {styleLoginScreen as style} from './style';
 
 export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const [isVisibleLoad, setVisibleLoad] = useState<boolean>(false);
@@ -64,8 +64,10 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
 
   return (
     <View style={style.container}>
-      <Text style={style.txtHeading}>Sign In</Text>
-      <Text style={[style.txt, style.txtDescription]}>
+      <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
+        Sign In
+      </Text>
+      <Text style={[style.textAlignCenter, style.textNormalGray]}>
         Enter your sign in details to access your account
       </Text>
       <ModalLoad isVisibleLoad={isVisibleLoad} />
@@ -90,8 +92,8 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
       />
 
       <Button
-        style={[style.button, style.buttonShadow]}
-        textStyle={[style.txt, style.txtButton]}
+        style={[style.buttonBlue, style.shadowBlue]}
+        textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
         activeOpacity={0.8}
         onPress={handleSubmit(onSubmit)}
         text="Sign In"

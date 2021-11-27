@@ -54,23 +54,25 @@ export const commonScreenStyle = StyleSheet.create({
     justifyContent: 'center',
   },
 
-  div2: {
-    flex: 0.3,
+  modalBMIScreen: {
+    backgroundColor: '#ffffff',
+    flex: 0.7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modalContainerBMIScreen: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   txt: {
-    margin: '1%',
+    margin: '1.5%',
     textAlign: 'center',
     justifyContent: 'center',
   },
 
-  txtHeader: {
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-
-  txtWelcome: {
-    margin: '2%',
+  txtWelcomeHomeScreen: {
     marginLeft: '4%',
     fontSize: rf(2.7),
     fontWeight: 'bold',
@@ -78,8 +80,7 @@ export const commonScreenStyle = StyleSheet.create({
     textAlign: 'left',
   },
 
-  txtMid: {
-    margin: '2%',
+  txtMidHomeScreen: {
     marginLeft: '4%',
     marginTop: '0%',
     fontSize: rf(2.7),
@@ -89,41 +90,88 @@ export const commonScreenStyle = StyleSheet.create({
     justifyContent: 'flex-start',
   },
 
-  txtNormal: {
-    padding: '1.5%',
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'bold',
-    color: '#ffffff',
-    alignSelf: 'center',
-  },
-
-  txtButton: {
-    fontSize: rf(2.5),
-    padding: '2%',
-    fontWeight: 'bold',
-    color: '#ffffff',
-  },
-
-  txtButtonSmall: {
-    fontSize: rf(1.8),
+  txtBoldBigWhite: {
+    fontSize: rf(2.4),
     padding: '2.5%',
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+
+  txtBoldWhite: {
+    padding: '2%',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+
+  txtNormalWhite: {
+    padding: '2.5%',
+    fontSize: rf(2),
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+
+  txtBoldBigBlack: {
+    fontSize: rf(2.4),
+    padding: '2.5%',
+    fontWeight: 'bold',
+    color: '#4c4c4c',
+  },
+
+  txtBoldBlack: {
+    padding: '2%',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
+    color: '#4c4c4c',
+  },
+
+  txtNormalBlack: {
+    padding: '2%',
+    fontSize: rf(2),
+    fontWeight: 'normal',
+    color: '#4c4c4c',
+  },
+
+  txtNormalSmallBlack: {
+    fontSize: rf(1.8),
+    padding: '1.5%',
+    fontWeight: 'normal',
+    color: '#4c4c4c',
+  },
+
+  txtNormalSmallWhite: {
+    fontSize: rf(1.8),
+    padding: '1.5%',
     fontWeight: 'normal',
     color: '#ffffff',
   },
 
-  txtNameProfileScreen: {
+  txtBoldSmallBlack: {
+    fontSize: rf(1.8),
     padding: '1.5%',
     fontWeight: 'bold',
-    fontSize: rf(2.6),
     color: '#4c4c4c',
   },
 
-  txtRoleProfileScreen: {
+  txtBoldSmallWhite: {
+    fontSize: rf(1.8),
     padding: '1.5%',
-    fontSize: rf(2),
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+
+  txtNormalTinyBlack: {
+    padding: '1.5%',
+    fontSize: rf(1.5),
     fontWeight: 'normal',
     color: '#4c4c4c',
+  },
+
+  txtNormalTinyWhite: {
+    padding: '1.5%',
+    fontSize: rf(1.5),
+    fontWeight: 'normal',
+    color: '#ffffff',
   },
 
   buttonNoColor: {
@@ -150,6 +198,16 @@ export const commonScreenStyle = StyleSheet.create({
     justifyContent: 'center',
     alignSelf: 'center',
     backgroundColor: '#59ADFF',
+  },
+
+  buttonModalBMIScreen: {
+    backgroundColor: '#FFFFFF',
+    margin: '3.5%',
+    borderRadius: 24,
+    width: '60%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
   },
 
   row: {
@@ -199,5 +257,12 @@ export const commonScreenStyle = StyleSheet.create({
     margin: '1.5%',
     height: '35%',
     width: '35%',
+  },
+
+  imageModalBMIScreen: {
+    width: 128,
+    height: 128,
+    margin: '5%',
+    resizeMode: 'contain',
   },
 });

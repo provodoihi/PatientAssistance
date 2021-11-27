@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Text, View, ScrollView} from 'react-native';
 import axios from 'axios';
-import {API_List} from '../API';
-import {AuthNavigationProps} from '../navigation/Routes';
+import {API_List} from '../../API';
+import {AuthNavigationProps} from '../../navigation/Routes';
 import {Picker} from '@react-native-picker/picker';
 import {useForm} from 'react-hook-form';
 import {
@@ -11,8 +11,8 @@ import {
   TextInputField,
   TextNavigation,
   showToast,
-} from '../components';
-import {authScreenStyle as style} from './style';
+} from '../../components';
+import {styleRegisterScreen as style} from './style';
 
 export const RegisterScreen = ({
   navigation,
@@ -55,11 +55,12 @@ export const RegisterScreen = ({
   };
 
   return (
-    // eslint-disable-next-line react-native/no-inline-styles
-    <View style={{flex: 1}}>
-      <ScrollView contentContainerStyle={style.container}>
-        <Text style={[style.txt, style.txtHeading]}>Sign Up</Text>
-        <Text style={[style.txt, style.txtDescription]}>
+    <View style={style.container}>
+      <ScrollView contentContainerStyle={style.srollView}>
+        <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
+          Sign Up
+        </Text>
+        <Text style={[style.textAlignCenter, style.textNormalGray]}>
           Enter your sign up details to register your new account
         </Text>
 
@@ -143,8 +144,8 @@ export const RegisterScreen = ({
           <Picker.Item label="Other" value="Other" />
         </Picker>
         <Button
-          style={[style.button, style.buttonShadow]}
-          textStyle={style.txtButton}
+          style={[style.buttonBlue, style.shadowBlue]}
+          textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
           activeOpacity={0.8}
           onPress={handleSubmit(onSubmit)}
           text="Sign Up"

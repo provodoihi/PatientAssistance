@@ -1,14 +1,6 @@
 import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  ListRenderItemInfo,
-} from 'react-native';
+import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
 import {AppNavigationProps} from '../../navigation/Routes';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {API_List} from '../../API';
 import axios from 'axios';
 import {
@@ -27,7 +19,7 @@ const Notfound = () => {
   return (
     <View style={style.midLocationScreen}>
       <Image style={style.image} source={pic_notFound} />
-      <Text style={styles.txtNotfound}>Not found</Text>
+      <Text style={style.txtBoldBigBlack}>Not found</Text>
     </View>
   );
 };
@@ -36,7 +28,7 @@ const Init = () => {
   return (
     <View style={style.midLocationScreen}>
       <Image style={style.image} source={pic_search} />
-      <Text style={styles.txtMid}>Search hospitals and clinics</Text>
+      <Text style={style.txtBoldBigBlack}>Search hospitals and clinics</Text>
     </View>
   );
 };
@@ -93,10 +85,11 @@ export const LocationScreen = ({
             longtitude: item.longtitude,
           });
         }}
-        imageSource={pic_hospital}>
-        <Text style={styles.txtName}>{item.name}</Text>
-        <Text style={styles.txtNormal2}>{item.address}</Text>
-        <Text style={styles.txtNormal2}>{item.phone}</Text>
+        imageSource={pic_hospital}
+        isMultipleAtrribute={true}>
+        <Text style={style.txtBoldSmallBlack}>{item.name}</Text>
+        <Text style={style.txtNormalSmallBlack}>{item.address}</Text>
+        <Text style={style.txtNormalSmallBlack}>{item.phone}</Text>
       </ListItem>
     );
   };
@@ -134,46 +127,3 @@ export const LocationScreen = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  txtMid: {
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'normal',
-    color: '#8B959E',
-    textAlign: 'center',
-  },
-
-  txtNotfound: {
-    margin: '2%',
-    fontSize: rf(2.5),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-    textAlign: 'center',
-  },
-
-  txtNormal: {
-    padding: '1.5%',
-    margin: '2%',
-    fontSize: rf(2),
-    fontWeight: 'bold',
-    color: '#ffffff',
-    // alignSelf: 'center',
-  },
-
-  txtNormal2: {
-    padding: '1.5%',
-    margin: '1%',
-    fontSize: rf(1.6),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-  },
-
-  txtName: {
-    padding: '1.5%',
-    margin: '1%',
-    fontSize: rf(1.8),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-  },
-});

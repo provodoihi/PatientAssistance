@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     width: '80%',
     margin: '2%',
     paddingLeft: '4%',
-    paddingVertical: '1.5%',
+    paddingVertical: '2%',
     borderColor: '#808080',
     borderWidth: 1,
     borderRadius: 24,

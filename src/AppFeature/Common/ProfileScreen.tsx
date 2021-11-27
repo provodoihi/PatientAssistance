@@ -92,10 +92,8 @@ export const ProfileScreen = ({
       <ScrollView style={style.container2}>
         <View style={style.containerProfileScreen}>
           <Image style={style.image} source={pic_userColor} />
-          <Text style={[style.txt, style.txtNameProfileScreen]}>
-            {fullname}
-          </Text>
-          <Text style={[style.txt, style.txtRoleProfileScreen]}>{role}</Text>
+          <Text style={[style.txt, style.txtBoldBigBlack]}>{fullname}</Text>
+          <Text style={[style.txt, style.txtNormalBlack]}>{role}</Text>
           <TextInputField
             placeholder={f1nameplace}
             placeholderTextColor="#9FA5AA"
@@ -132,7 +130,7 @@ export const ProfileScreen = ({
           />
           <Button
             style={[style.buttonColor, style.shadowBlue]}
-            textStyle={[style.txt, style.txtButton]}
+            textStyle={[style.txt, style.txtBoldBigWhite]}
             activeOpacity={0.8}
             onPress={handleSubmit(onSubmit)}
             text="Update My Profile"
@@ -140,7 +138,7 @@ export const ProfileScreen = ({
           <Button
             style={[style.buttonColor, style.shadowBlue]}
             activeOpacity={0.8}
-            textStyle={[style.txt, style.txtButton]}
+            textStyle={[style.txt, style.txtBoldBigWhite]}
             onPress={() => navigation.navigate('BMI')}
             text="My BMI"
           />

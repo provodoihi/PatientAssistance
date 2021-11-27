@@ -102,10 +102,14 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
       <HeaderBar text="Dashboard" isBack={false} />
       <View style={style.container2}>
         <View style={style.topHomeScreen}>
-          <Text style={[style.txt, style.txtWelcome]}>Welcome {fullname}</Text>
+          <Text style={[style.txt, style.txtWelcomeHomeScreen]}>
+            Welcome {fullname}
+          </Text>
           <View style={style.row}>
             <View style={style.div1}>
-              <Text style={[style.txt, style.txtNormal]}>Have a nice day</Text>
+              <Text style={[style.txt, style.txtBoldWhite]}>
+                Have a nice day
+              </Text>
               <Button
                 style={style.buttonSmall}
                 activeOpacity={0.8}
@@ -117,7 +121,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
                   })
                 }
                 text="View my profile"
-                textStyle={[style.txt, style.txtButtonSmall]}
+                textStyle={[style.txt, style.txtNormalSmallWhite]}
               />
             </View>
             <Image style={style.img} source={pic_healthCare256} />
@@ -125,17 +129,21 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
         </View>
 
         <View style={style.midHomeScreen}>
-          <Text style={style.txtMid}>What will you do?</Text>
+          <Text style={style.txtMidHomeScreen}>What will you do?</Text>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
+            isMultipleAtrribute={false}
             onPress={() => navigation.navigate('Location')}
             imageSource={pic_locationIcon}>
-            <Text style={style.txtButton}>Find Hospital Clinic</Text>
+            <Text style={[style.txt, style.txtNormalBlack]}>
+              Find Hospital Clinic
+            </Text>
           </ListItem>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
+            isMultipleAtrribute={false}
             onPress={() =>
               navigation.navigate('Appointment', {
                 token: token,
@@ -144,11 +152,12 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
               })
             }
             imageSource={pic_timesheet}>
-            <Text style={style.txtButton}>Appointment</Text>
+            <Text style={[style.txt, style.txtNormalBlack]}>Appointment</Text>
           </ListItem>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
+            isMultipleAtrribute={false}
             onPress={() =>
               navigation.navigate('HealthAdvisor', {
                 token: token,
@@ -157,13 +166,13 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
               })
             }
             imageSource={pic_healthBook}>
-            <Text style={style.txtButton}>Health Advice</Text>
+            <Text style={[style.txt, style.txtNormalBlack]}>Health Advice</Text>
           </ListItem>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
             imageSource={pic_edit}>
-            <Text style={style.txtButton}>Update Soon</Text>
+            <Text style={[style.txt, style.txtNormalBlack]}>Update Soon</Text>
           </ListItem>
         </View>
       </View>
