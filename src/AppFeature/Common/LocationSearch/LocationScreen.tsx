@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
-import {API_List} from '../../API';
+import {AppNavigationProps} from '../../../navigation/Routes';
+import {API_List} from '../../../API';
 import axios from 'axios';
 import {
   showToast,
@@ -10,25 +10,29 @@ import {
   SearchSchema,
   ListItem,
   HeaderBar,
-} from '../../components';
+} from '../../../components';
 import {useForm} from 'react-hook-form';
-import {commonScreenStyle as style} from './style';
-import {pic_hospital, pic_notFound, pic_search} from '../../../assets';
+import {styleLocationSearchScreen as style} from './style';
+import {pic_hospital, pic_notFound, pic_search} from '../../../../assets';
 
 const Notfound = () => {
   return (
-    <View style={style.midLocationScreen}>
+    <View style={style.midScreen}>
       <Image style={style.image} source={pic_notFound} />
-      <Text style={style.txtBoldBigBlack}>Not found</Text>
+      <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
+        Not found
+      </Text>
     </View>
   );
 };
 
 const Init = () => {
   return (
-    <View style={style.midLocationScreen}>
+    <View style={style.midScreen}>
       <Image style={style.image} source={pic_search} />
-      <Text style={style.txtBoldBigBlack}>Search hospitals and clinics</Text>
+      <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+        Search hospitals and clinics
+      </Text>
     </View>
   );
 };
@@ -75,22 +79,23 @@ export const LocationScreen = ({
 
   const renderItem = ({item}: ListRenderItemInfo<LocationListItem>) => {
     return (
-      <ListItem
-        style={[style.buttonNoColor, style.shadowGray]}
-        activeOpacity={0.8}
-        onPress={() => {
-          navigation.navigate('MapView', {
-            name: item.name,
-            latitude: item.latitude,
-            longtitude: item.longtitude,
-          });
-        }}
-        imageSource={pic_hospital}
-        isMultipleAtrribute={true}>
-        <Text style={style.txtBoldSmallBlack}>{item.name}</Text>
-        <Text style={style.txtNormalSmallBlack}>{item.address}</Text>
-        <Text style={style.txtNormalSmallBlack}>{item.phone}</Text>
-      </ListItem>
+      <View style={style.contentList}>
+        <ListItem
+          style={[style.buttonNoColor, style.shadowGray]}
+          activeOpacity={0.8}
+          onPress={() => {
+            navigation.navigate('MapView', {
+              name: item.name,
+              latitude: item.latitude,
+              longtitude: item.longtitude,
+            });
+          }}
+          imageSource={pic_hospital}>
+          <Text style={[style.textSmallBoldBlack]}>{item.name}</Text>
+          <Text style={[style.textSmallNormalBlack]}>{item.address}</Text>
+          <Text style={[style.textSmallNormalBlack]}>{item.phone}</Text>
+        </ListItem>
+      </View>
     );
   };
 
@@ -99,7 +104,7 @@ export const LocationScreen = ({
       <HeaderBar text="Find Hospital Clinic" isBack={true} />
       <View style={style.container2}>
         <ModalLoad isVisibleLoad={isVisible} />
-        <View style={style.topLocationScreen}>
+        <View style={style.searchBox}>
           <TextInputField
             onSubmitEditing={handleSubmit(onSubmit)}
             placeholder="Search here"
@@ -111,7 +116,7 @@ export const LocationScreen = ({
           />
         </View>
         {status === 200 ? (
-          <View style={style.midLocationScreen}>
+          <View style={style.midScreen}>
             <FlatList
               data={data}
               renderItem={renderItem}

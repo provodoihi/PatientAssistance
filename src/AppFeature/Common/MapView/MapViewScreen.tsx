@@ -1,9 +1,9 @@
 import React from 'react';
 import {View} from 'react-native';
-import {HeaderBar} from '../../components';
+import {HeaderBar} from '../../../components';
 import MapView, {Marker} from 'react-native-maps';
-import {AppNavigationProps} from '../../navigation/Routes';
-import {commonScreenStyle as style} from './style';
+import {AppNavigationProps} from '../../../navigation/Routes';
+import {styleMapViewScreen as style} from './style';
 
 export const MapViewScreen = ({route}: AppNavigationProps<'MapView'>) => {
   const region = {

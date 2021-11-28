@@ -1,16 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, Image, BackHandler, Alert} from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Button, ListItem, HeaderBar} from '../../components';
-import {commonScreenStyle as style} from './style';
+import {Button, ListItem, HeaderBar} from '../../../components';
+import {styleHomeScreen as style} from './style';
 import {
   pic_locationIcon,
   pic_timesheet,
   pic_healthBook,
   pic_edit,
   pic_healthCare256,
-} from '../../../assets';
+} from '../../../../assets';
 
 export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
   const [fullname, setFullname] = useState<string>('');
@@ -101,13 +101,13 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
     <View style={style.container}>
       <HeaderBar text="Dashboard" isBack={false} />
       <View style={style.container2}>
-        <View style={style.topHomeScreen}>
-          <Text style={[style.txt, style.txtWelcomeHomeScreen]}>
+        <View style={style.topScreen}>
+          <Text style={[style.textAlignLeft, style.textBigBoldWhite]}>
             Welcome {fullname}
           </Text>
           <View style={style.row}>
-            <View style={style.div1}>
-              <Text style={[style.txt, style.txtBoldWhite]}>
+            <View style={style.column}>
+              <Text style={[style.textAlignCenter, style.txtNormalBoldWhite]}>
                 Have a nice day
               </Text>
               <Button
@@ -121,29 +121,29 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
                   })
                 }
                 text="View my profile"
-                textStyle={[style.txt, style.txtNormalSmallWhite]}
+                textStyle={[style.textAlignCenter, style.textSmallWhite]}
               />
             </View>
-            <Image style={style.img} source={pic_healthCare256} />
+            <Image style={style.image} source={pic_healthCare256} />
           </View>
         </View>
 
-        <View style={style.midHomeScreen}>
-          <Text style={style.txtMidHomeScreen}>What will you do?</Text>
+        <View style={style.midScreen}>
+          <Text style={[style.textAlignLeft, style.textBigBoldBlack]}>
+            What will you do?
+          </Text>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
-            isMultipleAtrribute={false}
             onPress={() => navigation.navigate('Location')}
             imageSource={pic_locationIcon}>
-            <Text style={[style.txt, style.txtNormalBlack]}>
+            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
               Find Hospital Clinic
             </Text>
           </ListItem>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
-            isMultipleAtrribute={false}
             onPress={() =>
               navigation.navigate('Appointment', {
                 token: token,
@@ -152,12 +152,13 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
               })
             }
             imageSource={pic_timesheet}>
-            <Text style={[style.txt, style.txtNormalBlack]}>Appointment</Text>
+            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+              Appointment
+            </Text>
           </ListItem>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
-            isMultipleAtrribute={false}
             onPress={() =>
               navigation.navigate('HealthAdvisor', {
                 token: token,
@@ -166,13 +167,17 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
               })
             }
             imageSource={pic_healthBook}>
-            <Text style={[style.txt, style.txtNormalBlack]}>Health Advice</Text>
+            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+              Health Advice
+            </Text>
           </ListItem>
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
             imageSource={pic_edit}>
-            <Text style={[style.txt, style.txtNormalBlack]}>Update Soon</Text>
+            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+              Update Soon
+            </Text>
           </ListItem>
         </View>
       </View>

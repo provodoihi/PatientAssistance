@@ -1,25 +1,37 @@
 import {StyleSheet} from 'react-native';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {
+  responsiveScreenFontSize as rf,
+  responsiveScreenHeight as rh,
+} from 'react-native-responsive-dimensions';
 
-export const styleWelcomeScreen = StyleSheet.create({
+export const styleProfileScreen = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  scrollView: {
+    flex: 0.93,
     backgroundColor: '#ffffff',
-    justifyContent: 'center',
+  },
+
+  container2: {
+    height: rh(110),
+    backgroundColor: '#ffffff',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
   image: {
-    resizeMode: 'contain',
-    margin: '2.5%',
-    height: '25%',
     width: '30%',
+    margin: '1%',
+    height: '20%',
+    resizeMode: 'contain',
   },
 
   textAlignCenter: {
     margin: '1.5%',
-    alignSelf: 'center',
     textAlign: 'center',
+    alignSelf: 'center',
   },
 
   textBigBoldBlack: {
@@ -36,11 +48,11 @@ export const styleWelcomeScreen = StyleSheet.create({
     color: '#ffffff',
   },
 
-  textNormalGray: {
+  textNormalBlack: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'normal',
-    color: '#8B959E',
+    color: '#4c4c4c',
   },
 
   buttonBlue: {

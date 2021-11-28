@@ -11,8 +11,8 @@ export const styleRegisterSuccessScreen = StyleSheet.create({
 
   image: {
     resizeMode: 'contain',
-    margin: '2.5%',
-    height: '30%',
+    margin: '1%',
+    height: '25%',
     width: '30%',
   },
 

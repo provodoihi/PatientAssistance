@@ -1,25 +1,48 @@
 import {StyleSheet} from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
-export const styleWelcomeScreen = StyleSheet.create({
+export const styleBMIScreen = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  container2: {
+    flex: 0.93,
     backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
   },
 
   image: {
-    resizeMode: 'contain',
-    margin: '2.5%',
-    height: '25%',
     width: '30%',
+    margin: '1%',
+    height: '25%',
+    resizeMode: 'contain',
+  },
+
+  imageModal: {
+    width: 128,
+    height: 128,
+    margin: '2%',
+    resizeMode: 'contain',
+  },
+
+  modal: {
+    backgroundColor: '#ffffff',
+    flex: 0.7,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modalContent: {
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   textAlignCenter: {
     margin: '1.5%',
-    alignSelf: 'center',
     textAlign: 'center',
+    alignSelf: 'center',
   },
 
   textBigBoldBlack: {
@@ -36,11 +59,18 @@ export const styleWelcomeScreen = StyleSheet.create({
     color: '#ffffff',
   },
 
-  textNormalGray: {
+  textNormalBoldBlack: {
+    padding: '2%',
+    fontSize: rf(2),
+    fontWeight: 'bold',
+    color: '#4c4c4c',
+  },
+
+  textNormalBlack: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'normal',
-    color: '#8B959E',
+    color: '#4c4c4c',
   },
 
   buttonBlue: {
@@ -48,6 +78,15 @@ export const styleWelcomeScreen = StyleSheet.create({
     margin: '3%',
     borderRadius: 24,
     width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonModal: {
+    backgroundColor: '#ffffff',
+    margin: '3%',
+    borderRadius: 24,
+    width: '70%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -61,5 +100,16 @@ export const styleWelcomeScreen = StyleSheet.create({
     shadowOpacity: 0.41,
     shadowRadius: 9.11,
     elevation: 14,
+  },
+
+  shadowGray: {
+    shadowColor: '#a2a2a2',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 10,
   },
 });

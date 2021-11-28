@@ -19,15 +19,8 @@ interface ListItemProps extends TouchableOpacityProps {
 }
 
 export const ListItem = (props: ListItemProps) => {
-  const {
-    style,
-    activeOpacity,
-    onPress,
-    children,
-    imageSource,
-    isMultipleAtrribute,
-    ...restProps
-  } = props;
+  const {style, activeOpacity, onPress, children, imageSource, ...restProps} =
+    props;
   return (
     <TouchableOpacity
       style={style}
@@ -36,8 +29,8 @@ export const ListItem = (props: ListItemProps) => {
       {...restProps}>
       <View style={styles.row}>
         <Image style={styles.iconButton} source={imageSource} />
-        {isMultipleAtrribute && <View style={styles.column}>{children}</View>}
-        {children}
+        <View style={styles.column}>{children}</View>
+        {/* {children} */}
       </View>
     </TouchableOpacity>
   );
@@ -46,14 +39,14 @@ export const ListItem = (props: ListItemProps) => {
 const styles = StyleSheet.create({
   column: {
     flexDirection: 'column',
-    margin: '1%',
+    margin: '1.5%',
     justifyContent: 'flex-start',
     alignContent: 'flex-start',
     maxWidth: '80%',
   },
   iconButton: {
-    width: '16%',
-    height: '60%',
+    width: '20%',
+    height: '65%',
     margin: '1.5%',
     resizeMode: 'contain',
   },

@@ -1,17 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, Image, ScrollView} from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/Routes';
 import axios from 'axios';
-import {API_List} from '../../API';
-import {pic_userColor} from '../../../assets';
+import {API_List} from '../../../API';
+import {pic_userColor} from '../../../../assets';
 import {
   TextInputField,
   showToast,
   UpdateProfileSchema,
   Button,
   HeaderBar,
-} from '../../components';
-import {commonScreenStyle as style} from './style';
+} from '../../../components';
+import {styleProfileScreen as style} from './style';
 import {useForm} from 'react-hook-form';
 
 export const ProfileScreen = ({
@@ -89,11 +89,15 @@ export const ProfileScreen = ({
   return (
     <View style={style.container}>
       <HeaderBar text="Profile" isBack={true} />
-      <ScrollView style={style.container2}>
-        <View style={style.containerProfileScreen}>
+      <ScrollView style={style.scrollView}>
+        <View style={style.container2}>
           <Image style={style.image} source={pic_userColor} />
-          <Text style={[style.txt, style.txtBoldBigBlack]}>{fullname}</Text>
-          <Text style={[style.txt, style.txtNormalBlack]}>{role}</Text>
+          <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
+            {fullname}
+          </Text>
+          <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+            {role}
+          </Text>
           <TextInputField
             placeholder={f1nameplace}
             placeholderTextColor="#9FA5AA"
@@ -129,16 +133,16 @@ export const ProfileScreen = ({
             name="age"
           />
           <Button
-            style={[style.buttonColor, style.shadowBlue]}
-            textStyle={[style.txt, style.txtBoldBigWhite]}
+            style={[style.buttonBlue, style.shadowBlue]}
+            textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
             activeOpacity={0.8}
             onPress={handleSubmit(onSubmit)}
             text="Update My Profile"
           />
           <Button
-            style={[style.buttonColor, style.shadowBlue]}
+            style={[style.buttonBlue, style.shadowBlue]}
+            textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
             activeOpacity={0.8}
-            textStyle={[style.txt, style.txtBoldBigWhite]}
             onPress={() => navigation.navigate('BMI')}
             text="My BMI"
           />

@@ -7,22 +7,26 @@ import {
   TextInputField,
   HeaderBar,
   ListItem,
-} from '../../components';
-import {commonScreenStyle as style} from './style';
+} from '../../../components';
+import {styleBMIScreen as style} from './style';
 import {
   pic_diet,
   pic_exercise,
   pic_fireworks,
   pic_bmiBig,
-} from '../../../assets';
+} from '../../../../assets';
 import {useForm} from 'react-hook-form';
 
 export const Normal = () => {
   return (
-    <View style={style.modalContainerBMIScreen}>
-      <Text style={style.txtBoldBlack}>You are Normal</Text>
-      <Image style={style.imageModalBMIScreen} source={pic_fireworks} />
-      <Text style={style.txtBoldBlack}>Congratulation</Text>
+    <View style={style.modalContent}>
+      <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
+        You are Normal
+      </Text>
+      <Image style={style.imageModal} source={pic_fireworks} />
+      <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
+        Congratulation
+      </Text>
     </View>
   );
 };
@@ -33,16 +37,18 @@ type UnderOverWeightProps = {
 
 export const UnderOverWeight = ({isUnderweight}: UnderOverWeightProps) => {
   return (
-    <View style={style.modalContainerBMIScreen}>
-      <Text style={style.txtBoldBlack}>
+    <View style={style.modalContent}>
+      <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
         {isUnderweight ? 'You are Underweight' : 'You are Overweight'}
       </Text>
-      <Text style={style.txtBoldBlack}>Some Guidelines</Text>
+      <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
+        Some Guidelines
+      </Text>
       <ListItem
-        style={[style.buttonModalBMIScreen, style.shadowGray]}
+        style={[style.buttonModal, style.shadowGray]}
         imageSource={pic_diet}
         isMultipleAtrribute={false}>
-        <Text style={style.txtBoldBlack}>
+        <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
           {isUnderweight
             ? 'Eat more and choose nutrient-rich foods'
             : 'Choose healthy eating plan'}
@@ -59,10 +65,10 @@ export const UnderOverWeight = ({isUnderweight}: UnderOverWeightProps) => {
         </View>
       </View> */}
       <ListItem
-        style={[style.buttonModalBMIScreen, style.shadowGray]}
+        style={[style.buttonModal, style.shadowGray]}
         imageSource={pic_exercise}
         isMultipleAtrribute={false}>
-        <Text style={style.txtBoldBlack}>
+        <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
           {isUnderweight
             ? 'Exercise to build up your muscles'
             : 'Exercise more to lose weight'}
@@ -106,7 +112,7 @@ export const BMIScreen = () => {
       <HeaderBar text="BMI Calculator" isBack={true} />
       <View style={style.container2}>
         <Image style={style.image} source={pic_bmiBig} />
-        <Text style={[style.txt, style.txtBoldBigBlack]}>
+        <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
           Calculate your BMI Metric
         </Text>
         <TextInputField
@@ -129,8 +135,8 @@ export const BMIScreen = () => {
         />
 
         <Modal isVisible={isVisible} onBackdropPress={() => setVisible(false)}>
-          <View style={style.modalBMIScreen}>
-            <Text style={[style.txt, style.txtBoldBlack]}>
+          <View style={style.modal}>
+            <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
               BMI: {result.toFixed(2)}
             </Text>
             {result <= 18.4 ? (
@@ -141,20 +147,20 @@ export const BMIScreen = () => {
               <Normal />
             )}
             <Button
-              style={[style.buttonColor, style.shadowBlue]}
+              style={[style.buttonBlue, style.shadowBlue]}
               activeOpacity={0.8}
               onPress={toggleModal}
               text="Close"
-              textStyle={[style.txt, style.txtBoldBigWhite]}
+              textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
             />
           </View>
         </Modal>
         <Button
-          style={[style.buttonColor, style.shadowBlue]}
+          style={[style.buttonBlue, style.shadowBlue]}
           activeOpacity={0.8}
           onPress={handleSubmit(onSubmit)}
           text="Calulate Now"
-          textStyle={[style.txt, style.txtBoldBigWhite]}
+          textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
         />
       </View>
     </View>

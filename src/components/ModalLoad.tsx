@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   modalLoad: {
     backgroundColor: '#ffffff',
     flex: 0.25,
-    width: '70%',
+    width: '80%',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
