@@ -13,6 +13,7 @@ for people of all ages. Application main features:
 * [React Native](https://reactnative.dev)
 * [React Navigation](https://reactnavigation.org)
 * [Async Storage](https://react-native-async-storage.github.io/async-storage)
+* [React Hook Form](https://react-hook-form.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
