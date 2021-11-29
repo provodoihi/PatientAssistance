@@ -1,6 +1,6 @@
 import React from 'react';
 
-// import
+// import screen
 import {
   HomeScreen,
   LocationScreen,
@@ -10,7 +10,7 @@ import {
 } from '../AppFeature/Common';
 import HealthAdvisorScreen from '../AppFeature/Patient/HealthAdvisorScreen';
 import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
-import AppointmentListScreen from '../AppFeature/Patient/AppointmentList';
+import AppointmentListScreen from '../AppFeature/Patient/Appointment/AppointmentList/AppointmentList';
 import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
 import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
 import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
@@ -42,7 +42,7 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
 import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
 import AdminScreen from '../AppFeature/Admin/AdminScreen';
-import AppointmentScreen from '../AppFeature/Patient/AppointmentScreen';
+import AppointmentScreen from '../AppFeature/Patient/Appointment/AppointmentBooking/AppointmentScreen';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 type Item = {
@@ -52,7 +52,7 @@ type Item = {
 const CustomDrawerContent = (props: any) => {
   const {state, ...rest} = props;
   const newState = {...state};
-  // filter the screen to not showing in drawer menu
+  // filter the screen not to show in drawer menu
   newState.routes = newState.routes.filter(
     (item: Item) =>
       item.name !== 'Profile' &&

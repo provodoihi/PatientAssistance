@@ -136,6 +136,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
             onPress={() => navigation.navigate('Location')}
+            isMultipleAtrribute={false}
             imageSource={pic_locationIcon}>
             <Text style={[style.textAlignCenter, style.textNormalBlack]}>
               Find Hospital Clinic
@@ -151,6 +152,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
                 role: role,
               })
             }
+            isMultipleAtrribute={false}
             imageSource={pic_timesheet}>
             <Text style={[style.textAlignCenter, style.textNormalBlack]}>
               Appointment
@@ -166,6 +168,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
                 role: role,
               })
             }
+            isMultipleAtrribute={false}
             imageSource={pic_healthBook}>
             <Text style={[style.textAlignCenter, style.textNormalBlack]}>
               Health Advice
@@ -174,6 +177,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
           <ListItem
             style={[style.buttonNoColor, style.shadowGray]}
             activeOpacity={0.8}
+            isMultipleAtrribute={false}
             imageSource={pic_edit}>
             <Text style={[style.textAlignCenter, style.textNormalBlack]}>
               Update Soon

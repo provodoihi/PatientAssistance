@@ -13,7 +13,7 @@ import {
 } from '../../../components';
 import {useForm} from 'react-hook-form';
 import {styleLocationSearchScreen as style} from './style';
-import {pic_hospital, pic_notFound, pic_search} from '../../../../assets';
+import {pic_healthClinic, pic_notFound, pic_search} from '../../../../assets';
 
 const Notfound = () => {
   return (
@@ -90,10 +90,11 @@ export const LocationScreen = ({
               longtitude: item.longtitude,
             });
           }}
-          imageSource={pic_hospital}>
-          <Text style={[style.textSmallBoldBlack]}>{item.name}</Text>
-          <Text style={[style.textSmallNormalBlack]}>{item.address}</Text>
-          <Text style={[style.textSmallNormalBlack]}>{item.phone}</Text>
+          isMultipleAtrribute={true}
+          imageSource={pic_healthClinic}>
+          <Text style={style.textSmallBoldBlack}>{item.name}</Text>
+          <Text style={style.textSmallNormalBlack}>{item.address}</Text>
+          <Text style={style.textSmallNormalBlack}>{item.phone}</Text>
         </ListItem>
       </View>
     );

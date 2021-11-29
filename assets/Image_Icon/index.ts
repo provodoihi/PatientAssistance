@@ -17,6 +17,7 @@ import pic_healthBook from './HealthBook_icon.png';
 import pic_healthCare from './healthcare.png';
 import pic_healthCarex2 from './healthcare@x2.png';
 import pic_healthCare256 from './healthcare256.png';
+import pic_healthClinic from './health_clinic.png';
 import pic_help from './help.png';
 import pic_hospital from './hospital.png';
 import pic_locationColor from './location_color.png';
@@ -54,6 +55,7 @@ export {
   pic_healthCare,
   pic_healthCare256,
   pic_healthCarex2,
+  pic_healthClinic,
   pic_help,
   pic_hospital,
   pic_locationColor,

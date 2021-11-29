@@ -19,6 +19,7 @@ export const RegisterScreen = ({
 }: AuthNavigationProps<'Register'>) => {
   const [sex, setSex] = useState<String>('');
   const role: string[] = ['patient'];
+  // const [errorResponse, setErrorResponse] = useState<string>('');
   interface SignUpDataProps {
     username: string;
     email: string;
@@ -44,14 +45,14 @@ export const RegisterScreen = ({
     resolver: SignUpSchema,
   });
 
-  const onSubmit = (data: SignUpDataProps) => {
-    let signUpData = {...data, sex, role};
-    axios
-      .post(API_List.signup, signUpData)
-      .then(() => navigation.navigate('SignupSuccess'))
-      .catch(() => {
-        showToast('Something went wrong');
-      });
+  const onSubmit = async (data: SignUpDataProps) => {
+    try {
+      let signUpData = {...data, sex, role};
+      await axios.post(API_List.signup, signUpData);
+      navigation.navigate('SignupSuccess');
+    } catch (error: any) {
+      showToast(error.response.data.message);
+    }
   };
 
   return (
@@ -70,6 +71,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="username"
+          label="Username"
           isErrorField={true}
         />
         <TextInputField
@@ -79,6 +81,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="email"
+          label="Email"
           isErrorField={true}
         />
         <TextInputField
@@ -88,6 +91,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="password"
+          label="Password"
           isErrorField={true}
         />
         <TextInputField
@@ -96,6 +100,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="firstname"
+          label="Firstname"
           isErrorField={true}
         />
         <TextInputField
@@ -104,6 +109,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="lastname"
+          label="Lastname"
           isErrorField={true}
         />
         <TextInputField
@@ -113,6 +119,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="phone"
+          label="Phone Number"
           isErrorField={true}
         />
         <TextInputField
@@ -121,6 +128,7 @@ export const RegisterScreen = ({
           multiline={false}
           controller={control}
           name="address"
+          label="Address"
           isErrorField={true}
         />
         <TextInputField
@@ -131,6 +139,7 @@ export const RegisterScreen = ({
           maxLength={3}
           keyboardType="number-pad"
           name="age"
+          label="Age"
           isErrorField={true}
         />
         <Picker

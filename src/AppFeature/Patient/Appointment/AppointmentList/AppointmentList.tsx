@@ -8,11 +8,11 @@ import {
   FlatList,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../../API';
+import {API_List} from '../../../../API';
 import axios from 'axios';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../../navigation/Routes';
 import Modal from 'react-native-modal';
-import {showToastFail, ModalLoad, HeaderBar} from '../../components';
+import {showToast, ModalLoad, HeaderBar} from '../../../../components';
 
 const AppointmentListScreen = ({
   route,
@@ -57,7 +57,6 @@ const AppointmentListScreen = ({
           Authorization: `Bearer ${route.params.token}`,
         },
       });
-      console.log(response.status);
       setClinic(response.data.nameOfClinic);
       setTime(response.data.appointmentStartTime);
       setDescribe(response.data.description);
@@ -66,7 +65,7 @@ const AppointmentListScreen = ({
       setVisible(true);
     } catch (error) {
       setVisibleLoad(false);
-      showToastFail();
+      showToast('Something went wrong');
     }
   };
 
@@ -81,7 +80,7 @@ const AppointmentListScreen = ({
         <View style={styles.topScreen}>
           <Image
             style={styles.img}
-            source={require('../../../assets/Image_Icon/appointment_color.png')}
+            source={require('../../../../../assets/Image_Icon/appointment_color.png')}
           />
           <Text style={[styles.txt, styles.txtTitle]}>Your Appointments</Text>
         </View>
@@ -100,7 +99,7 @@ const AppointmentListScreen = ({
                     <View style={styles.rowButton}>
                       <Image
                         style={styles.iconButton}
-                        source={require('../../../assets/Image_Icon/calendar.png')}
+                        source={require('../../../../../assets/Image_Icon/calendar.png')}
                       />
 
                       <View style={styles.col}>
@@ -119,7 +118,7 @@ const AppointmentListScreen = ({
                   </TouchableOpacity>
                 );
               }}
-              keyExtractor={item => item.id}
+              keyExtractor={item => `row-${item.id}`}
             />
             <ModalLoad isVisibleLoad={isVisibleLoad} />
             <Modal
@@ -146,7 +145,7 @@ const AppointmentListScreen = ({
           <View style={styles.midScreen}>
             <Image
               style={styles.img}
-              source={require('../../../assets/Image_Icon/notfound.png')}
+              source={require('../../../../../assets/Image_Icon/notfound.png')}
             />
             <Text style={styles.txtNotfound}>Not found</Text>
           </View>
@@ -204,21 +203,6 @@ const styles = StyleSheet.create({
     flex: 0.65,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-
-  txtInput: {
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-    borderColor: '#808080',
-    borderWidth: 1,
-    borderRadius: 25,
   },
 
   txt: {

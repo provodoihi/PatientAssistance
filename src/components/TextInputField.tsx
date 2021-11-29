@@ -26,6 +26,7 @@ export interface TextInputFieldProps extends TextInputProps {
     e: NativeSyntheticEvent<TextInputSubmitEditingEventData>,
   ) => void;
   name: string;
+  label?: string;
   isErrorField?: boolean;
 }
 
@@ -41,6 +42,7 @@ export const TextInputField = (props: TextInputFieldProps) => {
     defaultValue,
     onSubmitEditing,
     style,
+    label,
     isErrorField,
     name,
     ...restProps
@@ -52,6 +54,7 @@ export const TextInputField = (props: TextInputFieldProps) => {
       render={({field: {onChange, value}, fieldState: {error}}) => {
         return (
           <>
+            {label && <Text style={styles.txtLabel}>{label}</Text>}
             <TextInput
               style={StyleSheet.flatten([style, styles.txtInput])}
               onChangeText={onChange}
@@ -98,7 +101,15 @@ const styles = StyleSheet.create({
     fontStyle: 'italic',
     fontSize: rf(1.5),
     color: '#ff6666',
-    paddingVertical: '1%',
+    paddingVertical: '0.5%',
     marginRight: '12%',
+  },
+  txtLabel: {
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    fontSize: rf(1.8),
+    color: '#666666',
+    paddingVertical: '0.5%',
+    marginLeft: '14%',
   },
 });

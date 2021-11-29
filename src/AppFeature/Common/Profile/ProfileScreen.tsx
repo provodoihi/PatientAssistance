@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, Image, ScrollView} from 'react-native';
 import {AppNavigationProps} from '../../../navigation/Routes';
 import axios from 'axios';
@@ -22,18 +22,6 @@ export const ProfileScreen = ({
   const token: string = route.params.token;
   const role: string = route.params.role;
 
-  // init data for placeholder
-  const [firstnameInit, setFirstname] = useState<string>('');
-  const [lastnameInit, setLastname] = useState<string>('');
-  const [ageInit, setAge] = useState<string | number>('');
-  const [addressInit, setAddress] = useState<string>('');
-
-  // placeholder
-  const f1nameplace: string = `Firstname: ${firstnameInit}`;
-  const f2nameplace: string = `Lastname: ${lastnameInit}`;
-  const addressplace: string = `Address: ${addressInit}`;
-  const ageplace: string = `Age: ${ageInit}`;
-
   interface ProfileDataProps {
     firstname: string;
     lastname: string;
@@ -41,13 +29,7 @@ export const ProfileScreen = ({
     age: number | string;
   }
 
-  const {control, handleSubmit} = useForm<ProfileDataProps>({
-    defaultValues: {
-      firstname: firstnameInit,
-      lastname: lastnameInit,
-      address: addressInit,
-      age: ageInit,
-    },
+  const {control, handleSubmit, setValue} = useForm<ProfileDataProps>({
     resolver: UpdateProfileSchema,
   });
 
@@ -60,30 +42,28 @@ export const ProfileScreen = ({
             Authorization: `Bearer ${token}`,
           },
         });
-        setFirstname(response.data.firstname);
-        setLastname(response.data.lastname);
-        setAddress(response.data.address);
-        setAge(response.data.age);
+        setValue('firstname', response.data.firstname);
+        setValue('lastname', response.data.lastname);
+        setValue('address', response.data.address);
+        setValue('age', response.data.age);
       } catch (error) {
         console.log(error);
       }
     };
     getProfile();
-  }, [token]);
+  }, [setValue, token]);
 
-  const onSubmit = (data: ProfileDataProps) => {
-    axios
-      .put(API_List.myProfile, data, {
+  const onSubmit = async (data: ProfileDataProps) => {
+    try {
+      await axios.put(API_List.myProfile, data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then(() => {
-        showToast('Upload profile successfully');
-      })
-      .catch(() => {
-        showToast('Something went wrong');
       });
+      showToast('Upload profile successfully');
+    } catch (error) {
+      showToast('Something went wrong');
+    }
   };
 
   return (
@@ -99,37 +79,41 @@ export const ProfileScreen = ({
             {role}
           </Text>
           <TextInputField
-            placeholder={f1nameplace}
+            placeholder="firstname"
             placeholderTextColor="#9FA5AA"
             multiline={false}
             isErrorField={true}
             controller={control}
+            label="Firstname"
             name="firstname"
           />
           <TextInputField
-            placeholder={f2nameplace}
+            placeholder="lastname"
             placeholderTextColor="#9FA5AA"
             multiline={false}
             isErrorField={true}
             controller={control}
+            label="Lastname"
             name="lastname"
           />
           <TextInputField
-            placeholder={addressplace}
+            placeholder="address"
             placeholderTextColor="#9FA5AA"
             multiline={false}
             isErrorField={true}
             controller={control}
+            label="Address"
             name="address"
           />
           <TextInputField
-            placeholder={ageplace}
+            placeholder="age"
             placeholderTextColor="#9FA5AA"
             maxLength={3}
             keyboardType="number-pad"
             multiline={false}
             isErrorField={true}
             controller={control}
+            label="Age"
             name="age"
           />
           <Button

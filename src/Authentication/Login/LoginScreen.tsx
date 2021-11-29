@@ -78,6 +78,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         multiline={false}
         controller={control}
         name="username"
+        label="Username"
         isErrorField={true}
       />
       <TextInputField
@@ -87,6 +88,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         multiline={false}
         controller={control}
         name="password"
+        label="Password"
         isErrorField={true}
         onSubmitEditing={handleSubmit(onSubmit)}
       />

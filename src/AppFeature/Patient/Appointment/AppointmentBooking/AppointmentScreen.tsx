@@ -9,18 +9,19 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../../../navigation/Routes';
 import {
   responsiveScreenFontSize as rf,
   responsiveScreenHeight as rh,
 } from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-date-picker';
-import Oops from '../../components/Oops';
+import Oops from '../../../../components/Oops';
 import {Picker} from '@react-native-picker/picker';
-import {API_List} from '../../API';
+import {API_List} from '../../../../API';
+import Modal from 'react-native-modal';
 import axios from 'axios';
-import {showToastFail, HeaderBar} from '../../components';
+import {showToast, HeaderBar} from '../../../../components';
 
 const AppointmentScreen = ({
   navigation,
@@ -31,10 +32,11 @@ const AppointmentScreen = ({
   const [phone, setPhone] = useState('');
   const [clinic, setClinic] = useState('');
   const [clinicID, setClinicID] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState<Date>(new Date());
   const [token, setToken] = useState(route.params.token);
   const [fullname, setFullName] = useState(route.params.name);
   const [userRole, setUserRole] = useState(route.params.role);
+  const [isVisible, setVisible] = useState(false);
 
   useEffect(() => {
     const getData = async () => {
@@ -105,7 +107,7 @@ const AppointmentScreen = ({
           ]);
         })
         .catch(() => {
-          showToastFail();
+          showToast('Something went wrong');
         });
     }
   };
@@ -119,7 +121,7 @@ const AppointmentScreen = ({
           <View style={styles.child}>
             <Image
               style={styles.img}
-              source={require('../../../assets/Image_Icon/appointment_color.png')}
+              source={require('../../../../../assets/Image_Icon/appointment_color.png')}
             />
             <Text style={[styles.txt, styles.txtTitle]}>
               Book new appointment
