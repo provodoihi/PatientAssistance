@@ -25,9 +25,10 @@ const styles = StyleSheet.create({
 
   modalLoad: {
     backgroundColor: '#ffffff',
-    flex: 0.25,
+    flex: 0.2,
     width: '80%',
     justifyContent: 'center',
+    borderRadius: 18,
     alignItems: 'center',
     alignSelf: 'center',
   },

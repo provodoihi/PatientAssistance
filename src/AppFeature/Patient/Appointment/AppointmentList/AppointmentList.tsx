@@ -12,7 +12,18 @@ import {API_List} from '../../../../API';
 import axios from 'axios';
 import {AppNavigationProps} from '../../../../navigation/Routes';
 import Modal from 'react-native-modal';
-import {showToast, ModalLoad, HeaderBar} from '../../../../components';
+import dayjs from 'dayjs';
+import {
+  showToast,
+  ModalLoad,
+  HeaderBar,
+  ListItem,
+} from '../../../../components';
+import {
+  pic_appointmentColor,
+  pic_calendar,
+  pic_notFound,
+} from '../../../../../assets';
 
 const AppointmentListScreen = ({
   route,
@@ -78,10 +89,7 @@ const AppointmentListScreen = ({
       <HeaderBar text="Appointment" isBack={true} />
       <View style={styles.container2}>
         <View style={styles.topScreen}>
-          <Image
-            style={styles.img}
-            source={require('../../../../../assets/Image_Icon/appointment_color.png')}
-          />
+          <Image style={styles.img} source={pic_appointmentColor} />
           <Text style={[styles.txt, styles.txtTitle]}>Your Appointments</Text>
         </View>
 
@@ -91,31 +99,24 @@ const AppointmentListScreen = ({
               data={data}
               renderItem={({item}: any) => {
                 return (
-                  <TouchableOpacity
+                  <ListItem
                     style={[styles.button, styles.shadow]}
                     activeOpacity={0.8}
                     onPressIn={() => setItemId(item.id)}
-                    onPress={openModal}>
-                    <View style={styles.rowButton}>
-                      <Image
-                        style={styles.iconButton}
-                        source={require('../../../../../assets/Image_Icon/calendar.png')}
-                      />
-
-                      <View style={styles.col}>
-                        <Text style={styles.txtName}>
-                          Clinic: {item.nameOfClinic}
-                        </Text>
-                        <Text style={styles.txtNormal2}>
-                          Time:{' '}
-                          {new Date(item.appointmentStartTime).toUTCString()}
-                        </Text>
-                        <Text style={styles.txtNormal2}>
-                          Status: {item.status}
-                        </Text>
-                      </View>
-                    </View>
-                  </TouchableOpacity>
+                    onPress={openModal}
+                    imageSource={pic_calendar}
+                    isMultipleAtrribute={true}>
+                    <Text style={styles.txtName}>
+                      Clinic: {item.nameOfClinic}
+                    </Text>
+                    <Text style={styles.txtNormal2}>
+                      Time:{' '}
+                      {dayjs(item.appointmentStartTime).format(
+                        'ddd, MMM D, YYYY HH:mm',
+                      )}
+                    </Text>
+                    <Text style={styles.txtNormal2}>Status: {item.status}</Text>
+                  </ListItem>
                 );
               }}
               keyExtractor={item => `row-${item.id}`}
@@ -128,7 +129,7 @@ const AppointmentListScreen = ({
                 <Text style={styles.txtModalHead}>Appointment Detail</Text>
                 <Text style={styles.txtModal}>Clinic: {clinic}</Text>
                 <Text style={styles.txtModal}>
-                  Time: {new Date(time).toUTCString()}
+                  Time: {dayjs(time).format('ddd, MMM D, YYYY HH:mm')}
                 </Text>
                 <Text style={styles.txtModal}>Description: {describe}</Text>
                 <Text style={styles.txtModal}>Status: {statusAppoint}</Text>
@@ -143,10 +144,7 @@ const AppointmentListScreen = ({
           </View>
         ) : (
           <View style={styles.midScreen}>
-            <Image
-              style={styles.img}
-              source={require('../../../../../assets/Image_Icon/notfound.png')}
-            />
+            <Image style={styles.img} source={pic_notFound} />
             <Text style={styles.txtNotfound}>Not found</Text>
           </View>
         )}

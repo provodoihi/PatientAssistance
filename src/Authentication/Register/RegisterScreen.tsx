@@ -1,25 +1,23 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Text, View, ScrollView} from 'react-native';
 import axios from 'axios';
 import {API_List} from '../../API';
 import {AuthNavigationProps} from '../../navigation/Routes';
-import {Picker} from '@react-native-picker/picker';
 import {useForm} from 'react-hook-form';
 import {
   Button,
   SignUpSchema,
   TextInputField,
   TextNavigation,
-  showToast,
+  showToastLong,
+  PickerControlled,
 } from '../../components';
 import {styleRegisterScreen as style} from './style';
 
 export const RegisterScreen = ({
   navigation,
 }: AuthNavigationProps<'Register'>) => {
-  const [sex, setSex] = useState<String>('');
   const role: string[] = ['patient'];
-  // const [errorResponse, setErrorResponse] = useState<string>('');
   interface SignUpDataProps {
     username: string;
     email: string;
@@ -29,6 +27,7 @@ export const RegisterScreen = ({
     phone: string;
     address: string;
     age: string | number;
+    sex: string;
   }
 
   const {control, handleSubmit} = useForm<SignUpDataProps>({
@@ -41,17 +40,18 @@ export const RegisterScreen = ({
       phone: '',
       address: '',
       age: '',
+      sex: '',
     },
     resolver: SignUpSchema,
   });
 
   const onSubmit = async (data: SignUpDataProps) => {
     try {
-      let signUpData = {...data, sex, role};
+      let signUpData = {...data, role};
       await axios.post(API_List.signup, signUpData);
       navigation.navigate('SignupSuccess');
     } catch (error: any) {
-      showToast(error.response.data.message);
+      showToastLong(error.response.data.message);
     }
   };
 
@@ -142,16 +142,15 @@ export const RegisterScreen = ({
           label="Age"
           isErrorField={true}
         />
-        <Picker
-          onValueChange={value => setSex(value)}
-          selectedValue={sex}
-          style={style.picker}
-          dropdownIconColor="#9FA5AA">
-          <Picker.Item label="Choose gender" value="" />
-          <Picker.Item label="Male" value="Male" />
-          <Picker.Item label="Female" value="Female" />
-          <Picker.Item label="Other" value="Other" />
-        </Picker>
+        <PickerControlled
+          name="sex"
+          placeholder="Choose gender"
+          data={['Male', 'Female', 'Other']}
+          label="Gender"
+          dropdownIconColor="#9FA5AA"
+          controller={control}
+          isErrorField={true}
+        />
         <Button
           style={[style.buttonBlue, style.shadowBlue]}
           textStyle={[style.textAlignCenter, style.textBigBoldWhite]}

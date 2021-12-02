@@ -7,6 +7,7 @@ import {pic_userColor} from '../../../../assets';
 import {
   TextInputField,
   showToast,
+  showToastLong,
   UpdateProfileSchema,
   Button,
   HeaderBar,
@@ -62,7 +63,7 @@ export const ProfileScreen = ({
       });
       showToast('Upload profile successfully');
     } catch (error) {
-      showToast('Something went wrong');
+      showToastLong('Something went wrong');
     }
   };
 

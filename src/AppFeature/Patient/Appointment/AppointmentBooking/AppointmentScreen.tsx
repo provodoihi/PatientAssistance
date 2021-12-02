@@ -21,7 +21,16 @@ import {Picker} from '@react-native-picker/picker';
 import {API_List} from '../../../../API';
 import Modal from 'react-native-modal';
 import axios from 'axios';
-import {showToast, HeaderBar} from '../../../../components';
+import {
+  showToast,
+  HeaderBar,
+  Button,
+  TextNavigation,
+  TextInputField,
+  AppointmentBookingSchema
+} from '../../../../components';
+import {useForm} from 'react-hook-form';
+import dayjs from 'dayjs';
 
 const AppointmentScreen = ({
   navigation,
@@ -71,8 +80,12 @@ const AppointmentScreen = ({
     getData();
   }, [fullname, token, userRole]);
 
+  const toggleModal = () => {
+    setVisible(!isVisible);
+  };
+
   const appointmentData = {
-    appointmentStartTime: date,
+    appointmentStartTime: dayjs(date).format(),
     description: describe,
     clinicId: clinicID,
     patientId: userID,
@@ -98,13 +111,7 @@ const AppointmentScreen = ({
           },
         })
         .then(() => {
-          Alert.alert('Notification', 'Successfully booking appointment', [
-            {
-              text: 'OK',
-              onPress: () => null,
-              style: 'cancel',
-            },
-          ]);
+          showToast('Successfully booking appointment');
         })
         .catch(() => {
           showToast('Something went wrong');
@@ -116,7 +123,6 @@ const AppointmentScreen = ({
     return (
       <View style={styles.container}>
         <HeaderBar text="Appointment" isBack={true} />
-
         <ScrollView style={styles.container2}>
           <View style={styles.child}>
             <Image
@@ -126,15 +132,15 @@ const AppointmentScreen = ({
             <Text style={[styles.txt, styles.txtTitle]}>
               Book new appointment
             </Text>
+            <TouchableOpacity onPress={toggleModal}>
+              <Text style={[styles.txt, styles.txtNormal]}>
+                Choose appointment time
+              </Text>
+            </TouchableOpacity>
+
             <Text style={[styles.txt, styles.txtNormal]}>
-              Choose appointment time
+              Time: {dayjs(date).format('ddd, MMM D, YYYY HH:mm')}
             </Text>
-            <DatePicker
-              date={date}
-              minimumDate={new Date(Date.now())}
-              onDateChange={setDate}
-              style={styles.datePick}
-            />
             <TextInput
               style={styles.txtInput}
               onChangeText={text => {
@@ -163,25 +169,43 @@ const AppointmentScreen = ({
               <Picker.Item label="ID: 21 - Clinic 01" value="21" />
               <Picker.Item label="ID: 22 - Clinic 02" value="22" />
             </Picker>
-            <TouchableOpacity
+            <Button
               style={[styles.button, styles.shadow]}
               activeOpacity={0.8}
-              onPress={submitAppointment}>
-              <Text style={[styles.txt, styles.txtButton]}>Book Now</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.8}
+              onPress={submitAppointment}
+              text="Book Now"
+              textStyle={[styles.txt, styles.txtButton]}
+            />
+            <TextNavigation
               onPress={() =>
                 navigation.navigate('AppointmentList', {
                   token: token,
                   userID: userID,
                 })
-              }>
-              <Text style={[styles.txt, styles.txtNavigate]}>
-                View My Appointments
-              </Text>
-            </TouchableOpacity>
+              }
+              text="View My Appointments"
+            />
           </View>
+          <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
+            <View style={styles.modal}>
+              <Text style={[styles.txt, styles.txtNormal]}>
+                Choose appointment time
+              </Text>
+              <DatePicker
+                date={date}
+                minimumDate={new Date(Date.now())}
+                onDateChange={setDate}
+                style={styles.datePick}
+              />
+              <Button
+                style={[styles.buttonModal, styles.shadow]}
+                activeOpacity={0.8}
+                onPress={toggleModal}
+                text="Save"
+                textStyle={[styles.txt, styles.txtButtonModal]}
+              />
+            </View>
+          </Modal>
         </ScrollView>
       </View>
     );
@@ -203,6 +227,13 @@ const styles = StyleSheet.create({
     flex: 1,
     height: rh(105),
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  modal: {
+    backgroundColor: '#ffffff',
+    flex: 0.6,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -253,6 +284,15 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
 
+  txtButtonModal: {
+    padding: '2.5%',
+    margin: '2%',
+    fontSize: rf(2.2),
+    fontWeight: 'bold',
+    color: '#ffffff',
+    alignSelf: 'center',
+  },
+
   txtNavigate: {
     margin: '1.5%',
     padding: '1.5%',
@@ -272,13 +312,22 @@ const styles = StyleSheet.create({
   },
 
   datePick: {
-    margin: '2%',
-    height: rh(15),
+    margin: '2.5%',
+    height: rh(20),
   },
 
   button: {
     backgroundColor: '#00BFFF',
     margin: '2%',
+    borderRadius: 25,
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  buttonModal: {
+    backgroundColor: '#00BFFF',
+    margin: '3%',
     borderRadius: 25,
     width: '80%',
     justifyContent: 'center',

@@ -70,7 +70,7 @@ export const TextInputField = (props: TextInputFieldProps) => {
               {...restProps}
             />
             {isErrorField && error && (
-              <Text style={styles.txtError}>This field is required</Text>
+              <Text style={styles.txtError}>{error?.message}</Text>
             )}
           </>
         );

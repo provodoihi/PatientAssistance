@@ -18,6 +18,7 @@
     "@react-navigation/native": "^5.9.8",
     "@react-navigation/stack": "^5.14.5",
     "axios": "^0.21.1",
+    "dayjs": "^1.10.7",
     "i18next": "^21.5.2",
     "mobx": "^6.3.7",
     "mobx-react-lite": "^3.2.2",
