@@ -8,8 +8,6 @@ import {
   ProfileScreen,
   MapViewScreen,
 } from '../AppFeature/Common';
-import HealthAdvisorScreen from '../AppFeature/Patient/HealthAdvisorScreen';
-import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
 import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
 import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
 import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
@@ -44,7 +42,9 @@ import AdminScreen from '../AppFeature/Admin/AdminScreen';
 import {
   AppointmentScreen,
   AppointmentListScreen,
-} from '../AppFeature/Patient/Appointment';
+  HealthAdvisorListScreen,
+  HealthAdvisorScreen,
+} from '../AppFeature/Patient';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 type Item = {

@@ -64,3 +64,9 @@ export const AppointmentBookingSchema = yupResolver(
     clinicId: yup.string().required('This is required field'),
   }),
 );
+
+export const QuestionAskingSchema = yupResolver(
+  yup.object().shape({
+    questionDetail: yup.string().required('This is required field'),
+  }),
+);

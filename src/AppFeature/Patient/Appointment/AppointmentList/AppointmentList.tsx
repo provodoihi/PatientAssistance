@@ -102,7 +102,19 @@ export const AppointmentListScreen = ({
           Time:{' '}
           {dayjs(item.appointmentStartTime).format('ddd, MMM D, YYYY HH:mm')}
         </Text>
-        <Text style={style.textSmallNormalBlack}>Status: {item.status}</Text>
+        <View style={style.row}>
+          <Text style={style.textSmallNormalBlack}>Status:</Text>
+          <Text
+            style={
+              item.status === 'CONFIRMED'
+                ? style.textSmallNormalGreen
+                : item.status === 'CANCELED'
+                ? style.textSmallNormalRed
+                : style.textSmallNormalOrange
+            }>
+            {item.status}
+          </Text>
+        </View>
       </ListItem>
     );
   };
@@ -144,9 +156,22 @@ export const AppointmentListScreen = ({
                 <Text style={[style.textAlignLeft, style.textNormalBlack]}>
                   Description: {describe}
                 </Text>
-                <Text style={[style.textAlignLeft, style.textNormalBlack]}>
-                  Status: {statusAppointment}
-                </Text>
+                <View style={style.row}>
+                  <Text style={[style.textAlignLeft, style.textNormalBlack]}>
+                    Status:
+                  </Text>
+                  <Text
+                    style={[
+                      statusAppointment === 'CONFIRMED'
+                        ? style.textNormalGreen
+                        : statusAppointment === 'CANCELED'
+                        ? style.textNormalRed
+                        : style.textNormalOrange,
+                      style.textAlignLeft,
+                    ]}>
+                    {statusAppointment}
+                  </Text>
+                </View>
                 <Button
                   style={[style.buttonBlue, style.shadowBlue]}
                   activeOpacity={0.8}

@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {Text, View, Image, ScrollView} from 'react-native';
 import {AppNavigationProps} from '../../../../navigation/Routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-date-picker';
-import Oops from '../../../../components/Oops';
 import {API_List} from '../../../../API';
 import Modal from 'react-native-modal';
 import axios from 'axios';
@@ -15,10 +14,12 @@ import {
   TextInputField,
   AppointmentBookingSchema,
   PickerControlled,
+  Oops,
+  ListItem,
 } from '../../../../components';
 import {useForm} from 'react-hook-form';
-import {appointmentBookingStyle as style} from './style';
-import {pic_appointmentColor} from '../../../../../assets';
+import {styleAppointmentBookingScreen as style} from './style';
+import {pic_appointmentColor, pic_calendar} from '../../../../../assets';
 import dayjs from 'dayjs';
 
 export const AppointmentScreen = ({
@@ -119,14 +120,19 @@ export const AppointmentScreen = ({
             <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
               Book new appointment
             </Text>
-            <TouchableOpacity onPress={toggleModal}>
+            <ListItem
+              style={[style.buttonNoColor, style.shadowGray]}
+              onPress={toggleModal}
+              activeOpacity={0.8}
+              isMultipleAtrribute={false}
+              imageSource={pic_calendar}>
               <Text style={[style.textAlignCenter, style.textNormalBlack]}>
-                Choose appointment time
+                Choose Time Slot
               </Text>
-            </TouchableOpacity>
+            </ListItem>
 
             <Text style={[style.textAlignCenter, style.textSmallNormalBlack]}>
-              Time: {dayjs(date).format('ddd, MMM D, YYYY HH:mm')}
+              Time Slot: {dayjs(date).format('ddd, MMM D, YYYY HH:mm')}
             </Text>
             <TextInputField
               placeholder="Description"
@@ -171,7 +177,7 @@ export const AppointmentScreen = ({
           </View>
           <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
             <View style={style.modal}>
-              <Text style={[style.textAlignCenter, style.textSmallNormalBlack]}>
+              <Text style={[style.textAlignCenter, style.textNormalBoldBlack]}>
                 Choose appointment time
               </Text>
               <DatePicker

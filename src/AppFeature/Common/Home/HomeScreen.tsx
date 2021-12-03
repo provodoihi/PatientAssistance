@@ -138,7 +138,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             onPress={() => navigation.navigate('Location')}
             isMultipleAtrribute={false}
             imageSource={pic_locationIcon}>
-            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+            <Text style={[style.textAlignCenter, style.textNormalPlusBlack]}>
               Find Hospital Clinic
             </Text>
           </ListItem>
@@ -154,7 +154,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             }
             isMultipleAtrribute={false}
             imageSource={pic_timesheet}>
-            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+            <Text style={[style.textAlignCenter, style.textNormalPlusBlack]}>
               Appointment
             </Text>
           </ListItem>
@@ -170,7 +170,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             }
             isMultipleAtrribute={false}
             imageSource={pic_healthBook}>
-            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+            <Text style={[style.textAlignCenter, style.textNormalPlusBlack]}>
               Health Advice
             </Text>
           </ListItem>
@@ -179,7 +179,7 @@ export const HomeScreen = ({navigation}: AppNavigationProps<'Home'>) => {
             activeOpacity={0.8}
             isMultipleAtrribute={false}
             imageSource={pic_edit}>
-            <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+            <Text style={[style.textAlignCenter, style.textNormalPlusBlack]}>
               Update Soon
             </Text>
           </ListItem>

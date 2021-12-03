@@ -14,12 +14,12 @@ export const styleAppointmentListScreen = StyleSheet.create({
   topScreen: {
     alignItems: 'center',
     justifyContent: 'center',
-    flex: 0.4,
+    flex: 0.35,
     backgroundColor: '#ffffff',
   },
 
   midScreen: {
-    flex: 0.6,
+    flex: 0.65,
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
@@ -34,10 +34,17 @@ export const styleAppointmentListScreen = StyleSheet.create({
   },
 
   image: {
-    width: '35%',
+    width: '40%',
     margin: '1%',
-    height: '30%',
+    height: '35%',
     resizeMode: 'contain',
+  },
+
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignContent: 'flex-start',
+    alignSelf: 'flex-start',
   },
 
   textAlignCenter: {
@@ -88,6 +95,27 @@ export const styleAppointmentListScreen = StyleSheet.create({
     color: '#4c4c4c',
   },
 
+  textNormalGreen: {
+    padding: '2%',
+    fontSize: rf(2),
+    fontWeight: 'normal',
+    color: '#66ff66',
+  },
+
+  textNormalRed: {
+    padding: '2%',
+    fontSize: rf(2),
+    fontWeight: 'normal',
+    color: '#ff6666',
+  },
+
+  textNormalOrange: {
+    padding: '2%',
+    fontSize: rf(2),
+    fontWeight: 'normal',
+    color: '#ffc966',
+  },
+
   textSmallBoldBlack: {
     fontSize: rf(1.8),
     padding: '1.5%',
@@ -100,6 +128,27 @@ export const styleAppointmentListScreen = StyleSheet.create({
     padding: '1.5%',
     fontWeight: 'normal',
     color: '#4c4c4c',
+  },
+
+  textSmallNormalGreen: {
+    fontSize: rf(1.8),
+    padding: '1.5%',
+    fontWeight: 'normal',
+    color: '#66ff66',
+  },
+
+  textSmallNormalOrange: {
+    fontSize: rf(1.8),
+    padding: '1.5%',
+    fontWeight: 'normal',
+    color: '#ffc966',
+  },
+
+  textSmallNormalRed: {
+    fontSize: rf(1.8),
+    padding: '1.5%',
+    fontWeight: 'normal',
+    color: '#ff6666',
   },
 
   buttonNoColor: {

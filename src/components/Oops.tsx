@@ -7,7 +7,7 @@ interface Props {
   text: string;
 }
 
-const Oops = ({text}: Props) => {
+export const Oops = ({text}: Props) => {
   return (
     <View style={styles.container}>
       <HeaderBar text={text} isBack={false} />
@@ -55,5 +55,3 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
 });
-
-export default Oops;

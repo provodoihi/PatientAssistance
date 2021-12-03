@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
     margin: '1.5%',
     justifyContent: 'flex-start',
     alignContent: 'flex-start',
-    maxWidth: '80%',
+    maxWidth: '75%',
   },
   iconButton: {
     width: '20%',

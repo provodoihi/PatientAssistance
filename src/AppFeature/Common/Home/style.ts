@@ -72,9 +72,9 @@ export const styleHomeScreen = StyleSheet.create({
     color: '#ffffff',
   },
 
-  textNormalBlack: {
+  textNormalPlusBlack: {
     padding: '2%',
-    fontSize: rf(2),
+    fontSize: rf(2.2),
     fontWeight: 'normal',
     color: '#4c4c4c',
   },
