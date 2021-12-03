@@ -10,7 +10,6 @@ import {
 } from '../AppFeature/Common';
 import HealthAdvisorScreen from '../AppFeature/Patient/HealthAdvisorScreen';
 import HealthAdvisorListScreen from '../AppFeature/Patient/HealthAdvisorList';
-import AppointmentListScreen from '../AppFeature/Patient/Appointment/AppointmentList/AppointmentList';
 import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
 import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
 import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
@@ -42,7 +41,10 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
 import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
 import AdminScreen from '../AppFeature/Admin/AdminScreen';
-import AppointmentScreen from '../AppFeature/Patient/Appointment/AppointmentBooking/AppointmentScreen';
+import {
+  AppointmentScreen,
+  AppointmentListScreen,
+} from '../AppFeature/Patient/Appointment';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 type Item = {

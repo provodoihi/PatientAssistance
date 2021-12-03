@@ -45,7 +45,7 @@ export const RegisterScreen = ({
     resolver: SignUpSchema,
   });
 
-  const onSubmit = async (data: SignUpDataProps) => {
+  const onSubmitRegister = async (data: SignUpDataProps) => {
     try {
       let signUpData = {...data, role};
       await axios.post(API_List.signup, signUpData);
@@ -155,7 +155,7 @@ export const RegisterScreen = ({
           style={[style.buttonBlue, style.shadowBlue]}
           textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
           activeOpacity={0.8}
-          onPress={handleSubmit(onSubmit)}
+          onPress={handleSubmit(onSubmitRegister)}
           text="Sign Up"
         />
         <TextNavigation

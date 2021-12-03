@@ -31,7 +31,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
     resolver: SignInSchema,
   });
 
-  const onSubmit = (data: SignInDataProps) => {
+  const onSubmitLogin = (data: SignInDataProps) => {
     setVisibleLoad(true);
     axios
       .post(API_List.login, data)
@@ -90,14 +90,14 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         name="password"
         label="Password"
         isErrorField={true}
-        onSubmitEditing={handleSubmit(onSubmit)}
+        onSubmitEditing={handleSubmit(onSubmitLogin)}
       />
 
       <Button
         style={[style.buttonBlue, style.shadowBlue]}
         textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
         activeOpacity={0.8}
-        onPress={handleSubmit(onSubmit)}
+        onPress={handleSubmit(onSubmitLogin)}
         text="Sign In"
       />
       <TextNavigation

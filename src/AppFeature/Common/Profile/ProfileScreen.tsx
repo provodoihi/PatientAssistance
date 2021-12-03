@@ -54,7 +54,7 @@ export const ProfileScreen = ({
     getProfile();
   }, [setValue, token]);
 
-  const onSubmit = async (data: ProfileDataProps) => {
+  const onSubmitProfile = async (data: ProfileDataProps) => {
     try {
       await axios.put(API_List.myProfile, data, {
         headers: {
@@ -121,7 +121,7 @@ export const ProfileScreen = ({
             style={[style.buttonBlue, style.shadowBlue]}
             textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
             activeOpacity={0.8}
-            onPress={handleSubmit(onSubmit)}
+            onPress={handleSubmit(onSubmitProfile)}
             text="Update My Profile"
           />
           <Button

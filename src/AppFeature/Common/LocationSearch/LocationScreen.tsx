@@ -79,24 +79,22 @@ export const LocationScreen = ({
 
   const renderItem = ({item}: ListRenderItemInfo<LocationListItem>) => {
     return (
-      <View style={style.contentList}>
-        <ListItem
-          style={[style.buttonNoColor, style.shadowGray]}
-          activeOpacity={0.8}
-          onPress={() => {
-            navigation.navigate('MapView', {
-              name: item.name,
-              latitude: item.latitude,
-              longtitude: item.longtitude,
-            });
-          }}
-          isMultipleAtrribute={true}
-          imageSource={pic_healthClinic}>
-          <Text style={style.textSmallBoldBlack}>{item.name}</Text>
-          <Text style={style.textSmallNormalBlack}>{item.address}</Text>
-          <Text style={style.textSmallNormalBlack}>{item.phone}</Text>
-        </ListItem>
-      </View>
+      <ListItem
+        style={[style.buttonNoColor, style.shadowGray]}
+        activeOpacity={0.8}
+        onPress={() => {
+          navigation.navigate('MapView', {
+            name: item.name,
+            latitude: item.latitude,
+            longtitude: item.longtitude,
+          });
+        }}
+        isMultipleAtrribute={true}
+        imageSource={pic_healthClinic}>
+        <Text style={style.textSmallBoldBlack}>{item.name}</Text>
+        <Text style={style.textSmallNormalBlack}>{item.address}</Text>
+        <Text style={style.textSmallNormalBlack}>{item.phone}</Text>
+      </ListItem>
     );
   };
 

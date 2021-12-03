@@ -1,23 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-  TextInput,
-  ScrollView,
-  Alert,
-} from 'react-native';
+import {Text, View, TouchableOpacity, Image, ScrollView} from 'react-native';
 import {AppNavigationProps} from '../../../../navigation/Routes';
-import {
-  responsiveScreenFontSize as rf,
-  responsiveScreenHeight as rh,
-} from 'react-native-responsive-dimensions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DatePicker from 'react-native-date-picker';
 import Oops from '../../../../components/Oops';
-import {Picker} from '@react-native-picker/picker';
 import {API_List} from '../../../../API';
 import Modal from 'react-native-modal';
 import axios from 'axios';
@@ -27,25 +13,31 @@ import {
   Button,
   TextNavigation,
   TextInputField,
-  AppointmentBookingSchema
+  AppointmentBookingSchema,
+  PickerControlled,
 } from '../../../../components';
 import {useForm} from 'react-hook-form';
+import {appointmentBookingStyle as style} from './style';
+import {pic_appointmentColor} from '../../../../../assets';
 import dayjs from 'dayjs';
 
-const AppointmentScreen = ({
+export const AppointmentScreen = ({
   navigation,
   route,
 }: AppNavigationProps<'Appointment'>) => {
-  const [describe, setDescribe] = useState('');
   const [userID, setUserID] = useState('');
   const [phone, setPhone] = useState('');
-  const [clinic, setClinic] = useState('');
-  const [clinicID, setClinicID] = useState('');
   const [date, setDate] = useState<Date>(new Date());
   const [token, setToken] = useState(route.params.token);
   const [fullname, setFullName] = useState(route.params.name);
   const [userRole, setUserRole] = useState(route.params.role);
   const [isVisible, setVisible] = useState(false);
+
+  interface AppointmentBookingProps {
+    description: string;
+    clinicId: string | number;
+    nameOfClinic: string;
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -84,97 +76,88 @@ const AppointmentScreen = ({
     setVisible(!isVisible);
   };
 
-  const appointmentData = {
-    appointmentStartTime: dayjs(date).format(),
-    description: describe,
-    clinicId: clinicID,
-    patientId: userID,
-    nameOfClinic: clinic,
-    nameOfPatient: fullname,
-    phoneOfPatient: phone,
-  };
+  const {control, handleSubmit} = useForm<AppointmentBookingProps>({
+    defaultValues: {
+      description: '',
+      clinicId: '',
+      nameOfClinic: '',
+    },
+    resolver: AppointmentBookingSchema,
+  });
 
-  const submitAppointment = () => {
-    if (describe === '') {
-      Alert.alert('Notification', 'Please write the description', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
+  const onSubmitAppointment = async (data: AppointmentBookingProps) => {
+    try {
+      let appointmentStartTime: string = dayjs(date).format();
+      let nameOfPatient: string = fullname;
+      let phoneOfPatient: string = phone;
+      let patientId: string | number = userID;
+      let AppointmentData = {
+        ...data,
+        appointmentStartTime,
+        nameOfPatient,
+        phoneOfPatient,
+        patientId,
+      };
+      await axios.post(API_List.appointmentGeneral, AppointmentData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      ]);
-    } else {
-      axios
-        .post(API_List.appointmentGeneral, appointmentData, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then(() => {
-          showToast('Successfully booking appointment');
-        })
-        .catch(() => {
-          showToast('Something went wrong');
-        });
+      });
+      showToast('Successfully booking appointment');
+    } catch (error) {
+      showToast('Something went wrong');
     }
   };
 
   if (userRole === 'ROLE_PATIENT') {
     return (
-      <View style={styles.container}>
+      <View style={style.container}>
         <HeaderBar text="Appointment" isBack={true} />
-        <ScrollView style={styles.container2}>
-          <View style={styles.child}>
-            <Image
-              style={styles.img}
-              source={require('../../../../../assets/Image_Icon/appointment_color.png')}
-            />
-            <Text style={[styles.txt, styles.txtTitle]}>
+        <ScrollView style={style.scrollView}>
+          <View style={style.container2}>
+            <Image style={style.image} source={pic_appointmentColor} />
+            <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
               Book new appointment
             </Text>
             <TouchableOpacity onPress={toggleModal}>
-              <Text style={[styles.txt, styles.txtNormal]}>
+              <Text style={[style.textAlignCenter, style.textNormalBlack]}>
                 Choose appointment time
               </Text>
             </TouchableOpacity>
 
-            <Text style={[styles.txt, styles.txtNormal]}>
+            <Text style={[style.textAlignCenter, style.textSmallNormalBlack]}>
               Time: {dayjs(date).format('ddd, MMM D, YYYY HH:mm')}
             </Text>
-            <TextInput
-              style={styles.txtInput}
-              onChangeText={text => {
-                setDescribe(text);
-              }}
-              value={describe}
+            <TextInputField
               placeholder="Description"
               placeholderTextColor="#9FA5AA"
               multiline={false}
+              name="description"
+              controller={control}
+              isErrorField={true}
             />
-            <Picker
-              style={styles.pick}
+            <PickerControlled
               dropdownIconColor="#9FA5AA"
-              selectedValue={clinic}
-              onValueChange={value => setClinic(value)}>
-              <Picker.Item label="Choose Clinic" value="" />
-              <Picker.Item label="Clinic 01" value="Clinic 01" />
-              <Picker.Item label="Clinic 02" value="Clinic 02" />
-            </Picker>
-            <Picker
-              style={styles.pick}
+              name="nameOfClinic"
+              placeholder="Choose Clinic"
+              data={['Clinic 01', 'Clinic 02']}
+              controller={control}
+              isErrorField={true}
+            />
+            <PickerControlled
               dropdownIconColor="#9FA5AA"
-              selectedValue={clinicID}
-              onValueChange={value => setClinicID(value)}>
-              <Picker.Item label=" Choose Clinic ID" value="" />
-              <Picker.Item label="ID: 21 - Clinic 01" value="21" />
-              <Picker.Item label="ID: 22 - Clinic 02" value="22" />
-            </Picker>
+              name="clinicId"
+              placeholder="Choose Clinic ID"
+              data={['21', '22']}
+              controller={control}
+              isErrorField={true}
+            />
             <Button
-              style={[styles.button, styles.shadow]}
+              style={[style.buttonBlue, style.shadowBlue]}
               activeOpacity={0.8}
-              onPress={submitAppointment}
+              onPress={handleSubmit(onSubmitAppointment)}
               text="Book Now"
-              textStyle={[styles.txt, styles.txtButton]}
+              textStyle={[style.textAlignCenter, style.textBigBoldWhite]}
             />
             <TextNavigation
               onPress={() =>
@@ -187,22 +170,22 @@ const AppointmentScreen = ({
             />
           </View>
           <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
-            <View style={styles.modal}>
-              <Text style={[styles.txt, styles.txtNormal]}>
+            <View style={style.modal}>
+              <Text style={[style.textAlignCenter, style.textSmallNormalBlack]}>
                 Choose appointment time
               </Text>
               <DatePicker
                 date={date}
                 minimumDate={new Date(Date.now())}
                 onDateChange={setDate}
-                style={styles.datePick}
+                style={style.datePicker}
               />
               <Button
-                style={[styles.buttonModal, styles.shadow]}
+                style={[style.buttonBlue, style.shadowBlue]}
                 activeOpacity={0.8}
                 onPress={toggleModal}
                 text="Save"
-                textStyle={[styles.txt, styles.txtButtonModal]}
+                textStyle={[style.textAlignCenter, style.textNormalBoldWhite]}
               />
             </View>
           </Modal>
@@ -213,159 +196,3 @@ const AppointmentScreen = ({
     return <Oops text="For Patient" />;
   }
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  container2: {
-    flex: 1,
-  },
-
-  child: {
-    flex: 1,
-    height: rh(105),
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  modal: {
-    backgroundColor: '#ffffff',
-    flex: 0.6,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  txtInput: {
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-    borderColor: '#808080',
-    borderWidth: 1,
-    borderRadius: 25,
-  },
-
-  txt: {
-    textAlign: 'center',
-    justifyContent: 'center',
-  },
-
-  txtTitle: {
-    margin: '2%',
-    fontSize: rf(2.5),
-    fontWeight: 'bold',
-    color: '#4c4c4c',
-    textAlign: 'center',
-  },
-
-  txtNormal: {
-    padding: '1.5%',
-    margin: '2%',
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#4c4c4c',
-    alignSelf: 'center',
-  },
-
-  txtButton: {
-    fontSize: rf(2.4),
-    padding: '2.5%',
-    margin: '2%',
-    fontWeight: 'bold',
-    color: '#ffffff',
-    alignSelf: 'center',
-  },
-
-  txtButtonModal: {
-    padding: '2.5%',
-    margin: '2%',
-    fontSize: rf(2.2),
-    fontWeight: 'bold',
-    color: '#ffffff',
-    alignSelf: 'center',
-  },
-
-  txtNavigate: {
-    margin: '1.5%',
-    padding: '1.5%',
-    fontSize: rf(1.8),
-    fontWeight: 'normal',
-    color: '#00BFFF',
-  },
-
-  pick: {
-    color: '#9FA5AA',
-    textAlign: 'left',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-    width: '80%',
-    margin: '2%',
-    paddingLeft: '4%',
-  },
-
-  datePick: {
-    margin: '2.5%',
-    height: rh(20),
-  },
-
-  button: {
-    backgroundColor: '#00BFFF',
-    margin: '2%',
-    borderRadius: 25,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  buttonModal: {
-    backgroundColor: '#00BFFF',
-    margin: '3%',
-    borderRadius: 25,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  row: {
-    flexDirection: 'row',
-    // flex: 1,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-  },
-
-  rowButton: {
-    flexDirection: 'row',
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
-
-  shadow: {
-    shadowColor: '#00BFFF',
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-
-    elevation: 10,
-  },
-
-  img: {
-    width: '35%',
-    height: '25%',
-    resizeMode: 'contain',
-  },
-});
-
-export default AppointmentScreen;

@@ -60,5 +60,7 @@ export const BMICalculateSchema = yupResolver(
 export const AppointmentBookingSchema = yupResolver(
   yup.object().shape({
     description: yup.string().required('This is required field'),
+    nameOfClinic: yup.string().required('This is required field'),
+    clinicId: yup.string().required('This is required field'),
   }),
 );
