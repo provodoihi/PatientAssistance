@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, ScrollView} from 'react-native';
-import axios from 'axios';
-import {API_List} from '../../API';
+// import axios from 'axios';
+// import {API_List} from '../../API';
 import {AuthNavigationProps} from '../../navigation/Routes';
 import {useForm} from 'react-hook-form';
 import {
@@ -12,25 +12,17 @@ import {
   showToastLong,
   PickerControlled,
 } from '../../components';
+import {useStores, SignUpDataType} from '../../models';
 import {styleRegisterScreen as style} from './style';
 
 export const RegisterScreen = ({
   navigation,
 }: AuthNavigationProps<'Register'>) => {
   const role: string[] = ['patient'];
-  interface SignUpDataProps {
-    username: string;
-    email: string;
-    password: string;
-    firstname: string;
-    lastname: string;
-    phone: string;
-    address: string;
-    age: string | number;
-    sex: string;
-  }
 
-  const {control, handleSubmit} = useForm<SignUpDataProps>({
+  const {authStore} = useStores();
+
+  const {control, handleSubmit} = useForm<SignUpDataType>({
     defaultValues: {
       username: '',
       email: '',
@@ -45,10 +37,10 @@ export const RegisterScreen = ({
     resolver: SignUpSchema,
   });
 
-  const onSubmitRegister = async (data: SignUpDataProps) => {
+  const onSubmitRegister = async (data: SignUpDataType) => {
     try {
       let signUpData = {...data, role};
-      await axios.post(API_List.signup, signUpData);
+      await authStore.register(signUpData);
       navigation.navigate('SignupSuccess');
     } catch (error: any) {
       showToastLong(error.response.data.message);

@@ -1,10 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, Alert} from 'react-native';
-import axios from 'axios';
 import {AuthNavigationProps} from '../../navigation/Routes';
-import {API_List} from '../../API';
 import {CommonActions} from '@react-navigation/routers';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useForm} from 'react-hook-form';
 import {
   Button,
@@ -13,17 +10,14 @@ import {
   TextNavigation,
   TextInputField,
 } from '../../components';
+import {useStores, SignInDataType} from '../../models';
 import {styleLoginScreen as style} from './style';
 
 export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const [isVisibleLoad, setVisibleLoad] = useState<boolean>(false);
+  const {authStore} = useStores();
 
-  interface SignInDataProps {
-    username: string;
-    password: string;
-  }
-
-  const {control, handleSubmit} = useForm<SignInDataProps>({
+  const {control, handleSubmit} = useForm<SignInDataType>({
     defaultValues: {
       username: '',
       password: '',
@@ -31,35 +25,24 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
     resolver: SignInSchema,
   });
 
-  const onSubmitLogin = (data: SignInDataProps) => {
+  const onSubmitLogin = async (data: SignInDataType) => {
     setVisibleLoad(true);
-    axios
-      .post(API_List.login, data)
-      .then(response => {
-        const id = JSON.stringify(response.data.id);
-        AsyncStorage.setItem('token', response.data.accessToken);
-        AsyncStorage.setItem('username', response.data.username);
-        AsyncStorage.setItem('userID', id);
-        AsyncStorage.setItem('name', response.data.fullname);
-        AsyncStorage.setItem('phone', response.data.phone);
-        AsyncStorage.setItem('role', response.data.roles[0]);
-        setVisibleLoad(false);
-      })
-      .then(() =>
-        navigation.dispatch(
-          CommonActions.reset({index: 0, routes: [{name: 'Main'}]}),
-        ),
-      )
-      .catch(() => {
-        setVisibleLoad(false);
-        Alert.alert('Error', 'Invalid username or password', [
-          {
-            text: 'OK',
-            onPress: () => null,
-            style: 'cancel',
-          },
-        ]);
-      });
+    try {
+      await authStore.login(data);
+      setVisibleLoad(false);
+      navigation.dispatch(
+        CommonActions.reset({index: 0, routes: [{name: 'Main'}]}),
+      );
+    } catch (error) {
+      setVisibleLoad(false);
+      Alert.alert('Error', 'Invalid username or password', [
+        {
+          text: 'OK',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ]);
+    }
   };
 
   return (

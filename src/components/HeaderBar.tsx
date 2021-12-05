@@ -1,8 +1,8 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useNavigation, CommonActions} from '@react-navigation/native';
 import React from 'react';
 import {Alert, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import {useStores} from '../models';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
@@ -12,16 +12,13 @@ interface Props {
 
 export const HeaderBar = ({text, isBack}: Props) => {
   const navigation = useNavigation();
+  const {authStore} = useStores();
 
-  const clearAll = async () => {
-    try {
-      await AsyncStorage.clear();
-      navigation.dispatch(
-        CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
-      );
-    } catch (e) {
-      // clear error
-    }
+  const logOut = () => {
+    authStore.deleteToken();
+    navigation.dispatch(
+      CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
+    );
   };
 
   return (
@@ -49,7 +46,7 @@ export const HeaderBar = ({text, isBack}: Props) => {
               onPress: () => null,
               style: 'cancel',
             },
-            {text: 'YES', onPress: clearAll},
+            {text: 'YES', onPress: logOut},
           ])
         }>
         <Icon name="logout" size={24} />
