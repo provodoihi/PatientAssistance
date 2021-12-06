@@ -12,6 +12,7 @@ export const styleLocationSearchScreen = StyleSheet.create({
   container2: {
     flex: 0.93,
     backgroundColor: '#ffffff',
+    justifyContent: 'flex-start',
   },
 
   contentList: {

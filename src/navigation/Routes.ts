@@ -36,7 +36,7 @@ export type AppRoutes = {
   AdminAppointmentManage: {token: string};
   AdminAdvisorManage: {token: string};
   AdminLocationManage: {token: string};
-  MapView: {name: string; latitude: number; longtitude: number};
+  MapView: {name: string; latitude: number; longitude: number};
   AdminLocationAdd: {token: string};
   AdminLocationSearch: {token: string};
   AdminLocationEdit: {token: string};

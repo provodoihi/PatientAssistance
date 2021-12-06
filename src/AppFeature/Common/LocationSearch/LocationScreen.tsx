@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
 import {AppNavigationProps} from '../../../navigation/Routes';
-import {API_List} from '../../../API';
-import axios from 'axios';
+// import {API_List} from '../../../API';
+// import axios from 'axios';
 import {
   showToast,
   ModalLoad,
@@ -12,46 +12,18 @@ import {
   HeaderBar,
 } from '../../../components';
 import {useForm} from 'react-hook-form';
+import {useStores, LocationDataType} from '../../../models';
 import {styleLocationSearchScreen as style} from './style';
 import {pic_healthClinic, pic_notFound, pic_search} from '../../../../assets';
-
-const Notfound = () => {
-  return (
-    <View style={style.midScreen}>
-      <Image style={style.image} source={pic_notFound} />
-      <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
-        Not found
-      </Text>
-    </View>
-  );
-};
-
-const Init = () => {
-  return (
-    <View style={style.midScreen}>
-      <Image style={style.image} source={pic_search} />
-      <Text style={[style.textAlignCenter, style.textNormalBlack]}>
-        Search hospitals and clinics
-      </Text>
-    </View>
-  );
-};
-
-interface LocationListItem {
-  id: number | string;
-  name: string;
-  latitude: number;
-  longtitude: number;
-  address: string;
-  phone: string;
-}
 
 export const LocationScreen = ({
   navigation,
 }: AppNavigationProps<'Location'>) => {
-  const [data, setData] = useState<Array<LocationListItem>>([]);
-  const [status, setStatus] = useState<number>(0);
+  const [data, setData] = useState<Array<LocationDataType>>([]);
+  // const [status, setStatus] = useState<number>(0);
   const [isVisible, setVisible] = useState<boolean>(false);
+
+  const {locationStore} = useStores();
 
   interface SearchProps {
     keyword: string;
@@ -64,12 +36,11 @@ export const LocationScreen = ({
     resolver: SearchSchema,
   });
 
-  const onSubmit = async (search: SearchProps) => {
+  const onSubmit = async ({keyword}: SearchProps) => {
     try {
       setVisible(true);
-      let response = await axios.get(API_List.filterLocation + search.keyword);
-      setStatus(response.status);
-      setData(response.data);
+      let response = await locationStore.getLocationList(keyword);
+      setData(response);
       setVisible(false);
     } catch (error) {
       setVisible(false);
@@ -77,7 +48,7 @@ export const LocationScreen = ({
     }
   };
 
-  const renderItem = ({item}: ListRenderItemInfo<LocationListItem>) => {
+  const renderItem = ({item}: ListRenderItemInfo<LocationDataType>) => {
     return (
       <ListItem
         style={[style.buttonNoColor, style.shadowGray]}
@@ -86,7 +57,7 @@ export const LocationScreen = ({
           navigation.navigate('MapView', {
             name: item.name,
             latitude: item.latitude,
-            longtitude: item.longtitude,
+            longitude: item.longtitude,
           });
         }}
         isMultipleAtrribute={true}
@@ -95,6 +66,28 @@ export const LocationScreen = ({
         <Text style={style.textSmallNormalBlack}>{item.address}</Text>
         <Text style={style.textSmallNormalBlack}>{item.phone}</Text>
       </ListItem>
+    );
+  };
+
+  const Notfound = () => {
+    return (
+      <View style={style.midScreen}>
+        <Image style={style.image} source={pic_notFound} />
+        <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
+          Not found
+        </Text>
+      </View>
+    );
+  };
+
+  const Init = () => {
+    return (
+      <View style={style.midScreen}>
+        <Image style={style.image} source={pic_search} />
+        <Text style={[style.textAlignCenter, style.textNormalBlack]}>
+          Search hospitals and clinics
+        </Text>
+      </View>
     );
   };
 
@@ -114,7 +107,7 @@ export const LocationScreen = ({
             name="keyword"
           />
         </View>
-        {status === 200 ? (
+        {locationStore.responseStatus === 200 ? (
           <View style={style.midScreen}>
             <FlatList
               data={data}
@@ -122,7 +115,7 @@ export const LocationScreen = ({
               keyExtractor={item => `row-${item.id}`}
             />
           </View>
-        ) : status === 204 ? (
+        ) : locationStore.responseStatus === 204 ? (
           <Notfound />
         ) : (
           <Init />
