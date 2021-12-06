@@ -24,7 +24,7 @@ export type AppRoutes = {
   Advisor: {token: string; name: string; role: string; userID: string | number};
   BMI: undefined;
   Appointment: {token: string; name: string; role: string};
-  Profile: {token: string; name: string; role: string};
+  Profile: undefined;
   QAList: {token: string};
   AppointmentList: {token: string; userID: string | number};
   AdvisorQuestionList: {token: string};

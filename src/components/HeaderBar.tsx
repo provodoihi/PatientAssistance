@@ -15,7 +15,7 @@ export const HeaderBar = ({text, isBack}: Props) => {
   const {authStore} = useStores();
 
   const logOut = () => {
-    authStore.deleteToken();
+    authStore.signOut();
     navigation.dispatch(
       CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
     );

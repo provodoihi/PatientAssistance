@@ -26,10 +26,8 @@ export const Auth = types
   .props({
     token: types.maybeNull(types.string),
     userID: types.maybeNull(types.union(types.string, types.number)),
-    role: types.maybeNull(types.string),
     fullname: types.maybeNull(types.string),
-    email: types.maybeNull(types.string),
-    phone: types.maybeNull(types.string),
+    role: types.maybeNull(types.string),
   })
   .actions(self => ({
     login: flow(function* (body: SignInDataType) {
@@ -39,8 +37,6 @@ export const Auth = types
           self.token = response.data.accessToken;
           self.userID = response.data.id;
           self.role = response.data.roles[0];
-          self.email = response.data.email;
-          self.phone = response.data.phone;
           self.fullname = response.data.fullname;
           storage.saveString(STORAGE_KEY.TOKEN, response.data.accessToken);
           return response.data;
@@ -62,7 +58,7 @@ export const Auth = types
         storage.saveString(STORAGE_KEY.TOKEN, self.token);
       }
     },
-    deleteToken: () => {
+    signOut: () => {
       self.token = null;
       storage.clear();
     },

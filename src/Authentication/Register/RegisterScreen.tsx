@@ -1,7 +1,5 @@
 import React from 'react';
 import {Text, View, ScrollView} from 'react-native';
-// import axios from 'axios';
-// import {API_List} from '../../API';
 import {AuthNavigationProps} from '../../navigation/Routes';
 import {useForm} from 'react-hook-form';
 import {

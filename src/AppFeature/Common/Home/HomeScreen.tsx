@@ -21,7 +21,7 @@ export const HomeScreen = observer(
     const [role, setRole] = useState<string>('');
     const [uid, setUid] = useState<string | number>('');
 
-    const {authStore} = useStores();
+    const {authStore, userStore} = useStores();
     useEffect(() => {
       const getData = () => {
         setToken(authStore.token);
@@ -92,7 +92,7 @@ export const HomeScreen = observer(
         <View style={style.container2}>
           <View style={style.topScreen}>
             <Text style={[style.textAlignLeft, style.textBigBoldWhite]}>
-              Welcome {fullname}
+              Welcome {!userStore.fullname ? fullname : userStore.fullname}
             </Text>
             <View style={style.row}>
               <View style={style.column}>
@@ -102,13 +102,7 @@ export const HomeScreen = observer(
                 <Button
                   style={style.buttonSmall}
                   activeOpacity={0.8}
-                  onPress={() =>
-                    navigation.navigate('Profile', {
-                      token: token,
-                      name: fullname,
-                      role: role,
-                    })
-                  }
+                  onPress={() => navigation.navigate('Profile')}
                   text="View my profile"
                   textStyle={[style.textAlignCenter, style.textSmallWhite]}
                 />

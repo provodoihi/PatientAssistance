@@ -22,7 +22,7 @@ export const styleProfileScreen = StyleSheet.create({
   },
 
   image: {
-    width: '30%',
+    width: '35%',
     margin: '1%',
     height: '20%',
     resizeMode: 'contain',
