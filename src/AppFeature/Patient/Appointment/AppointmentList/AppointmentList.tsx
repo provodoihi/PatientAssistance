@@ -1,8 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
-import {API_List} from '../../../../API';
-import axios from 'axios';
-import {AppNavigationProps} from '../../../../navigation/Routes';
 import Modal from 'react-native-modal';
 import dayjs from 'dayjs';
 import {
@@ -18,62 +15,50 @@ import {
   pic_calendar,
   pic_notFound,
 } from '../../../../../assets';
+import {AppointmentDataType, useStores} from '../../../../models';
+import {observer} from 'mobx-react-lite';
 
-interface AppointmentDataProps {
-  id: string | number;
-  nameOfClinic: string;
-  description: string;
-  appointmentStartTime: string;
-  status: string;
-}
-
-export const AppointmentListScreen = ({
-  route,
-}: AppNavigationProps<'AppointmentList'>) => {
-  const [data, setData] = useState<Array<AppointmentDataProps>>([]);
-  const [statusResponse, setStatusResponse] = useState<number>(0);
+export const AppointmentListScreen = observer(() => {
+  const [data, setData] = useState<Array<AppointmentDataType>>([]);
   const [itemId, setItemId] = useState<string | number>(0);
 
+  const {authStore, appointmentStore} = useStores();
+  const token: string = authStore.token;
+
   // for modal
-  const [isVisibleLoad, setVisibleLoad] = useState(false);
-  const [isVisible, setVisible] = useState(false);
-  const [clinic, setClinic] = useState('');
-  const [time, setTime] = useState('');
-  const [describe, setDescribe] = useState('');
-  const [statusAppointment, setStatusAppointment] = useState('');
+  const [isVisibleLoad, setVisibleLoad] = useState<boolean>(false);
+  const [isVisible, setVisible] = useState<boolean>(false);
+  const [clinic, setClinic] = useState<string>('');
+  const [time, setTime] = useState<string | Date>('');
+  const [describe, setDescribe] = useState<string>('');
+  const [statusAppointment, setStatusAppointment] = useState<string>('');
 
   useEffect(() => {
     const getAppointment = async () => {
       try {
-        let response = await axios.get(
-          API_List.appointmentFindPatient + route.params.userID,
-          {
-            headers: {
-              Authorization: `Bearer ${route.params.token}`,
-            },
-          },
+        setVisibleLoad(true);
+        let response = await appointmentStore.getAppointmentList(
+          authStore.userID,
+          authStore.token,
         );
-        setData(response.data);
-        setStatusResponse(response.status);
+        setData(response);
+        setVisibleLoad(false);
       } catch (error) {
+        setVisibleLoad(false);
         showToast('Something went wrong');
       }
     };
     getAppointment();
-  }, [route.params.token, route.params.userID]);
+  }, [appointmentStore, authStore.token, authStore.userID]);
 
   const openModal = async () => {
     setVisibleLoad(true);
     try {
-      let response = await axios.get(API_List.appointmentGeneral + itemId, {
-        headers: {
-          Authorization: `Bearer ${route.params.token}`,
-        },
-      });
-      setClinic(response.data.nameOfClinic);
-      setTime(response.data.appointmentStartTime);
-      setDescribe(response.data.description);
-      setStatusAppointment(response.data.status);
+      let response = await appointmentStore.getAppointmentByID(itemId, token);
+      setClinic(response.nameOfClinic);
+      setTime(response.appointmentStartTime);
+      setDescribe(response.description);
+      setStatusAppointment(response.status);
       setVisibleLoad(false);
       setVisible(true);
     } catch (error) {
@@ -86,7 +71,7 @@ export const AppointmentListScreen = ({
     setVisible(!isVisible);
   };
 
-  const renderItem = ({item}: ListRenderItemInfo<AppointmentDataProps>) => {
+  const renderItem = ({item}: ListRenderItemInfo<AppointmentDataType>) => {
     return (
       <ListItem
         style={[style.buttonNoColor, style.shadowGray]}
@@ -131,7 +116,7 @@ export const AppointmentListScreen = ({
         </View>
         <ModalLoad isVisibleLoad={isVisibleLoad} />
 
-        {statusResponse === 200 ? (
+        {appointmentStore.responseStatus === 200 ? (
           <View style={style.midScreen}>
             <FlatList
               data={data}
@@ -193,4 +178,4 @@ export const AppointmentListScreen = ({
       </View>
     </View>
   );
-};
+});

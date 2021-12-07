@@ -23,14 +23,16 @@ export const HomeScreen = observer(
 
     const {authStore, userStore} = useStores();
     useEffect(() => {
-      const getData = () => {
-        setToken(authStore.token);
-        setFullname(authStore.fullname);
-        setRole(authStore.role);
-        setUid(authStore.userID);
+      const getData = async () => {
+        try {
+          setToken(authStore.token);
+          setFullname(userStore.fullname);
+          setRole(authStore.role);
+          setUid(authStore.userID);
+        } catch (error) {}
       };
       getData();
-    }, [authStore.fullname, authStore.role, authStore.token, authStore.userID]);
+    }, [authStore.role, authStore.token, authStore.userID, userStore.fullname]);
 
     // change the screen route for corresponding user role
     useEffect(() => {
@@ -92,7 +94,8 @@ export const HomeScreen = observer(
         <View style={style.container2}>
           <View style={style.topScreen}>
             <Text style={[style.textAlignLeft, style.textBigBoldWhite]}>
-              Welcome {!userStore.fullname ? fullname : userStore.fullname}
+              Welcome{' '}
+              {userStore.fullname ? authStore.fullname : userStore.fullname}
             </Text>
             <View style={style.row}>
               <View style={style.column}>
@@ -128,13 +131,7 @@ export const HomeScreen = observer(
             <ListItem
               style={[style.buttonNoColor, style.shadowGray]}
               activeOpacity={0.8}
-              onPress={() =>
-                navigation.navigate('Appointment', {
-                  token: token,
-                  name: fullname,
-                  role: role,
-                })
-              }
+              onPress={() => navigation.navigate('Appointment')}
               isMultipleAtrribute={false}
               imageSource={pic_timesheet}>
               <Text style={[style.textAlignCenter, style.textNormalPlusBlack]}>

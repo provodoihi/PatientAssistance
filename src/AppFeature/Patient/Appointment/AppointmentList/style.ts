@@ -31,6 +31,7 @@ export const styleAppointmentListScreen = StyleSheet.create({
     flex: 0.6,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 24,
   },
 
   image: {

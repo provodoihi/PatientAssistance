@@ -23,10 +23,10 @@ export type AppRoutes = {
   Clinic: {token: string; name: string; role: string; userID: string | number};
   Advisor: {token: string; name: string; role: string; userID: string | number};
   BMI: undefined;
-  Appointment: {token: string; name: string; role: string};
+  Appointment: undefined;
   Profile: undefined;
   QAList: {token: string};
-  AppointmentList: {token: string; userID: string | number};
+  AppointmentList: undefined;
   AdvisorQuestionList: {token: string};
   AdvisorAnswer: {token: string};
   AdvisorAnswerList: {token: string};

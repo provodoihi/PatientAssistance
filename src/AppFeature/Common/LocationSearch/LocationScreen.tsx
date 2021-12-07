@@ -1,8 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
 import {AppNavigationProps} from '../../../navigation/Routes';
-// import {API_List} from '../../../API';
-// import axios from 'axios';
 import {
   showToast,
   ModalLoad,
@@ -20,7 +18,6 @@ import {observer} from 'mobx-react-lite';
 export const LocationScreen = observer(
   ({navigation}: AppNavigationProps<'Location'>) => {
     const [data, setData] = useState<Array<LocationDataType>>([]);
-    // const [status, setStatus] = useState<number>(0);
     const [isVisible, setVisible] = useState<boolean>(false);
 
     const {locationStore} = useStores();
