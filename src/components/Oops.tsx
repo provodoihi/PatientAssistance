@@ -3,20 +3,20 @@ import {Image, StyleSheet, Text, View} from 'react-native';
 import {HeaderBar} from './HeaderBar';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
-interface Props {
+interface OopsProps {
   text: string;
 }
 
-export const Oops = ({text}: Props) => {
+export const Oops = ({text}: OopsProps) => {
   return (
     <View style={styles.container}>
       <HeaderBar text={text} isBack={false} />
       <View style={styles.container2}>
         <Image
           source={require('../../assets/Image_Icon/oops.png')}
-          style={styles.img}
+          style={styles.image}
         />
-        <Text style={styles.txtOops}>This function is {text} only</Text>
+        <Text style={styles.textOops}>This function is {text} only</Text>
       </View>
     </View>
   );
@@ -27,14 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  headerBar: {
-    flexDirection: 'row',
-    flex: 0.07,
-    margin: '1%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-
   container2: {
     flex: 0.93,
     backgroundColor: '#fff',
@@ -42,16 +34,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  txtOops: {
-    margin: '1%',
+  textOops: {
+    margin: '1.5%',
     color: '#4c4c4c',
     fontWeight: 'bold',
     fontSize: rf(2.5),
   },
 
-  img: {
+  image: {
     width: '35%',
     height: '30%',
+    margin: '1.5%',
     resizeMode: 'contain',
   },
 });

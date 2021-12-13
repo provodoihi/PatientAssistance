@@ -20,7 +20,7 @@ export const TextNavigation = (props: TextNavigationProps) => {
   const {onPress, style, text, ...restProps} = props;
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={onPress} {...restProps}>
-      <Text style={StyleSheet.flatten([style, styles.txt, styles.txtNavigate])}>
+      <Text style={StyleSheet.flatten([style, styles.textNavigate])}>
         {text}
       </Text>
     </TouchableOpacity>
@@ -28,13 +28,11 @@ export const TextNavigation = (props: TextNavigationProps) => {
 };
 
 const styles = StyleSheet.create({
-  txt: {
+  textNavigate: {
     margin: '1.5%',
     alignSelf: 'center',
     textAlign: 'center',
     justifyContent: 'center',
-  },
-  txtNavigate: {
     padding: '1.5%',
     fontSize: rf(1.8),
     fontWeight: 'normal',

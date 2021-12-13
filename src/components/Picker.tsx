@@ -34,9 +34,9 @@ export const PickerControlled = (props: PickerProps) => {
       render={({field: {onChange, value}, fieldState: {error}}) => {
         return (
           <>
-            {label && <Text style={styles.txtLabel}>{label}</Text>}
+            {label && <Text style={styles.textLabel}>{label}</Text>}
             <Picker
-              style={styles.pick}
+              style={styles.picker}
               dropdownIconColor={dropdownIconColor}
               selectedValue={value}
               onValueChange={val => onChange(val)}
@@ -47,7 +47,7 @@ export const PickerControlled = (props: PickerProps) => {
               ))}
             </Picker>
             {isErrorField && error && (
-              <Text style={styles.txtError}>{error?.message}</Text>
+              <Text style={styles.textError}>{error?.message}</Text>
             )}
           </>
         );
@@ -57,7 +57,7 @@ export const PickerControlled = (props: PickerProps) => {
 };
 
 const styles = StyleSheet.create({
-  pick: {
+  picker: {
     color: '#9FA5AA',
     textAlign: 'left',
     justifyContent: 'center',
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     marginVertical: '1%',
     paddingLeft: '4%',
   },
-  txtError: {
+  textError: {
     textAlign: 'right',
     alignSelf: 'flex-end',
     fontStyle: 'italic',
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     paddingVertical: '0.5%',
     marginRight: '12%',
   },
-  txtLabel: {
+  textLabel: {
     textAlign: 'left',
     alignSelf: 'flex-start',
     fontSize: rf(1.8),

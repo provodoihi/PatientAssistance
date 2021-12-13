@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, Image, BackHandler, Alert} from 'react-native';
 import {AppNavigationProps} from '../../../navigation/Routes';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, ListItem, HeaderBar} from '../../../components';
 import {styleHomeScreen as style} from './style';
 import {observer} from 'mobx-react-lite';
@@ -23,16 +22,23 @@ export const HomeScreen = observer(
 
     const {authStore, userStore} = useStores();
     useEffect(() => {
-      const getData = async () => {
-        try {
-          setToken(authStore.token);
-          setFullname(userStore.fullname);
-          setRole(authStore.role);
-          setUid(authStore.userID);
-        } catch (error) {}
+      const getData = () => {
+        setToken(authStore.token);
+        if (userStore.fullname) {
+          authStore.updateFullname(userStore.fullname);
+        }
+        setFullname(authStore.fullname);
+        setRole(authStore.role);
+        setUid(authStore.userID);
       };
       getData();
-    }, [authStore.role, authStore.token, authStore.userID, userStore.fullname]);
+    }, [
+      authStore,
+      authStore.role,
+      authStore.token,
+      authStore.userID,
+      userStore.fullname,
+    ]);
 
     // change the screen route for corresponding user role
     useEffect(() => {
@@ -71,8 +77,8 @@ export const HomeScreen = observer(
           },
           {
             text: 'YES',
-            onPress: async () => {
-              await AsyncStorage.clear();
+            onPress: () => {
+              authStore.signOut();
               BackHandler.exitApp();
             },
           },
@@ -86,7 +92,7 @@ export const HomeScreen = observer(
       );
 
       return () => backHandler.remove();
-    }, []);
+    }, [authStore]);
 
     return (
       <View style={style.container}>
@@ -94,8 +100,7 @@ export const HomeScreen = observer(
         <View style={style.container2}>
           <View style={style.topScreen}>
             <Text style={[style.textAlignLeft, style.textBigBoldWhite]}>
-              Welcome{' '}
-              {userStore.fullname ? authStore.fullname : userStore.fullname}
+              Welcome {authStore.fullname}
             </Text>
             <View style={style.row}>
               <View style={style.column}>

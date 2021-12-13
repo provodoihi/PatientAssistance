@@ -28,6 +28,7 @@ export const Auth = types
     userID: types.maybeNull(types.union(types.string, types.number)),
     fullname: types.maybeNull(types.string),
     role: types.maybeNull(types.string),
+    phone: types.maybeNull(types.string),
   })
   .actions(self => ({
     login: flow(function* (body: SignInDataType) {
@@ -38,6 +39,7 @@ export const Auth = types
           self.userID = response.data.id;
           self.role = response.data.roles[0];
           self.fullname = response.data.fullname;
+          self.phone = response.data.phone;
           storage.saveString(STORAGE_KEY.TOKEN, response.data.accessToken);
           return response.data;
         }
@@ -58,8 +60,10 @@ export const Auth = types
         storage.saveString(STORAGE_KEY.TOKEN, self.token);
       }
     },
+    updateFullname: (name: string) => {
+      self.fullname = name;
+    },
     signOut: () => {
-      self.token = null;
       storage.clear();
     },
   }));

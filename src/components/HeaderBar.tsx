@@ -5,12 +5,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useStores} from '../models';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-interface Props {
+interface HeaderBarProps {
   text: string;
   isBack: boolean;
 }
 
-export const HeaderBar = ({text, isBack}: Props) => {
+export const HeaderBar = ({text, isBack}: HeaderBarProps) => {
   const navigation = useNavigation();
   const {authStore} = useStores();
 
@@ -25,19 +25,19 @@ export const HeaderBar = ({text, isBack}: Props) => {
     <View style={styles.headerBar}>
       {isBack === true ? (
         <TouchableOpacity
-          style={styles.button2}
+          style={styles.button}
           activeOpacity={0.8}
           onPress={() => navigation.goBack()}>
           <Icon name="arrow-back" size={24} />
         </TouchableOpacity>
       ) : (
-        <TouchableOpacity style={styles.button2} activeOpacity={0.8}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
           <MaterialCommunityIcons name="home-plus" size={28} />
         </TouchableOpacity>
       )}
-      <Text style={[styles.txt, styles.txtHeader]}>{text}</Text>
+      <Text style={styles.textHeader}>{text}</Text>
       <TouchableOpacity
-        style={styles.button2}
+        style={styles.button}
         activeOpacity={0.8}
         onPress={() =>
           Alert.alert('Notification', 'Are you sure to exit the app?', [
@@ -56,10 +56,6 @@ export const HeaderBar = ({text, isBack}: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
   headerBar: {
     flexDirection: 'row',
     flex: 0.07,
@@ -68,25 +64,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
 
-  container2: {
-    flex: 0.93,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-
-  txt: {
+  textHeader: {
     textAlign: 'center',
     justifyContent: 'center',
-  },
-
-  txtHeader: {
     margin: '1%',
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
 
-  button2: {
+  button: {
     margin: '1%',
   },
 });

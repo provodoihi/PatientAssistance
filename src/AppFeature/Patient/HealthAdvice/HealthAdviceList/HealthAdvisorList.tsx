@@ -1,42 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
-import {API_List} from '../../../../API';
-import axios from 'axios';
-import {AppNavigationProps} from '../../../../navigation/Routes';
 import {pic_qaColor, pic_notFound} from '../../../../../assets';
 import {styleAnswerListScreen as style} from './style';
-import {HeaderBar, ListItem} from '../../../../components';
+import {HeaderBar, ListItem, showToast} from '../../../../components';
+import {useStores, AnswerType} from '../../../../models';
+import {observer} from 'mobx-react-lite';
 
-interface AnswerDataProps {
-  id: string | number;
-  questionDetail: string;
-  answerDetail: string;
-}
+export const HealthAdvisorListScreen = observer(() => {
+  const [data, setData] = useState<Array<AnswerType>>([]);
 
-export const HealthAdvisorListScreen = ({
-  route,
-}: AppNavigationProps<'QAList'>) => {
-  const [data, setData] = useState<Array<AnswerDataProps>>([]);
-  const [status, setStatus] = useState(0);
+  const {authStore, answerStore} = useStores();
 
   useEffect(() => {
     const getAnswerList = async () => {
       try {
-        let response = await axios.get(API_List.answerPatient, {
-          headers: {
-            Authorization: `Bearer ${route.params.token}`,
-          },
-        });
-        setData(response.data);
-        setStatus(response.status);
+        let response = await answerStore.getAnswerList(authStore.token);
+        setData(response);
       } catch (error) {
-        console.log(error);
+        showToast('Something went wrong');
       }
     };
     getAnswerList();
-  }, [route.params.token]);
+  }, [answerStore, authStore.token]);
 
-  const renderItem = ({item}: ListRenderItemInfo<AnswerDataProps>) => {
+  const renderItem = ({item}: ListRenderItemInfo<AnswerType>) => {
     return (
       <ListItem
         style={[style.buttonNoColor, style.shadowGray]}
@@ -63,7 +50,7 @@ export const HealthAdvisorListScreen = ({
             Your Questions Answers
           </Text>
         </View>
-        {status === 200 ? (
+        {answerStore.responseStatus === 200 ? (
           <View style={style.midScreen}>
             <FlatList
               data={data}
@@ -82,4 +69,4 @@ export const HealthAdvisorListScreen = ({
       </View>
     </View>
   );
-};
+});

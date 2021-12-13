@@ -41,6 +41,12 @@ export const ProfileScreen = observer(
       getProfile();
     }, [setValue, token, userStore]);
 
+    //set new fullname when fullname change
+    useEffect(() => {
+      authStore.updateFullname(userStore.fullname);
+      console.log(authStore.fullname);
+    }, [authStore, userStore.fullname]);
+
     const onSubmitProfile = async (data: UpdateProfileDataType) => {
       try {
         await userStore.updateProfile(data, token);

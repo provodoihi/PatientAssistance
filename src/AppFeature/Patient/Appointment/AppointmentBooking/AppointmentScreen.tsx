@@ -45,11 +45,7 @@ export const AppointmentScreen = observer(
     };
 
     const {control, handleSubmit} = useForm<AppointmentBookingFormProps>({
-      defaultValues: {
-        description: '',
-        clinicId: '',
-        nameOfClinic: '',
-      },
+      mode: 'onSubmit',
       resolver: AppointmentBookingSchema,
     });
 
