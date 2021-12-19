@@ -13,9 +13,9 @@ for people of all ages. Application main features:
 * [React Native](https://reactnative.dev)
 * [React Navigation](https://reactnavigation.org)
 * [Async Storage](https://react-native-async-storage.github.io/async-storage)
-* [React Hook Form](https://react-hook-form.com/)
-* [Mobx](https://mobx.js.org/README.html)
-* [Mobx State Tree](https://mobx-state-tree.js.org/intro/welcome)
+* [React Hook Form](https://react-hook-form.com/), [Yup](https://github.com/jquense/yup)
+* [Mobx](https://mobx.js.org/README.html), [Mobx State Tree](https://mobx-state-tree.js.org/intro/welcome)
+* [i18next](https://www.i18next.com/), [react-i18next](https://react.i18next.com/)
 
 <!-- GETTING STARTED -->
 ## Getting Started
