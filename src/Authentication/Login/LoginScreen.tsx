@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Text, View, Alert} from 'react-native';
 import {AuthNavigationProps} from '../../navigation/Routes';
+import {useTranslation} from 'react-i18next';
 import {CommonActions} from '@react-navigation/routers';
 import {useForm} from 'react-hook-form';
 import {
@@ -16,6 +17,7 @@ import {styleLoginScreen as style} from './style';
 export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const [isVisibleLoad, setVisibleLoad] = useState<boolean>(false);
   const {authStore} = useStores();
+  const {t} = useTranslation();
 
   const {control, handleSubmit} = useForm<SignInDataType>({
     defaultValues: {
@@ -48,7 +50,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   return (
     <View style={style.container}>
       <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>
-        Sign In
+        {t('loginScreen.signIn')}
       </Text>
       <Text style={[style.textAlignCenter, style.textNormalGray]}>
         Enter your sign in details to access your account
