@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {types, Instance, flow} from 'mobx-state-tree';
-import {API_List} from '../API';
+import {API_LIST} from '../utils';
 
 export type UpdateProfileDataType = {
   firstname: string;
@@ -24,7 +24,7 @@ export const User = types
   .actions(self => ({
     getUserInfo: flow(function* (token: string) {
       try {
-        let response = yield axios.get(API_List.myProfile, {
+        let response = yield axios.get(API_LIST.myProfile, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -46,7 +46,7 @@ export const User = types
     }),
     updateProfile: flow(function* (body: UpdateProfileDataType, token: string) {
       try {
-        let response = yield axios.put(API_List.myProfile, body, {
+        let response = yield axios.put(API_LIST.myProfile, body, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

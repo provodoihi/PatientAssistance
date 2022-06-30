@@ -1,7 +1,6 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import {RouteProp} from '@react-navigation/native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {CompositeNavigationProp} from '@react-navigation/native';
+import {CompositeNavigationProp, RouteProp} from '@react-navigation/native';
 
 export type MainRoutes = {
   Auth: undefined;
@@ -49,7 +48,7 @@ export type AppRoutes = {
 
 export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {
   navigation: CompositeNavigationProp<
-    StackNavigationProp<AuthRoutes, RouteName>,
+    NativeStackNavigationProp<AuthRoutes, RouteName>,
     DrawerNavigationProp<AppRoutes, 'Home'>
   >;
   route: RouteProp<AuthRoutes, RouteName>;

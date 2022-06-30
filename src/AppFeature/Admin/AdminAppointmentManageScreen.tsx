@@ -8,12 +8,12 @@ import {
   FlatList,
   ToastAndroid,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import HeaderBar from '../../components/HeaderBar';
 import axios from 'axios';
 import Modal from 'react-native-modal';
-import {API_List} from '../../API/apiList';
+import {API_List} from '../../utils/api-list';
 import showToastFail from '../../components/ToastMessage';
 import ModalLoad from '../../components/ModalLoad';
 

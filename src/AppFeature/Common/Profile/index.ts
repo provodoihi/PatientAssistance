@@ -1,2 +1,1 @@
-export * from './ProfileScreen';
-export * from './style';
+export * from './profile-screen';

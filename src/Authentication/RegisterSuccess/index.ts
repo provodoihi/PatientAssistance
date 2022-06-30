@@ -1,2 +1,1 @@
-export * from './SignupSuccessScreen';
-export * from './style';
+export * from './signup-success-screen';

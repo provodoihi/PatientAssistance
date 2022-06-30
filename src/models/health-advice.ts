@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {types, Instance, flow} from 'mobx-state-tree';
-import {API_List} from '../API';
+import {API_LIST} from '../utils';
 
 export type QuestionSubmitType = {
   userId: string | number;
@@ -23,7 +23,7 @@ export const Question = types
       questionData: QuestionSubmitType,
     ) {
       try {
-        let response = yield axios.post(API_List.question, questionData, {
+        let response = yield axios.post(API_LIST.question, questionData, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -54,7 +54,7 @@ export const Answer = types
   .actions(self => ({
     getAnswerList: flow(function* (token: string) {
       try {
-        let response = yield axios.get(API_List.answerPatient, {
+        let response = yield axios.get(API_LIST.answerPatient, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

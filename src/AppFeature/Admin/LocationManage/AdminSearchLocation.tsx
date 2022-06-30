@@ -9,9 +9,9 @@ import {
   Alert,
   FlatList,
 } from 'react-native';
-import {AppNavigationProps} from '../../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../../../API/apiList';
+import {API_List} from '../../../utils/api-list';
 import axios from 'axios';
 import HeaderBar from '../../../components/HeaderBar';
 import ModalLoad from '../../../components/ModalLoad';

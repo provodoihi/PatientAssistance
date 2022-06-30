@@ -8,13 +8,12 @@ import {
   TextInput,
   Alert,
 } from 'react-native';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import axios from 'axios';
 import {Picker} from '@react-native-picker/picker';
-import HeaderBar from '../../components/HeaderBar';
-import {API_List} from '../../API/apiList';
-import showToastFail from '../../components/ToastMessage';
+import {HeaderBar, showToast} from '../../components';
+import {API_List} from '../../utils/api-list';
 
 const ClinicAppointmentManageScreen = ({
   route,
@@ -56,7 +55,7 @@ const ClinicAppointmentManageScreen = ({
           ]);
         })
         .catch(() => {
-          showToastFail();
+          showToast('Something went wrong');
         });
     }
   };
@@ -78,7 +77,7 @@ const ClinicAppointmentManageScreen = ({
         ]);
       })
       .catch(() => {
-        showToastFail();
+        showToast('Something went wrong');
       });
   };
 

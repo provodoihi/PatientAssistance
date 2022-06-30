@@ -8,9 +8,9 @@ import {
   FlatList,
 } from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../../API/apiList';
+import {API_List} from '../../utils/api-list';
 import axios from 'axios';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/routes';
 import HeaderBar from '../../components/HeaderBar';
 
 const AdvisorQuestionListScreen = ({

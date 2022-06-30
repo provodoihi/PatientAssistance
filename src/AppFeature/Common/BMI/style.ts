@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
-export const styleBMIScreen = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },

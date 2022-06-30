@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {types, flow, Instance} from 'mobx-state-tree';
-import {API_List} from '../API';
+import {API_LIST} from '../utils';
 
 const LocationData = types.model({
   id: types.maybeNull(types.union(types.string, types.number)),
@@ -21,7 +21,7 @@ export const Location = types
   .actions(self => ({
     getLocationList: flow(function* (searchKeyword: string) {
       try {
-        let response = yield axios.get(API_List.filterLocation + searchKeyword);
+        let response = yield axios.get(API_LIST.filterLocation + searchKeyword);
         if (response.data) {
           self.itemList = response.data;
           self.responseStatus = response.status;

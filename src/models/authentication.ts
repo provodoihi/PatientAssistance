@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {types, Instance, flow} from 'mobx-state-tree';
-import {API_List} from '../API';
+import {API_LIST} from '../utils';
 import * as storage from '../utils/storage';
 import {STORAGE_KEY} from '../utils';
 
@@ -33,7 +33,7 @@ export const Auth = types
   .actions(self => ({
     login: flow(function* (body: SignInDataType) {
       try {
-        const response = yield axios.post(API_List.login, body);
+        const response = yield axios.post(API_LIST.login, body);
         if (response.data) {
           self.token = response.data.accessToken;
           self.userID = response.data.id;
@@ -49,7 +49,7 @@ export const Auth = types
     }),
     register: flow(function* (body: SignUpDataType) {
       try {
-        const response = yield axios.post(API_List.signup, body);
+        const response = yield axios.post(API_LIST.signup, body);
         return response;
       } catch (error) {
         throw error;
@@ -65,6 +65,11 @@ export const Auth = types
     },
     signOut: () => {
       storage.clear();
+    },
+  }))
+  .views(self => ({
+    get getGullname() {
+      return self.fullname;
     },
   }));
 

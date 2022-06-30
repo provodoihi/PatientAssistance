@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, Image, ScrollView} from 'react-native';
-import {AppNavigationProps} from '../../../../navigation/Routes';
+import {AppNavigationProps} from '../../../../navigation/routes';
 import DatePicker from 'react-native-date-picker';
 import Modal from 'react-native-modal';
 import {

@@ -13,7 +13,7 @@ export interface PickerProps extends PickerItemProps {
   name: string;
   label?: string;
   placeholder?: string;
-  data?: Array<any>;
+  data: Array<any>;
   isErrorField?: boolean;
 }
 
@@ -42,7 +42,7 @@ export const PickerControlled = (props: PickerProps) => {
               onValueChange={val => onChange(val)}
               {...restProps}>
               <Picker.Item label={props.placeholder} value="" />
-              {data?.map(element => (
+              {data.map(element => (
                 <Picker.Item label={element} value={element} key={element} />
               ))}
             </Picker>

@@ -1,3 +1,3 @@
-export * from './AppNavigation';
-export * from './AuthNavigation';
-export * from './Routes';
+export * from './app-navigation';
+export * from './auth-navigation';
+export * from './routes';

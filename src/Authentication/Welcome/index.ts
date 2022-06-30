@@ -1,2 +1,1 @@
-export * from './WelcomeScreen';
-export * from './style';
+export * from './welcome-screen';

@@ -1,2 +1,1 @@
-export * from './HomeScreen';
-export * from './style';
+export * from './home-screen';

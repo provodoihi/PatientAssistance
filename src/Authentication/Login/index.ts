@@ -1,2 +1,1 @@
-export * from './LoginScreen';
-export * from './style';
+export * from './login-screen';

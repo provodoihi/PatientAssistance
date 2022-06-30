@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {types, Instance, flow} from 'mobx-state-tree';
-import {API_List} from '../API';
+import {API_LIST} from '../utils';
 
 export type AppointmentBookingType = {
   appointmentStartTime: string | Date;
@@ -38,7 +38,7 @@ export const Appointment = types
     ) {
       try {
         let response = yield axios.get(
-          API_List.appointmentFindPatient + userId,
+          API_LIST.appointmentFindPatient + userId,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -56,7 +56,7 @@ export const Appointment = types
     }),
     getAppointmentByID: flow(function* (id: string | number, token: string) {
       try {
-        let response = yield axios.get(API_List.appointmentGeneral + id, {
+        let response = yield axios.get(API_LIST.appointmentGeneral + id, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -74,7 +74,7 @@ export const Appointment = types
       data: AppointmentBookingType,
     ) {
       try {
-        const response = yield axios.post(API_List.appointmentGeneral, data, {
+        const response = yield axios.post(API_LIST.appointmentGeneral, data, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

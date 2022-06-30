@@ -1,2 +1,1 @@
-export * from './RegisterScreen';
-export * from './style';
+export * from './register-screen';

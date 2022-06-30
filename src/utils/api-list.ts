@@ -1,0 +1,21 @@
+import {API_ROOT} from './constants';
+export const API_LIST = {
+  login: API_ROOT + 'auth/signin',
+  signup: API_ROOT + 'auth/signup',
+  findLocation: API_ROOT + 'public/hospitalclinic',
+  filterLocation: API_ROOT + 'public/hospitalclinic/find?keyword=',
+  myProfile: API_ROOT + 'profile/myProfile',
+  appointmentGeneral: API_ROOT + 'appointments/',
+  appointmentAll: API_ROOT + 'appointments/all',
+  appointmentFindPatient: API_ROOT + 'appointments/patient/',
+  appointmentFindClinic: API_ROOT + 'appointments/clinic/',
+  question: API_ROOT + 'patient/question/',
+  answerPatient: API_ROOT + 'patient/answer',
+  questionListAdvisor: API_ROOT + 'advisor/question',
+  answerAdvisor: API_ROOT + 'advisor/answer/',
+  adminLocationGeneral: API_ROOT + 'admin/hospitalclinic/',
+  adminAnswer: API_ROOT + 'admin/answer/',
+  adminQuestion: API_ROOT + 'admin/question/',
+  adminUserGeneral: API_ROOT + 'admin/user/',
+  adminUserFind: API_ROOT + 'admin/user/find?keyword=',
+};

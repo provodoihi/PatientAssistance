@@ -9,13 +9,13 @@ import {
   Alert,
   ScrollView,
 } from 'react-native';
-import {AppNavigationProps} from '../../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/routes';
 import {
   responsiveScreenFontSize as rf,
   responsiveScreenHeight as rh,
 } from 'react-native-responsive-dimensions';
 import axios from 'axios';
-import {API_List} from '../../../API/apiList';
+import {API_List} from '../../../utils/api-list';
 import HeaderBar from '../../../components/HeaderBar';
 import showToastFail from '../../../components/ToastMessage';
 

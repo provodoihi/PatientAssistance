@@ -9,9 +9,9 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
-import {AppNavigationProps} from '../../../navigation/Routes';
+import {AppNavigationProps} from '../../../navigation/routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {API_List} from '../../../API/apiList';
+import {API_List} from '../../../utils/api-list';
 import axios from 'axios';
 import Modal from 'react-native-modal';
 import HeaderBar from '../../../components/HeaderBar';

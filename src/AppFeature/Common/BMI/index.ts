@@ -1,2 +1,1 @@
-export * from './BMIScreen';
-export * from './style';
+export * from './BMI-screen';

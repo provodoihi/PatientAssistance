@@ -10,7 +10,7 @@ import {
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {API_List} from '../../API';
 import axios from 'axios';
-import {AppNavigationProps} from '../../navigation/Routes';
+import {AppNavigationProps} from '../../navigation/routes';
 import HeaderBar from '../../components/HeaderBar';
 
 const ClinicAppointmentListScreen = ({

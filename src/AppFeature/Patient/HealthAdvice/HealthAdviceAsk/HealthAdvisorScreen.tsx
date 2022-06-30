@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, Image} from 'react-native';
-import {AppNavigationProps} from '../../../../navigation/Routes';
+import {AppNavigationProps} from '../../../../navigation/routes';
 import {pic_qaColor} from '../../../../../assets';
 import {styleAdviceQuestionScreen as style} from './style';
 import {useForm} from 'react-hook-form';
