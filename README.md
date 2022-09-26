@@ -22,9 +22,9 @@ for people of all ages. Application main features:
 
 ### Prerequisites
 
-To run the application, you need to install the latest `npm` package manager
+To run the application, you need to install the latest `yarn` package manager
   ```
-  npm install npm@latest -g
+  npm install yarn -g
   ```
 
 ### Installation
@@ -33,9 +33,9 @@ To run the application, you need to install the latest `npm` package manager
    ```sh
    git clone https://github.com/provodoihi/PatientAssistance.git
    ```
-2. Install NPM packages
+2. Install Yarn packages
    ```sh
-   npm install
+   yarn
    ```
 3. Run the application for Android devices:
    ```sh
