@@ -4,7 +4,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,22 +17,21 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="Gp4-xY-fpc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                             </imageView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Gp4-xY-fpc" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" id="TAp-Rw-4vG"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="Gp4-xY-fpc" secondAttribute="trailing" id="su3-X5-PCQ"/>
-                            <constraint firstItem="Gp4-xY-fpc" firstAttribute="top" secondItem="Bcu-3y-fUS" secondAttribute="top" id="tRr-0t-g7M"/>
-                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="Gp4-xY-fpc" secondAttribute="bottom" id="zLa-cX-lHg"/>
+                            <constraint firstItem="Gp4-xY-fpc" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="TAp-Rw-4vG"/>
+                            <constraint firstAttribute="trailing" secondItem="Gp4-xY-fpc" secondAttribute="trailing" id="su3-X5-PCQ"/>
+                            <constraint firstItem="Gp4-xY-fpc" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="tRr-0t-g7M"/>
+                            <constraint firstAttribute="bottom" secondItem="Gp4-xY-fpc" secondAttribute="bottom" id="zLa-cX-lHg"/>
                         </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+            <point key="canvasLocation" x="50.724637681159422" y="374.33035714285711"/>
         </scene>
     </scenes>
     <resources>

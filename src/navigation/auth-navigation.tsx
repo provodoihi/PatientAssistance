@@ -4,7 +4,7 @@ import {
   LoginScreen,
   RegisterScreen,
   SignupSuccessScreen,
-} from '../Authentication';
+} from '../authentication';
 import {AuthRoutes} from './routes';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 

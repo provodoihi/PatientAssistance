@@ -4,13 +4,13 @@ import {AuthNavigationProps} from '../../navigation/routes';
 import {useForm} from 'react-hook-form';
 import {
   Button,
-  SignUpSchema,
   TextInputField,
   TextNavigation,
   showToastLong,
   PickerControlled,
 } from '../../components';
-import {GENDER, palette} from '../../utils';
+import {useTranslation} from 'react-i18next';
+import {GENDER, palette, SignUpSchema} from '../../utils';
 import {useStores, SignUpDataType} from '../../models';
 import {styles} from './styles';
 
@@ -18,10 +18,10 @@ export const RegisterScreen = ({
   navigation,
 }: AuthNavigationProps<'Register'>) => {
   const role: string[] = ['patient'];
-
+  const {t} = useTranslation();
   const {authStore} = useStores();
 
-  const {control, handleSubmit} = useForm<SignUpDataType>({
+  const {control, handleSubmit, getValues} = useForm<SignUpDataType>({
     defaultValues: {
       username: '',
       email: '',
@@ -46,98 +46,109 @@ export const RegisterScreen = ({
     }
   };
 
+  const isDisabled =
+    !getValues('username') &&
+    !getValues('password') &&
+    !getValues('email') &&
+    !getValues('address') &&
+    !getValues('age') &&
+    !getValues('firstname') &&
+    !getValues('lastname') &&
+    !getValues('phone') &&
+    !getValues('sex');
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.srollView}>
         <Text style={[styles.textAlignCenter, styles.textBigBoldBlack]}>
-          Sign Up
+          {t('signUpScreen.signUp')}
         </Text>
         <Text style={[styles.textAlignCenter, styles.textNormalGray]}>
-          Enter your sign up details to register your new account
+          {t('signUpScreen.enterSignUpDetails')}
         </Text>
 
         <TextInputField
-          placeholder="Username"
+          placeholder={t('common.username')}
           placeholderTextColor={palette.lightGrey}
           multiline={false}
           controller={control}
           name="username"
-          label="Username"
+          label={t('common.username')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Email"
+          placeholder={t('common.email')}
           placeholderTextColor={palette.lightGrey}
           keyboardType="email-address"
           multiline={false}
           controller={control}
           name="email"
-          label="Email"
+          label={t('common.email')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Password"
+          placeholder={t('common.password')}
           placeholderTextColor={palette.lightGrey}
           secureTextEntry={true}
           multiline={false}
           controller={control}
           name="password"
-          label="Password"
+          label={t('common.password')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Firstname"
+          placeholder={t('common.firstname')}
           placeholderTextColor={palette.lightGrey}
           multiline={false}
           controller={control}
           name="firstname"
-          label="Firstname"
+          label={t('common.firstname')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Lastname"
+          placeholder={t('common.lastname')}
           placeholderTextColor={palette.lightGrey}
           multiline={false}
           controller={control}
           name="lastname"
-          label="Lastname"
+          label={t('common.lastname')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Phone"
+          placeholder={t('common.phoneNumber')}
           placeholderTextColor={palette.lightGrey}
           keyboardType="phone-pad"
           multiline={false}
           controller={control}
           name="phone"
-          label="Phone Number"
+          label={t('common.phoneNumber')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Address"
+          placeholder={t('common.address')}
           placeholderTextColor={palette.lightGrey}
           multiline={false}
           controller={control}
           name="address"
-          label="Address"
+          label={t('common.address')}
           isErrorField={true}
         />
         <TextInputField
-          placeholder="Age"
+          placeholder={t('common.age')}
           placeholderTextColor={palette.lightGrey}
           multiline={false}
           controller={control}
           maxLength={3}
           keyboardType="number-pad"
           name="age"
-          label="Age"
+          label={t('common.age')}
           isErrorField={true}
         />
         <PickerControlled
           name="sex"
-          placeholder="Choose gender"
+          placeholder={t('common.chooseGender')}
           data={GENDER}
-          label="Gender"
+          label={t('common.gender')}
           dropdownIconColor={palette.lightGrey}
           controller={control}
           isErrorField={true}
@@ -146,11 +157,12 @@ export const RegisterScreen = ({
           style={[styles.buttonBlue, styles.shadowBlue]}
           textStyle={[styles.textAlignCenter, styles.textBigBoldWhite]}
           activeOpacity={0.8}
+          disabled={isDisabled}
           onPress={handleSubmit(onSubmitRegister)}
           text="Sign Up"
         />
         <TextNavigation
-          text="Already have an account? Sign In"
+          text={t('common.alreadyHasAccount')}
           onPress={() => navigation.navigate('Login')}
         />
       </ScrollView>

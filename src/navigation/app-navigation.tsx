@@ -7,51 +7,52 @@ import {
   BMIScreen,
   ProfileScreen,
   MapViewScreen,
-} from '../AppFeature/Common';
-import AdvisorQuestionListScreen from '../AppFeature/Advisor/AdvisorQuestionListScreen';
-import AdvisorAnswerScreen from '../AppFeature/Advisor/AdvisorAnswerScreen';
-import AdvisorAnswerListScreen from '../AppFeature/Advisor/AdvisorAnswerList';
-import ClinicAppointmentListScreen from '../AppFeature/Clinic/ClinicAppointmentList';
-import ClinicAppointmentManageScreen from '../AppFeature/Clinic/ClinicAppointmentManageScreen';
-import AdminUserManageScreen from '../AppFeature/Admin/AdminUserManageScreen';
-import AdminAppointmentManageScreen from '../AppFeature/Admin/AdminAppointmentManageScreen';
-import AdminAdvisorManageScreen from '../AppFeature/Admin/AdminAdvisorManageScreen';
-import AdminLocationManageScreen from '../AppFeature/Admin/AdminLocationManageScreen';
-import AdminSearchLocationScreen from '../AppFeature/Admin/LocationManage/AdminSearchLocation';
-import AdminLocationAddScreen from '../AppFeature/Admin/LocationManage/AdminAddLocation';
-import AdminLocationEditScreen from '../AppFeature/Admin/LocationManage/AdminEditLocation';
-import AdminQuestionManageScreen from '../AppFeature/Admin/AdvisorManage/AdminQuestionManage';
-import AdminAnswerManageScreen from '../AppFeature/Admin/AdvisorManage/AdminAnswerManage';
-import AdminListUserScreen from '../AppFeature/Admin/UserManage/AdminListUser';
-import AdminEditUserScreen from '../AppFeature/Admin/UserManage/AdminEditUser';
-import AdminDeleteUserScreen from '../AppFeature/Admin/UserManage/AdminDeleteUser';
+} from '../app-feature/common';
+import AdvisorQuestionListScreen from '../app-feature/advisor/AdvisorQuestionListScreen';
+import AdvisorAnswerScreen from '../app-feature/advisor/AdvisorAnswerScreen';
+import AdvisorAnswerListScreen from '../app-feature/advisor/AdvisorAnswerList';
+import ClinicAppointmentListScreen from '../app-feature/clinic/ClinicAppointmentList';
+import ClinicAppointmentManageScreen from '../app-feature/clinic/ClinicAppointmentManageScreen';
+import AdminUserManageScreen from '../app-feature/admin/AdminUserManageScreen';
+import AdminAppointmentManageScreen from '../app-feature/admin/AdminAppointmentManageScreen';
+import AdminAdvisorManageScreen from '../app-feature/admin/AdminAdvisorManageScreen';
+import AdminLocationManageScreen from '../app-feature/admin/AdminLocationManageScreen';
+import AdminSearchLocationScreen from '../app-feature/admin/LocationManage/AdminSearchLocation';
+import AdminLocationAddScreen from '../app-feature/admin/LocationManage/AdminAddLocation';
+import AdminLocationEditScreen from '../app-feature/admin/LocationManage/AdminEditLocation';
+import AdminQuestionManageScreen from '../app-feature/admin/AdvisorManage/AdminQuestionManage';
+import AdminAnswerManageScreen from '../app-feature/admin/AdvisorManage/AdminAnswerManage';
+import AdminListUserScreen from '../app-feature/admin/UserManage/AdminListUser';
+import AdminEditUserScreen from '../app-feature/admin/UserManage/AdminEditUser';
+import AdminDeleteUserScreen from '../app-feature/admin/UserManage/AdminDeleteUser';
 
 // other import
 import {AppRoutes} from './routes';
 import {
   createDrawerNavigator,
+  DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
 } from '@react-navigation/drawer';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import ClinicScreen from '../AppFeature/Clinic/ClinicScreen';
-import AdvisorScreen from '../AppFeature/Advisor/AdvisorScreen';
-import AdminScreen from '../AppFeature/Admin/AdminScreen';
+import ClinicScreen from '../app-feature/clinic/ClinicScreen';
+import AdvisorScreen from '../app-feature/advisor/AdvisorScreen';
+import AdminScreen from '../app-feature/admin/AdminScreen';
 import {
   AppointmentScreen,
   AppointmentListScreen,
   HealthAdvisorListScreen,
   HealthAdvisorScreen,
-} from '../AppFeature/Patient';
+} from '../app-feature/patient';
 const Drawer = createDrawerNavigator<AppRoutes>();
 
 type Item = {
   name: string;
 };
 
-const CustomDrawerContent = (props: any) => {
+const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const {state, ...rest} = props;
   const newState = {...state};
   // filter the screen not to show in drawer menu

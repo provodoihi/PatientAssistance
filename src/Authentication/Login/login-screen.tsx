@@ -6,11 +6,11 @@ import {CommonActions} from '@react-navigation/routers';
 import {useForm} from 'react-hook-form';
 import {
   Button,
-  SignInSchema,
   ModalLoad,
   TextNavigation,
   TextInputField,
 } from '../../components';
+import {SignInSchema} from '../../utils';
 import {useStores, SignInDataType} from '../../models';
 import {styles} from './styles';
 import {palette} from '../../utils';
@@ -20,13 +20,16 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const {authStore} = useStores();
   const {t} = useTranslation();
 
-  const {control, handleSubmit} = useForm<SignInDataType>({
+  const {control, handleSubmit, getValues} = useForm<SignInDataType>({
     defaultValues: {
       username: '',
       password: '',
     },
     resolver: SignInSchema,
   });
+
+  const isDisabled =
+    !getValues('password').length && !getValues('username').length;
 
   const onSubmitLogin = async (data: SignInDataType) => {
     setVisibleLoad(true);
@@ -54,27 +57,27 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
         {t('loginScreen.signIn')}
       </Text>
       <Text style={[styles.textAlignCenter, styles.textNormalGray]}>
-        Enter your sign in details to access your account
+        {t('loginScreen.enterSignInDetails')}
       </Text>
       <ModalLoad isVisibleLoad={isVisibleLoad} />
 
       <TextInputField
-        placeholder="Username"
+        placeholder={t('common.username')}
         placeholderTextColor={palette.lightGrey}
         multiline={false}
         controller={control}
         name="username"
-        label="Username"
+        label={t('common.username')}
         isErrorField={true}
       />
       <TextInputField
-        placeholder="Password"
+        placeholder={t('common.password')}
         placeholderTextColor={palette.lightGrey}
         secureTextEntry={true}
         multiline={false}
         controller={control}
         name="password"
-        label="Password"
+        label={t('common.password')}
         isErrorField={true}
         onSubmitEditing={handleSubmit(onSubmitLogin)}
       />
@@ -82,12 +85,13 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
       <Button
         style={[styles.buttonBlue, styles.shadowBlue]}
         textStyle={[styles.textAlignCenter, styles.textBigBoldWhite]}
+        disabled={isDisabled}
         activeOpacity={0.8}
         onPress={handleSubmit(onSubmitLogin)}
-        text="Sign In"
+        text={t('loginScreen.signIn')}
       />
       <TextNavigation
-        text="Don't have an account? Sign Up"
+        text={t('loginScreen.dontHaveAccount')}
         onPress={() => navigation.navigate('Register')}
       />
     </View>

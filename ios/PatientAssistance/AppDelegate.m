@@ -11,7 +11,6 @@
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
 #import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-#import <GoogleMaps/GoogleMaps.h>
 #import "RNSplashScreen.h"
 
 static void InitializeFlipper(UIApplication *application) {
@@ -48,7 +47,6 @@ static void InitializeFlipper(UIApplication *application) {
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
-  [GMSServices provideAPIKey:@"AIzaSyCKa6_lXiK87rAzfbZGf5x8MisaqUjbcTk"]; // add this line using the api key obtained from Google Console
   [RNSplashScreen show];
   return YES;
 }

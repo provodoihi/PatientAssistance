@@ -2,12 +2,51 @@
   "common": {
     "ok": "OK",
     "cancel": "Cancel",
-    "back": "Back"
+    "back": "Back",
+    "email": "Email",
+    "phone": "Phone",
+    "username": "Username",
+    "password": "Password",
+    "firstname": "Firstname",
+    "lastname": "Lastname",
+    "phoneNumber": "Phone Number",
+    "address": "Address",
+    "age": "Age",
+    "gender": "Gender",
+    "getStarted": "Get Started",
+    "welcome": "Welcome",
+    "dashboard": "Dashboard",
+    "appointment": "Appointment",
+    "healthAdvice": " Health Advice",
+    "updateSoon": "Update Soon",
+    "alreadyHasAccount": "Already have an account? Sign In",
+    "somethingWentWrong": "Something went wrong"
   },
   "errors": {
     "invalidEmail": "Invalid email address"
   },
   "loginScreen": {
-    "signIn": "Sign In"
+    "signIn": "Sign In",
+    "enterSignInDetails": "Enter your sign in details to access your account",
+    "dontHaveAccount": "Don't have an account? Sign Up"
+  },
+  "signUpScreen": {
+    "signUp": "Sign Up",
+    "enterSignUpDetails": "Enter your sign up details to register your new account",
+    "chooseGender": "Choose gender"
+  },
+  "welcomeScreen": {
+    "welcomeMsg": "Welcome to\nPatient Assitance",
+    "welcomeMsg1": "Your trustworthy healthcare solution"
+  },
+  "signUpSuccessScreen": {
+    "signUpSuccess": "Sign Up Success",
+    "signInNow": "Sign In Now"
+  },
+  "homeScreen": {
+    "haveNiceDay": "Have a nice day",
+    "viewMyProfile": "View my profile",
+    "whatWillYouDo": "What will you do?",
+    "findHealthFacilities": "Find Health Facilities"
   }
 }
