@@ -1,5 +1,5 @@
 import React from 'react';
-import {View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {HeaderBar} from '../../../components';
 import MapView, {Marker} from 'react-native-maps';
 import {AppNavigationProps} from '../../../navigation/routes';
@@ -14,7 +14,7 @@ export const MapViewScreen = ({route}: AppNavigationProps<'MapView'>) => {
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
       <HeaderBar text="MapView" isBack={true} />
       <MapView region={region} style={styles.container2}>
         <Marker
@@ -25,6 +25,6 @@ export const MapViewScreen = ({route}: AppNavigationProps<'MapView'>) => {
           }}
         />
       </MapView>
-    </View>
+    </SafeAreaView>
   );
 };

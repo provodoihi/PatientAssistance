@@ -1,15 +1,24 @@
 import {StyleSheet} from 'react-native';
+import {palette} from '../../utils';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: palette.white,
   },
 
   srollView: {
-    backgroundColor: '#fff',
+    backgroundColor: palette.white,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  modalContainer: {
+    flex: 0.2,
+    width: '80%',
+    borderRadius: 24,
+    alignSelf: 'center',
   },
 
   textAlignCenter: {

@@ -4,6 +4,7 @@ import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#ffffff',
   },
 
   container2: {
@@ -13,13 +14,13 @@ export const styles = StyleSheet.create({
 
   topScreen: {
     backgroundColor: '#00BFFF',
-    flex: 0.3,
+    flex: 0.25,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
   },
 
   midScreen: {
-    flex: 0.7,
+    flex: 0.75,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

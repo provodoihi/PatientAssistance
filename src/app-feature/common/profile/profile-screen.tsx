@@ -1,5 +1,6 @@
 import React, {useCallback, useEffect} from 'react';
 import {Text, View, Image, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {AppNavigationProps} from '../../../navigation/routes';
 import {pic_userColor} from '../../../../assets';
 import {
@@ -57,7 +58,7 @@ export const ProfileScreen = observer(
     };
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
         <HeaderBar text="Profile" isBack={true} />
         <ScrollView style={styles.scrollView}>
           <View style={styles.container2}>
@@ -122,7 +123,7 @@ export const ProfileScreen = observer(
             />
           </View>
         </ScrollView>
-      </View>
+      </SafeAreaView>
     );
   },
 );

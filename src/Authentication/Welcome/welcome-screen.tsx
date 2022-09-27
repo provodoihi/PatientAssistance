@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, Image, Alert, BackHandler} from 'react-native';
+import {Text, Image, Alert, BackHandler} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import {AuthNavigationProps} from '../../navigation/routes';
 import {Button, TextNavigation} from '../../components';
@@ -23,7 +24,7 @@ export const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
   useBackHandler(backAction);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
       <Image style={styles.image} source={pic_healthCare256} />
 
       <Text style={[styles.textAlignCenter, styles.textBigBoldBlack]}>
@@ -43,6 +44,6 @@ export const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
         text={t('common.alreadyHasAccount')}
         onPress={() => navigation.navigate('Login')}
       />
-    </View>
+    </SafeAreaView>
   );
 };

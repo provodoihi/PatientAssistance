@@ -94,6 +94,7 @@ export const AppNavigation = () => {
   return (
     <Drawer.Navigator
       initialRouteName={'Home'}
+      screenOptions={{headerShown: false}}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name={'Home'}

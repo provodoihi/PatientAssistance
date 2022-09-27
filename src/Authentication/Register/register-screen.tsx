@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, ScrollView} from 'react-native';
+import {Text, ScrollView} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {AuthNavigationProps} from '../../navigation/routes';
 import {useForm} from 'react-hook-form';
 import {
@@ -7,7 +8,7 @@ import {
   TextInputField,
   TextNavigation,
   showToastLong,
-  PickerControlled,
+  CustomPickerControlled,
 } from '../../components';
 import {useTranslation} from 'react-i18next';
 import {GENDER, palette, SignUpSchema} from '../../utils';
@@ -21,7 +22,7 @@ export const RegisterScreen = ({
   const {t} = useTranslation();
   const {authStore} = useStores();
 
-  const {control, handleSubmit, getValues} = useForm<SignUpDataType>({
+  const {control, handleSubmit, watch} = useForm<SignUpDataType>({
     defaultValues: {
       username: '',
       email: '',
@@ -47,18 +48,20 @@ export const RegisterScreen = ({
   };
 
   const isDisabled =
-    !getValues('username') &&
-    !getValues('password') &&
-    !getValues('email') &&
-    !getValues('address') &&
-    !getValues('age') &&
-    !getValues('firstname') &&
-    !getValues('lastname') &&
-    !getValues('phone') &&
-    !getValues('sex');
+    !watch('username') ||
+    !watch('password') ||
+    !watch('email') ||
+    !watch('address') ||
+    !watch('age') ||
+    !watch('firstname') ||
+    !watch('lastname') ||
+    !watch('phone') ||
+    !watch('sex');
+
+  console.log('log', isDisabled);
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.srollView}>
         <Text style={[styles.textAlignCenter, styles.textBigBoldBlack]}>
           {t('signUpScreen.signUp')}
@@ -144,10 +147,20 @@ export const RegisterScreen = ({
           label={t('common.age')}
           isErrorField={true}
         />
-        <PickerControlled
+        {/* <PickerControlled
           name="sex"
           placeholder={t('common.chooseGender')}
           data={GENDER}
+          label={t('common.gender')}
+          dropdownIconColor={palette.lightGrey}
+          controller={control}
+          isErrorField={true}
+        /> */}
+        <CustomPickerControlled
+          name="sex"
+          placeholder={t('common.chooseGender')}
+          data={GENDER}
+          styleModal={styles.modalContainer}
           label={t('common.gender')}
           dropdownIconColor={palette.lightGrey}
           controller={control}
@@ -166,6 +179,6 @@ export const RegisterScreen = ({
           onPress={() => navigation.navigate('Login')}
         />
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };

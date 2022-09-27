@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  StyleSheet,
   Text,
   TextStyle,
   TouchableOpacity,
@@ -31,9 +32,14 @@ export const Button = (props: ButtonProps) => {
     disabled,
     ...restProps
   } = props;
+
+  const buttonStyle = StyleSheet.flatten([
+    style,
+    disabled ? styles.buttonDisable : styles.buttonEnable,
+  ]);
   return (
     <TouchableOpacity
-      style={style}
+      style={buttonStyle}
       activeOpacity={activeOpacity}
       onPress={onPress}
       disabled={disabled}
@@ -43,3 +49,12 @@ export const Button = (props: ButtonProps) => {
     </TouchableOpacity>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonEnable: {
+    opacity: 1,
+  },
+  buttonDisable: {
+    opacity: 0.4,
+  },
+});

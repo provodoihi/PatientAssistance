@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Text, View, FlatList, ListRenderItemInfo} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {AppNavigationProps} from '../../../navigation/routes';
 import {
   showToast,
@@ -68,7 +69,7 @@ export const LocationScreen = observer(
     };
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
         <HeaderBar text="Find Hospital Clinic" isBack={true} />
         <View style={styles.container2}>
           <ModalLoad isVisibleLoad={isVisible} />
@@ -97,7 +98,7 @@ export const LocationScreen = observer(
             <Initial />
           )}
         </View>
-      </View>
+      </SafeAreaView>
     );
   },
 );

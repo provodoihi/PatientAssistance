@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {Text, View, Image, BackHandler, Alert} from 'react-native';
 import {AppNavigationProps} from '../../../navigation/routes';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {Button, ListItem, HeaderBar} from '../../../components';
 import {styles} from './styles';
 import {useBackHandler} from '../../../utils';
@@ -90,11 +91,11 @@ export const HomeScreen = observer(
     useBackHandler(backAction);
 
     return (
-      <View style={styles.container}>
+      <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
         <HeaderBar text={t('common.dashboard')} isBack={false} />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
-            <Text style={[styles.textAlignLeft, styles.textBigBoldWhite]}>
+            <Text style={[styles.textAlignCenter, styles.textBigBoldWhite]}>
               {`${t('common.welcome')} ${authStore.fullname}`}
             </Text>
             <View style={styles.row}>
@@ -170,7 +171,7 @@ export const HomeScreen = observer(
             </ListItem>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   },
 );

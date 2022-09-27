@@ -13,6 +13,7 @@
     "address": "Address",
     "age": "Age",
     "gender": "Gender",
+    "chooseGender": "Choose gender",
     "getStarted": "Get Started",
     "welcome": "Welcome",
     "dashboard": "Dashboard",
@@ -27,12 +28,12 @@
   },
   "loginScreen": {
     "signIn": "Sign In",
-    "enterSignInDetails": "Enter your sign in details to access your account",
+    "enterSignInDetails": "Enter sign in details to access your account",
     "dontHaveAccount": "Don't have an account? Sign Up"
   },
   "signUpScreen": {
     "signUp": "Sign Up",
-    "enterSignUpDetails": "Enter your sign up details to register your new account",
+    "enterSignUpDetails": "Enter sign up details to register a new account",
     "chooseGender": "Choose gender"
   },
   "welcomeScreen": {

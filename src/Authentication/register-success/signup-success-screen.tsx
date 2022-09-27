@@ -1,5 +1,6 @@
 import React from 'react';
-import {Text, View, Image} from 'react-native';
+import {Text, Image} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {useTranslation} from 'react-i18next';
 import {AuthNavigationProps} from '../../navigation';
 import {Button} from '../../components';
@@ -11,7 +12,7 @@ export const SignupSuccessScreen = ({
 }: AuthNavigationProps<'SignupSuccess'>) => {
   const {t} = useTranslation();
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
       <Image style={styles.image} source={pic_check} />
       <Text style={[styles.textAlignCenter, styles.textBigBoldBlack]}>
         {t('signUpSuccessScreen.signUpSuccess')}
@@ -23,6 +24,6 @@ export const SignupSuccessScreen = ({
         onPress={() => navigation.navigate('Login')}
         text={t('signUpSuccessScreen.signInNow')}
       />
-    </View>
+    </SafeAreaView>
   );
 };

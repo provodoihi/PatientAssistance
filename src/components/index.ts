@@ -8,3 +8,4 @@ export * from './toast-message';
 export * from './list-item';
 export * from './header-bar';
 export * from './picker';
+export * from './custom-picker';

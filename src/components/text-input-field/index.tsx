@@ -56,7 +56,7 @@ export const TextInputField = (props: TextInputFieldProps) => {
           <>
             {label && <Text style={styles.txtLabel}>{label}</Text>}
             <TextInput
-              style={StyleSheet.flatten([style, styles.txtInput])}
+              style={StyleSheet.flatten([styles.txtInput, style])}
               onChangeText={onChange}
               value={value}
               defaultValue={defaultValue}

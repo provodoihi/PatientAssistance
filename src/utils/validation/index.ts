@@ -3,44 +3,44 @@ import {yupResolver} from '@hookform/resolvers/yup';
 
 export const SignUpSchema = yupResolver(
   yup.object().shape({
-    username: yup.string().required('This is required field'),
+    username: yup.string().required('This is a required field'),
     email: yup
       .string()
       .email('Email format is not correct')
-      .required('This is required field'),
-    password: yup.string().required('This is required field'),
-    firstname: yup.string().required('This is required field'),
-    lastname: yup.string().required('This is required field'),
-    phone: yup.string().required('This is required field'),
-    address: yup.string().required('This is required field'),
+      .required('This is a required field'),
+    password: yup.string().required('This is a required field'),
+    firstname: yup.string().required('This is a required field'),
+    lastname: yup.string().required('This is a required field'),
+    phone: yup.string().required('This is a required field'),
+    address: yup.string().required('This is a required field'),
     age: yup
       .number()
       .typeError('Age must be a number')
       .positive('Age format is incorrect')
       .integer('Ager format is incorrect')
-      .required('This is required field'),
-    sex: yup.string().required('This is required field'),
+      .required('This is a required field'),
+    sex: yup.string().required('This is a required field'),
   }),
 );
 
 export const SignInSchema = yupResolver(
   yup.object().shape({
-    username: yup.string().required('This is required field'),
-    password: yup.string().required('This is required field'),
+    username: yup.string().required('This is a required field'),
+    password: yup.string().required('This is a required field'),
   }),
 );
 
 export const UpdateProfileSchema = yupResolver(
   yup.object().shape({
-    firstname: yup.string().required('This is required field'),
-    lastname: yup.string().required('This is required field'),
-    address: yup.string().required('This is required field'),
+    firstname: yup.string().required('This is a required field'),
+    lastname: yup.string().required('This is a required field'),
+    address: yup.string().required('This is a required field'),
     age: yup
       .number()
       .typeError('Age must be a number')
       .positive('Age format is incorrect')
       .integer('Age format is incorrect')
-      .required('This is required field'),
+      .required('This is a required field'),
   }),
 );
 
@@ -59,14 +59,14 @@ export const BMICalculateSchema = yupResolver(
 
 export const AppointmentBookingSchema = yupResolver(
   yup.object().shape({
-    description: yup.string().required('This is required field'),
-    nameOfClinic: yup.string().required('This is required field'),
-    clinicId: yup.string().required('This is required field'),
+    description: yup.string().required('This is a required field'),
+    nameOfClinic: yup.string().required('This is a required field'),
+    clinicId: yup.string().required('This is a required field'),
   }),
 );
 
 export const QuestionAskingSchema = yupResolver(
   yup.object().shape({
-    questionDetail: yup.string().required('This is required field'),
+    questionDetail: yup.string().required('This is a required field'),
   }),
 );

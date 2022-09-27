@@ -20,7 +20,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const {authStore} = useStores();
   const {t} = useTranslation();
 
-  const {control, handleSubmit, getValues} = useForm<SignInDataType>({
+  const {control, handleSubmit, watch} = useForm<SignInDataType>({
     defaultValues: {
       username: '',
       password: '',
@@ -28,8 +28,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
     resolver: SignInSchema,
   });
 
-  const isDisabled =
-    !getValues('password').length && !getValues('username').length;
+  const isDisabled = !watch('username').length || !watch('password').length;
 
   const onSubmitLogin = async (data: SignInDataType) => {
     setVisibleLoad(true);
