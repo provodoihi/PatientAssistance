@@ -13,7 +13,7 @@
       android:theme="@style/AppTheme">
       <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyCKa6_lXiK87rAzfbZGf5x8MisaqUjbcTk"/>
+        android:value="@string/GOOGLE_MAPS_API_KEY"/>
       <!-- You will also only need to add this uses-library tag -->
       <uses-library android:name="org.apache.http.legacy" android:required="false"/>
       <activity

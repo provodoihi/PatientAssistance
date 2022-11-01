@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {AppNavigationProps} from '../../navigation/routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {HeaderBar, Oops} from '../../components';
@@ -18,7 +19,7 @@ const AdminScreen = ({navigation, route}: AppNavigationProps<'Admin'>) => {
 
   if (userRole === 'ROLE_ADMIN') {
     return (
-      <View style={styles.container}>
+      <SafeAreaView edges={['bottom']} style={styles.container}>
         <HeaderBar text="For Admin" isBack={false} />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
@@ -93,7 +94,7 @@ const AdminScreen = ({navigation, route}: AppNavigationProps<'Admin'>) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   } else {
     return <Oops text="For Admin" />;

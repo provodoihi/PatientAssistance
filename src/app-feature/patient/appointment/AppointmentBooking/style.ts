@@ -3,31 +3,40 @@ import {
   responsiveScreenFontSize as rf,
   responsiveScreenHeight as rh,
 } from 'react-native-responsive-dimensions';
+import {palette} from '../../../../utils';
 
 export const styleAppointmentBookingScreen = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: palette.white,
   },
 
   scrollView: {
     flex: 0.93,
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   container2: {
-    height: rh(100),
-    backgroundColor: '#ffffff',
+    flex: 1,
+    backgroundColor: palette.white,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
 
   modal: {
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
     flex: 0.6,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 24,
     borderWidth: 1,
+  },
+
+  modalContainer: {
+    flex: 0.2,
+    width: '80%',
+    borderRadius: 24,
+    alignSelf: 'center',
   },
 
   datePicker: {
@@ -59,14 +68,14 @@ export const styleAppointmentBookingScreen = StyleSheet.create({
     fontSize: rf(2.5),
     padding: '2.5%',
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   textNormalBoldWhite: {
     fontSize: rf(2),
     padding: '2%',
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   textNormalBoldBlack: {
@@ -104,7 +113,7 @@ export const styleAppointmentBookingScreen = StyleSheet.create({
     width: '80%',
     borderRadius: 24,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   shadowBlue: {

@@ -3,15 +3,17 @@ import {
   responsiveScreenFontSize as rf,
   responsiveScreenHeight as rh,
 } from 'react-native-responsive-dimensions';
+import {palette} from '../../../utils';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: palette.white,
   },
 
   container2: {
     flex: 0.93,
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
     justifyContent: 'flex-start',
   },
 
@@ -23,7 +25,7 @@ export const styles = StyleSheet.create({
     flex: 0.1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   midScreen: {
@@ -31,7 +33,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     alignContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   image: {
@@ -58,42 +60,42 @@ export const styles = StyleSheet.create({
     padding: '2.5%',
     fontSize: rf(2.5),
     fontWeight: 'bold',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textBigBoldWhite: {
     fontSize: rf(2.5),
     padding: '2.5%',
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   txtNormalBoldWhite: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   textNormalBlack: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'normal',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textSmallBoldBlack: {
     fontSize: rf(1.8),
     padding: '1.5%',
     fontWeight: 'bold',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textSmallNormalBlack: {
     fontSize: rf(1.8),
     padding: '1.5%',
     fontWeight: 'normal',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   buttonNoColor: {
@@ -107,7 +109,7 @@ export const styles = StyleSheet.create({
   },
 
   shadowGray: {
-    shadowColor: '#a2a2a2',
+    shadowColor: palette.lightGrey,
     shadowOffset: {
       width: 0,
       height: 5,

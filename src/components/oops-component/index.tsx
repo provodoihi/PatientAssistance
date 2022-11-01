@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, Text, View} from 'react-native';
 import {HeaderBar} from '../header-bar';
 import {pic_oops} from '../../../assets';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {scale} from '../../utils';
 
 interface OopsProps {
   text: string;
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     margin: '1.5%',
     color: '#4c4c4c',
     fontWeight: 'bold',
-    fontSize: rf(2.5),
+    fontSize: scale(2.5),
   },
 
   image: {

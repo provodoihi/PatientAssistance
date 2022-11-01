@@ -8,7 +8,7 @@ const LocationData = types.model({
   address: types.maybeNull(types.string),
   phone: types.maybeNull(types.string),
   latitude: types.maybeNull(types.number),
-  longtitude: types.maybeNull(types.number),
+  longitude: types.maybeNull(types.number),
 });
 
 export type LocationDataType = Instance<typeof LocationData>;

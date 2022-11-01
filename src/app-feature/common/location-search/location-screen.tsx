@@ -7,7 +7,6 @@ import {
   ModalLoad,
   TextInputField,
   ListItem,
-  HeaderBar,
 } from '../../../components';
 import {SearchSchema} from '../../../utils';
 import {useForm} from 'react-hook-form';
@@ -56,7 +55,7 @@ export const LocationScreen = observer(
             navigation.navigate('MapView', {
               name: item.name,
               latitude: item.latitude,
-              longitude: item.longtitude,
+              longitude: item.longitude,
             });
           }}
           isMultipleAtrribute={true}
@@ -69,8 +68,7 @@ export const LocationScreen = observer(
     };
 
     return (
-      <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-        <HeaderBar text="Find Hospital Clinic" isBack={true} />
+      <SafeAreaView edges={['bottom']} style={styles.container}>
         <View style={styles.container2}>
           <ModalLoad isVisibleLoad={isVisible} />
           <View style={styles.searchBox}>

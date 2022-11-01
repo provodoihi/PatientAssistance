@@ -8,7 +8,6 @@ import {
   showToast,
   showToastLong,
   Button,
-  HeaderBar,
 } from '../../../components';
 import {UpdateProfileSchema} from '../../../utils';
 import {observer} from 'mobx-react-lite';
@@ -19,7 +18,6 @@ import {useForm} from 'react-hook-form';
 export const ProfileScreen = observer(
   ({navigation}: AppNavigationProps<'Profile'>) => {
     const {userStore, authStore} = useStores();
-    const token: string = authStore.token;
     const role: string = authStore.role;
 
     const {control, handleSubmit, setValue} = useForm<UpdateProfileDataType>({
@@ -28,15 +26,15 @@ export const ProfileScreen = observer(
 
     const getProfile = useCallback(async () => {
       try {
-        await userStore.getUserInfo(token);
+        await userStore.getUserInfo();
         setValue('firstname', userStore.firstname);
         setValue('lastname', userStore.lastname);
         setValue('address', userStore.address);
         setValue('age', userStore.age);
       } catch (error) {
-        showToast('Something went wrong');
+        // showToast('Something went wrong');
       }
-    }, [setValue, token, userStore]);
+    }, [setValue, userStore]);
 
     // get profile
     useEffect(() => {
@@ -50,7 +48,7 @@ export const ProfileScreen = observer(
 
     const onSubmitProfile = async (data: UpdateProfileDataType) => {
       try {
-        await userStore.updateProfile(data, token);
+        await userStore.updateProfile(data);
         showToast('Upload profile successfully');
       } catch (error) {
         showToastLong('Something went wrong');
@@ -58,8 +56,7 @@ export const ProfileScreen = observer(
     };
 
     return (
-      <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-        <HeaderBar text="Profile" isBack={true} />
+      <SafeAreaView edges={['bottom']} style={styles.container}>
         <ScrollView style={styles.scrollView}>
           <View style={styles.container2}>
             <Image style={styles.image} source={pic_userColor} />

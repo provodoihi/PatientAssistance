@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {AppNavigationProps} from '../../navigation/routes';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {HeaderBar, Oops} from '../../components';
@@ -32,7 +33,6 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
           if (value4 !== null) {
             setUserId(value4);
           }
-          console.log('note');
         }
       } catch (e) {
         console.log('Error');
@@ -43,7 +43,7 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
 
   if (userRole === 'ROLE_CLINIC') {
     return (
-      <View style={styles.container}>
+      <SafeAreaView edges={['bottom']} style={styles.container}>
         <HeaderBar text="For Clinic" isBack={false} />
         <View style={styles.container2}>
           <View style={styles.topScreen}>
@@ -100,7 +100,7 @@ const ClinicScreen = ({navigation}: AppNavigationProps<'Clinic'>) => {
             </TouchableOpacity>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     );
   } else {
     return <Oops text="For Clinic" />;

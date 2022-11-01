@@ -1,19 +1,20 @@
 import {StyleSheet} from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {palette} from '../../../utils';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   container2: {
     flex: 0.93,
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   topScreen: {
-    backgroundColor: '#00BFFF',
+    backgroundColor: palette.aquaBlue,
     flex: 0.25,
     borderBottomLeftRadius: 28,
     borderBottomRightRadius: 28,
@@ -56,35 +57,35 @@ export const styles = StyleSheet.create({
     padding: '2.5%',
     fontSize: rf(2.5),
     fontWeight: 'bold',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textBigBoldWhite: {
     fontSize: rf(2.5),
     padding: '2.5%',
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   txtNormalBoldWhite: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   textNormalPlusBlack: {
     padding: '2%',
     fontSize: rf(2.2),
     fontWeight: 'normal',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textSmallWhite: {
     fontSize: rf(1.8),
     padding: '2%',
     fontWeight: 'normal',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   buttonNoColor: {
@@ -92,7 +93,7 @@ export const styles = StyleSheet.create({
     width: '80%',
     borderRadius: 24,
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   buttonSmall: {
@@ -100,8 +101,9 @@ export const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 24,
     justifyContent: 'center',
+    alignItems: 'center',
     alignSelf: 'center',
-    backgroundColor: '#59ADFF',
+    backgroundColor: palette.accent,
   },
 
   row: {
@@ -112,7 +114,7 @@ export const styles = StyleSheet.create({
   },
 
   shadowGray: {
-    shadowColor: '#a2a2a2',
+    shadowColor: palette.lightGrey,
     shadowOffset: {
       width: 0,
       height: 5,
@@ -120,5 +122,10 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
     elevation: 10,
+  },
+
+  paddingNone: {
+    margin: 0,
+    // padding: 0,
   },
 });

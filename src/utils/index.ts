@@ -6,3 +6,4 @@ export * from './color';
 export * from './validation';
 export * from './date';
 export * from './size-scale';
+export * from './device';

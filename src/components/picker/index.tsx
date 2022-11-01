@@ -1,8 +1,8 @@
 import React from 'react';
 import {StyleSheet, Text, TextStyle, StyleProp, ColorValue} from 'react-native';
 import {Controller, Control} from 'react-hook-form';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
 import {Picker, PickerItemProps} from '@react-native-picker/picker';
+import {scale} from '../../utils';
 
 export interface PickerProps extends PickerItemProps {
   controller?: Control<any>;
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     alignSelf: 'flex-end',
     fontStyle: 'italic',
-    fontSize: rf(1.5),
+    fontSize: scale(1.5),
     color: '#ff6666',
     paddingVertical: '0.5%',
     marginRight: '12%',
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   textLabel: {
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     color: '#666666',
     paddingVertical: '0.5%',
     marginLeft: '14%',

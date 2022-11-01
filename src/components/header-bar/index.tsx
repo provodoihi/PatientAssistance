@@ -9,21 +9,34 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {useStores} from '../../models';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import {palette, scale} from '../../utils';
+import {useTranslation} from 'react-i18next';
 
 interface HeaderBarProps {
-  text: string;
-  isBack: boolean;
+  text?: string;
+  isBack?: boolean;
 }
 
 export const HeaderBar = ({text, isBack}: HeaderBarProps) => {
   const navigation = useNavigation();
   const {authStore} = useStores();
+  const {t} = useTranslation();
 
-  const logOut = () => {
-    authStore.signOut();
+  const logOut = async () => {
+    await authStore.signOut();
     navigation.dispatch(
       CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
     );
+  };
+
+  const backAction = () => {
+    Alert.alert(t('backAction.title'), t('backAction.content'), [
+      {
+        text: t('common.cancel'),
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: t('common.yes'), onPress: logOut},
+    ]);
   };
 
   const toggleDrawer = () => {
@@ -51,19 +64,75 @@ export const HeaderBar = ({text, isBack}: HeaderBarProps) => {
       <TouchableOpacity
         style={styles.button}
         activeOpacity={0.8}
-        onPress={() =>
-          Alert.alert('Notification', 'Are you sure to exit the app?', [
-            {
-              text: 'Cancel',
-              onPress: () => null,
-              style: 'cancel',
-            },
-            {text: 'YES', onPress: logOut},
-          ])
-        }>
+        onPress={backAction}>
         <Icon name="logout" size={24} color={palette.black} />
       </TouchableOpacity>
     </View>
+  );
+};
+
+export const HeaderBarLeft = ({isBack}: HeaderBarProps) => {
+  const navigation = useNavigation();
+
+  const toggleDrawer = () => {
+    navigation.dispatch(DrawerActions.toggleDrawer());
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  return (
+    <>
+      {isBack === true ? (
+        <TouchableOpacity
+          style={styles.button}
+          activeOpacity={0.8}
+          onPress={goBack}>
+          <Icon name="arrow-back" size={24} color={palette.black} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.button}
+          onPress={toggleDrawer}
+          activeOpacity={0.8}>
+          <MaterialCommunityIcons name="menu" size={24} color={palette.black} />
+        </TouchableOpacity>
+      )}
+    </>
+  );
+};
+
+export const HeaderBarRight = () => {
+  const navigation = useNavigation();
+  const {authStore} = useStores();
+  const {t} = useTranslation();
+
+  const logOut = async () => {
+    await authStore.signOut();
+    navigation.dispatch(
+      CommonActions.reset({index: 0, routes: [{name: 'Auth'}]}),
+    );
+  };
+
+  const backAction = () => {
+    Alert.alert(t('backAction.title'), t('backAction.content'), [
+      {
+        text: t('common.cancel'),
+        onPress: () => null,
+        style: 'cancel',
+      },
+      {text: t('common.yes'), onPress: logOut},
+    ]);
+  };
+
+  return (
+    <TouchableOpacity
+      style={styles.button}
+      activeOpacity={0.8}
+      onPress={backAction}>
+      <Icon name="logout" size={24} color={palette.black} />
+    </TouchableOpacity>
   );
 };
 

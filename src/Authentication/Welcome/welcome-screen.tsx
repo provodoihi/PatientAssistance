@@ -11,13 +11,13 @@ import {pic_healthCare256} from '../../../assets';
 export const WelcomeScreen = ({navigation}: AuthNavigationProps<'Welcome'>) => {
   const {t} = useTranslation();
   const backAction = () => {
-    Alert.alert('Notification', 'Are you sure to exit the app?', [
+    Alert.alert(t('backAction.title'), t('backAction.content'), [
       {
-        text: 'Cancel',
+        text: t('common.cancel'),
         onPress: () => null,
         style: 'cancel',
       },
-      {text: 'YES', onPress: () => BackHandler.exitApp()},
+      {text: t('common.yes'), onPress: () => BackHandler.exitApp()},
     ]);
   };
 

@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Text, View, Image, BackHandler, Alert} from 'react-native';
 import {AppNavigationProps} from '../../../navigation/routes';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Button, ListItem, HeaderBar} from '../../../components';
+import {Button, ListItem} from '../../../components';
 import {styles} from './styles';
 import {useBackHandler} from '../../../utils';
 import {observer} from 'mobx-react-lite';
@@ -42,7 +42,7 @@ export const HomeScreen = observer(
     // change the screen route for corresponding user role
     useEffect(() => {
       switch (role) {
-        case 'ROLE_PATIENT':
+        case 'ROLE_CLINIC':
           navigation.navigate('Clinic', {
             token: token,
             name: fullname,
@@ -72,16 +72,16 @@ export const HomeScreen = observer(
     }, [fullname, navigation, role, token, uid]);
 
     const backAction = () => {
-      Alert.alert('Notification', 'Are you sure to exit the app?', [
+      Alert.alert(t('backAction.title'), t('backAction.content'), [
         {
-          text: 'Cancel',
+          text: t('common.cancel'),
           onPress: () => null,
           style: 'cancel',
         },
         {
-          text: 'YES',
-          onPress: () => {
-            authStore.signOut();
+          text: t('common.yes'),
+          onPress: async () => {
+            await authStore.signOut();
             BackHandler.exitApp();
           },
         },
@@ -91,8 +91,7 @@ export const HomeScreen = observer(
     useBackHandler(backAction);
 
     return (
-      <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
-        <HeaderBar text={t('common.dashboard')} isBack={false} />
+      <SafeAreaView edges={['bottom']} style={styles.container}>
         <View style={styles.container2}>
           <View style={styles.topScreen}>
             <Text style={[styles.textAlignCenter, styles.textBigBoldWhite]}>
@@ -109,7 +108,11 @@ export const HomeScreen = observer(
                   activeOpacity={0.8}
                   onPress={() => navigation.navigate('Profile')}
                   text={t('homeScreen.viewMyProfile')}
-                  textStyle={[styles.textAlignCenter, styles.textSmallWhite]}
+                  textStyle={[
+                    styles.textAlignCenter,
+                    styles.textSmallWhite,
+                    styles.paddingNone,
+                  ]}
                 />
               </View>
               <Image style={styles.image} source={pic_healthCare256} />

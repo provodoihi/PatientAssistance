@@ -1,6 +1,6 @@
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {DrawerNavigationProp} from '@react-navigation/drawer';
-import {CompositeNavigationProp, RouteProp} from '@react-navigation/native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {DrawerScreenProps} from '@react-navigation/drawer';
+import {CompositeScreenProps} from '@react-navigation/native';
 
 export type MainRoutes = {
   Auth: undefined;
@@ -46,15 +46,11 @@ export type AppRoutes = {
   AdminUserDelete: {token: string};
 };
 
-export interface AuthNavigationProps<RouteName extends keyof AuthRoutes> {
-  navigation: CompositeNavigationProp<
-    NativeStackNavigationProp<AuthRoutes, RouteName>,
-    DrawerNavigationProp<AppRoutes, 'Home'>
+export type AuthNavigationProps<RouteName extends keyof AuthRoutes> =
+  CompositeScreenProps<
+    NativeStackScreenProps<AuthRoutes, RouteName>,
+    DrawerScreenProps<AppRoutes, 'Home'>
   >;
-  route: RouteProp<AuthRoutes, RouteName>;
-}
 
-export interface AppNavigationProps<RouteName extends keyof AppRoutes> {
-  navigation: DrawerNavigationProp<AppRoutes, RouteName>;
-  route: RouteProp<AppRoutes, RouteName>;
-}
+export type AppNavigationProps<RouteName extends keyof AppRoutes> =
+  DrawerScreenProps<AppRoutes, RouteName>;

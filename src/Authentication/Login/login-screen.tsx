@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
-import {Text, View, Alert} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {Text} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {AuthNavigationProps} from '../../navigation/routes';
 import {useTranslation} from 'react-i18next';
 import {CommonActions} from '@react-navigation/routers';
@@ -9,6 +10,7 @@ import {
   ModalLoad,
   TextNavigation,
   TextInputField,
+  ToastMessage,
 } from '../../components';
 import {SignInSchema} from '../../utils';
 import {useStores, SignInDataType} from '../../models';
@@ -19,6 +21,7 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
   const [isVisibleLoad, setVisibleLoad] = useState<boolean>(false);
   const {authStore} = useStores();
   const {t} = useTranslation();
+  const toastMessage = useRef<ToastMessage>(null);
 
   const {control, handleSubmit, watch} = useForm<SignInDataType>({
     defaultValues: {
@@ -40,26 +43,18 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
       );
     } catch (error) {
       setVisibleLoad(false);
-      Alert.alert('Error', 'Invalid username or password', [
-        {
-          text: 'OK',
-          onPress: () => null,
-          style: 'cancel',
-        },
-      ]);
+      toastMessage.current?.show('Error', t('errors.invalidUser'), 4000);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView edges={['top', 'bottom']} style={styles.container}>
       <Text style={[styles.textAlignCenter, styles.textBigBoldBlack]}>
         {t('loginScreen.signIn')}
       </Text>
       <Text style={[styles.textAlignCenter, styles.textNormalGray]}>
         {t('loginScreen.enterSignInDetails')}
       </Text>
-      <ModalLoad isVisibleLoad={isVisibleLoad} />
-
       <TextInputField
         placeholder={t('common.username')}
         placeholderTextColor={palette.lightGrey}
@@ -92,7 +87,10 @@ export const LoginScreen = ({navigation}: AuthNavigationProps<'Login'>) => {
       <TextNavigation
         text={t('loginScreen.dontHaveAccount')}
         onPress={() => navigation.navigate('Register')}
+        // onPress={test}
       />
-    </View>
+      <ModalLoad isVisibleLoad={isVisibleLoad} />
+      <ToastMessage ref={toastMessage} />
+    </SafeAreaView>
   );
 };

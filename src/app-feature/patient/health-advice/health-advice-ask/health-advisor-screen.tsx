@@ -14,6 +14,7 @@ import {
 } from '../../../../components';
 import {QuestionAskingSchema} from '../../../../utils';
 import {observer} from 'mobx-react-lite';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export const HealthAdvisorScreen = observer(
   ({navigation}: AppNavigationProps<'HealthAdvisor'>) => {
@@ -49,7 +50,7 @@ export const HealthAdvisorScreen = observer(
 
     if (authStore.role === 'ROLE_PATIENT') {
       return (
-        <View style={style.container}>
+        <SafeAreaView edges={['bottom']} style={style.container}>
           <HeaderBar text="Health Advice" isBack={true} />
           <View style={style.container2}>
             <Image style={style.image} source={pic_qaColor} />
@@ -81,7 +82,7 @@ export const HealthAdvisorScreen = observer(
               }
             />
           </View>
-        </View>
+        </SafeAreaView>
       );
     } else {
       return <Oops text="For Patient" />;

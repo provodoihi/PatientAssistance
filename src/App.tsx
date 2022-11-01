@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {AuthNavigation, AppNavigation, MainRoutes} from './navigation';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {
+  createNativeStackNavigator,
+  NativeStackNavigationOptions,
+} from '@react-navigation/native-stack';
 import SplashScreen from 'react-native-splash-screen';
 import {setupRootStore, RootStore, RootStoreProvider} from './models';
+import {palette} from './utils';
 
 const Stack = createNativeStackNavigator<MainRoutes>();
 
@@ -18,6 +22,12 @@ const App = () => {
   if (!rootStore) {
     return null;
   }
+  const commonNavOptions: NativeStackNavigationOptions = {
+    contentStyle: {
+      backgroundColor: palette.white,
+    },
+    headerShown: false,
+  };
   return (
     <RootStoreProvider value={rootStore}>
       <NavigationContainer>
@@ -25,12 +35,12 @@ const App = () => {
           <Stack.Screen
             name="Auth"
             component={AuthNavigation}
-            options={{headerShown: false}}
+            options={{...commonNavOptions}}
           />
           <Stack.Screen
             name="Main"
             component={AppNavigation}
-            options={{headerShown: false}}
+            options={{...commonNavOptions}}
           />
         </Stack.Navigator>
       </NavigationContainer>

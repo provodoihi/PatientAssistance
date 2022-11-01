@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactNode} from 'react';
 
 // import screen
 import {
@@ -33,6 +33,7 @@ import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerNavigationOptions,
 } from '@react-navigation/drawer';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -46,43 +47,42 @@ import {
   HealthAdvisorListScreen,
   HealthAdvisorScreen,
 } from '../app-feature/patient';
+import {HeaderBarRight, HeaderBarLeft} from '../components';
+import {StyleProp, ViewStyle} from 'react-native';
+import {scale} from '../utils';
 const Drawer = createDrawerNavigator<AppRoutes>();
-
-type Item = {
-  name: string;
-};
 
 const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   const {state, ...rest} = props;
   const newState = {...state};
   // filter the screen not to show in drawer menu
-  newState.routes = newState.routes.filter(
-    (item: Item) =>
-      item.name !== 'Profile' &&
-      item.name !== 'QAList' &&
-      item.name !== 'MapView' &&
-      item.name !== 'Admin' &&
-      item.name !== 'Clinic' &&
-      item.name !== 'Advisor' &&
-      item.name !== 'AppointmentList' &&
-      item.name !== 'AdvisorQuestionList' &&
-      item.name !== 'AdvisorAnswer' &&
-      item.name !== 'AdvisorAnswerList' &&
-      item.name !== 'ClinicAppointmentList' &&
-      item.name !== 'ClinicAppointmentManage' &&
-      item.name !== 'AdminUserManage' &&
-      item.name !== 'AdminAppointmentManage' &&
-      item.name !== 'AdminAdvisorManage' &&
-      item.name !== 'AdminLocationManage' &&
-      item.name !== 'AdminLocationSearch' &&
-      item.name !== 'AdminLocationAdd' &&
-      item.name !== 'AdminLocationEdit' &&
-      item.name !== 'AdminQuestionManage' &&
-      item.name !== 'AdminAnswerManage' &&
-      item.name !== 'AdminUserFind' &&
-      item.name !== 'AdminUserEdit' &&
-      item.name !== 'AdminUserDelete',
-  );
+  // newState.routes = newState.routes.filter(
+  //   (item: Item) =>
+  //     item.name !== 'Profile' &&
+  //     item.name !== 'QAList' &&
+  //     item.name !== 'MapView' &&
+  //     item.name !== 'Admin' &&
+  //     item.name !== 'Clinic' &&
+  //     item.name !== 'Advisor' &&
+  //     item.name !== 'AppointmentList' &&
+  //     item.name !== 'AdvisorQuestionList' &&
+  //     item.name !== 'AdvisorAnswer' &&
+  //     item.name !== 'AdvisorAnswerList' &&
+  //     item.name !== 'ClinicAppointmentList' &&
+  //     item.name !== 'ClinicAppointmentManage' &&
+  //     item.name !== 'AdminUserManage' &&
+  //     item.name !== 'AdminAppointmentManage' &&
+  //     item.name !== 'AdminAdvisorManage' &&
+  //     item.name !== 'AdminLocationManage' &&
+  //     item.name !== 'AdminLocationSearch' &&
+  //     item.name !== 'AdminLocationAdd' &&
+  //     item.name !== 'AdminLocationEdit' &&
+  //     item.name !== 'AdminQuestionManage' &&
+  //     item.name !== 'AdminAnswerManage' &&
+  //     item.name !== 'AdminUserFind' &&
+  //     item.name !== 'AdminUserEdit' &&
+  //     item.name !== 'AdminUserDelete',
+  // );
   return (
     <DrawerContentScrollView {...props}>
       <DrawerItemList state={newState} {...rest} />
@@ -90,11 +90,35 @@ const CustomDrawerContent = (props: DrawerContentComponentProps) => {
   );
 };
 
+type hiddenDrawerOptionsProps = {
+  swipeEnabled?: boolean;
+  headerLeft?: () => ReactNode;
+  drawerItemStyle?: StyleProp<ViewStyle>;
+};
+
+const commonDrawerOptions: DrawerNavigationOptions = {
+  headerShown: true,
+  swipeEnabled: true,
+  headerRight: () => <HeaderBarRight />,
+  headerRightContainerStyle: {paddingRight: scale(2)},
+  headerLeftContainerStyle: {paddingLeft: scale(2)},
+  headerTitleAlign: 'center',
+};
+
+const hiddenDrawerOptions: hiddenDrawerOptionsProps = {
+  headerLeft: () => <HeaderBarLeft isBack={true} />,
+  drawerItemStyle: {display: 'none'},
+};
+
+const homeDrawerOptions: hiddenDrawerOptionsProps = {
+  headerLeft: () => <HeaderBarLeft isBack={false} />,
+};
+
 export const AppNavigation = () => {
   return (
     <Drawer.Navigator
       initialRouteName={'Home'}
-      screenOptions={{headerShown: false}}
+      screenOptions={{...commonDrawerOptions}}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen
         name={'Home'}
@@ -102,6 +126,7 @@ export const AppNavigation = () => {
         options={{
           title: 'Dashboard',
           drawerIcon: () => <MaterialIcon name="dashboard" size={24} />,
+          ...homeDrawerOptions,
         }}
       />
       <Drawer.Screen
@@ -110,6 +135,8 @@ export const AppNavigation = () => {
         options={{
           title: 'Find Location',
           drawerIcon: () => <MaterialIcon name="location-on" size={24} />,
+          ...hiddenDrawerOptions,
+          drawerItemStyle: {display: 'flex'},
         }}
       />
       <Drawer.Screen
@@ -119,22 +146,24 @@ export const AppNavigation = () => {
         options={{
           title: 'Appointment',
           drawerIcon: () => <FontAwesome name="calendar-plus-o" size={24} />,
+          ...hiddenDrawerOptions,
+          drawerItemStyle: {display: 'flex'},
         }}
       />
       <Drawer.Screen
         name={'Admin'}
         component={AdminScreen}
-        options={{swipeEnabled: false}}
+        options={{...homeDrawerOptions, drawerItemStyle: {display: 'none'}}}
       />
       <Drawer.Screen
         name={'Clinic'}
         component={ClinicScreen}
-        options={{swipeEnabled: false}}
+        options={{...homeDrawerOptions, drawerItemStyle: {display: 'none'}}}
       />
       <Drawer.Screen
         name={'Advisor'}
         component={AdvisorScreen}
-        options={{swipeEnabled: false}}
+        options={{...homeDrawerOptions, drawerItemStyle: {display: 'none'}}}
       />
       <Drawer.Screen
         name={'HealthAdvisor'}
@@ -143,6 +172,8 @@ export const AppNavigation = () => {
         options={{
           title: 'Health Advisor',
           drawerIcon: () => <MaterialIcon name="question-answer" size={24} />,
+          ...hiddenDrawerOptions,
+          drawerItemStyle: {display: 'flex'},
         }}
       />
       <Drawer.Screen
@@ -151,112 +182,114 @@ export const AppNavigation = () => {
         options={{
           title: 'BMI Calculation',
           drawerIcon: () => <FontAwesome5 name="weight" size={24} />,
+          ...hiddenDrawerOptions,
+          drawerItemStyle: {display: 'flex'},
         }}
       />
       <Drawer.Screen
         name={'Profile'}
         component={ProfileScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'MapView'}
         component={MapViewScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'QAList'}
         component={HealthAdvisorListScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AppointmentList'}
         component={AppointmentListScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdvisorQuestionList'}
         component={AdvisorQuestionListScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdvisorAnswer'}
         component={AdvisorAnswerScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdvisorAnswerList'}
         component={AdvisorAnswerListScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'ClinicAppointmentList'}
         component={ClinicAppointmentListScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'ClinicAppointmentManage'}
         component={ClinicAppointmentManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminUserManage'}
         component={AdminUserManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminAppointmentManage'}
         component={AdminAppointmentManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminAdvisorManage'}
         component={AdminAdvisorManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminLocationManage'}
         component={AdminLocationManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminLocationSearch'}
         component={AdminSearchLocationScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminLocationAdd'}
         component={AdminLocationAddScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminLocationEdit'}
         component={AdminLocationEditScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminQuestionManage'}
         component={AdminQuestionManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminAnswerManage'}
         component={AdminAnswerManageScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminUserFind'}
         component={AdminListUserScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminUserEdit'}
         component={AdminEditUserScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
       <Drawer.Screen
         name={'AdminUserDelete'}
         component={AdminDeleteUserScreen}
-        options={{swipeEnabled: false}}
+        options={{...hiddenDrawerOptions}}
       />
     </Drawer.Navigator>
   );

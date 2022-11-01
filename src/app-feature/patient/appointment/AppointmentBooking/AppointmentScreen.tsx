@@ -5,13 +5,12 @@ import DatePicker from 'react-native-date-picker';
 import Modal from 'react-native-modal';
 import {
   showToast,
-  HeaderBar,
   Button,
   TextNavigation,
   TextInputField,
-  PickerControlled,
   Oops,
   ListItem,
+  CustomPickerControlled,
 } from '../../../../components';
 import {useForm} from 'react-hook-form';
 import {styleAppointmentBookingScreen as style} from './style';
@@ -20,9 +19,11 @@ import {
   AppointmentBookingSchema,
   dateWithFormat,
   dateWithoutFormat,
+  palette,
 } from '../../../../utils';
 import {observer} from 'mobx-react-lite';
 import {AppointmentBookingType, useStores} from '../../../../models';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 export const AppointmentScreen = observer(
   ({navigation}: AppNavigationProps<'Appointment'>) => {
@@ -74,8 +75,7 @@ export const AppointmentScreen = observer(
 
     if (userRole === 'ROLE_PATIENT') {
       return (
-        <View style={style.container}>
-          <HeaderBar text="Appointment" isBack={true} />
+        <SafeAreaView edges={['bottom']} style={style.container}>
           <ScrollView style={style.scrollView}>
             <View style={style.container2}>
               <Image style={style.image} source={pic_appointmentColor} />
@@ -104,19 +104,23 @@ export const AppointmentScreen = observer(
                 controller={control}
                 isErrorField={true}
               />
-              <PickerControlled
-                dropdownIconColor="#9FA5AA"
+              <CustomPickerControlled
                 name="nameOfClinic"
-                placeholder="Choose Clinic"
+                placeholder={'Choose Clinic'}
                 data={['Clinic 01', 'Clinic 02']}
+                styleModal={style.modalContainer}
+                label={'Clinic Name'}
+                dropdownIconColor={palette.lightGrey}
                 controller={control}
                 isErrorField={true}
               />
-              <PickerControlled
-                dropdownIconColor="#9FA5AA"
+              <CustomPickerControlled
                 name="clinicId"
-                placeholder="Choose Clinic ID"
+                placeholder={'Choose Clinic ID'}
                 data={['21', '22']}
+                styleModal={style.modalContainer}
+                label={'Clinic ID'}
+                dropdownIconColor={palette.lightGrey}
                 controller={control}
                 isErrorField={true}
               />
@@ -154,7 +158,7 @@ export const AppointmentScreen = observer(
               </View>
             </Modal>
           </ScrollView>
-        </View>
+        </SafeAreaView>
       );
     } else {
       return <Oops text="For Patient" />;

@@ -7,7 +7,7 @@ import {
   TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {scale} from '../../utils';
 
 export interface TextNavigationProps extends TouchableOpacityProps, TextProps {
   onPress?: () => void;
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     padding: '1.5%',
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     fontWeight: 'normal',
     color: '#00BFFF',
   },

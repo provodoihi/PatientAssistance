@@ -3,20 +3,23 @@ import {
   responsiveScreenFontSize as rf,
   responsiveScreenHeight as rh,
 } from 'react-native-responsive-dimensions';
+import {palette} from '../../../utils';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: palette.white,
   },
 
   scrollView: {
     flex: 0.93,
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
   },
 
   container2: {
     height: rh(110),
-    backgroundColor: '#ffffff',
+    // flexGrow: 1,
+    backgroundColor: palette.white,
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
@@ -38,25 +41,25 @@ export const styles = StyleSheet.create({
     padding: '2.5%',
     fontSize: rf(2.5),
     fontWeight: 'bold',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textBigBoldWhite: {
     fontSize: rf(2.5),
     padding: '2.5%',
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   textNormalBlack: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'normal',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   buttonBlue: {
-    backgroundColor: '#00BFFF',
+    backgroundColor: palette.aquaBlue,
     margin: '3%',
     borderRadius: 24,
     width: '80%',
@@ -65,7 +68,7 @@ export const styles = StyleSheet.create({
   },
 
   shadowBlue: {
-    shadowColor: '#00BFFF',
+    shadowColor: palette.aquaBlue,
     shadowOffset: {
       width: 0,
       height: 7,

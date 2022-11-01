@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {scale} from '../../utils';
 
 export const styles = StyleSheet.create({
   container: {
@@ -17,20 +17,20 @@ export const styles = StyleSheet.create({
 
   textNormalGray: {
     padding: '2%',
-    fontSize: rf(2),
+    fontSize: scale(2),
     fontWeight: 'normal',
     color: '#8B959E',
   },
 
   textBigBoldBlack: {
     padding: '2.5%',
-    fontSize: rf(2.5),
+    fontSize: scale(2.5),
     fontWeight: 'bold',
     color: '#4c4c4c',
   },
 
   textBigBoldWhite: {
-    fontSize: rf(2.5),
+    fontSize: scale(2.5),
     padding: '2.5%',
     fontWeight: 'bold',
     color: '#ffffff',

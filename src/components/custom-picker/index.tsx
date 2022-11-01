@@ -11,8 +11,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Controller, Control} from 'react-hook-form';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
-import {palette} from '../../utils';
+import {palette, scale} from '../../utils';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Modal from 'react-native-modal';
 
@@ -24,6 +23,7 @@ export interface CustomPickerProps extends TextInputProps {
   defaultValue?: string;
   placeholderTextColor?: string;
   onValueChange?: (item: string) => void;
+  selectedValue?: string;
   name: string;
   label?: string;
   placeholder?: string;
@@ -101,6 +101,89 @@ export const CustomPickerControlled = (props: CustomPickerProps) => {
   );
 };
 
+export const PickerWithTicker = (props: CustomPickerProps) => {
+  const {
+    controller,
+    dropdownIconColor,
+    placeholderTextColor,
+    defaultValue,
+    label,
+    isErrorField,
+    name,
+    data,
+    style,
+    styleModal,
+    placeholder,
+    onValueChange,
+    selectedValue,
+    ...restProps
+  } = props;
+  const [isVisible, setVisible] = useState<boolean>(false);
+  const toggleModal = () => {
+    setVisible(!isVisible);
+  };
+  return (
+    <Controller
+      control={controller}
+      name={name}
+      render={({field: {onChange, value}, fieldState: {error}}) => {
+        return (
+          <>
+            {label && <Text style={styles.textLabel}>{label}</Text>}
+            <View style={styles.picker}>
+              <TextInput
+                style={StyleSheet.flatten([styles.txtInput, style])}
+                placeholder={placeholder}
+                editable={false}
+                value={value}
+                placeholderTextColor={placeholderTextColor}
+                defaultValue={defaultValue}
+                {...restProps}
+              />
+              <AntDesign
+                name="caretdown"
+                size={16}
+                style={styles.dropdownIcon}
+                color={dropdownIconColor}
+                onPress={toggleModal}
+              />
+            </View>
+            {isErrorField && error && (
+              <Text style={styles.textError}>{error?.message}</Text>
+            )}
+            <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
+              <View style={StyleSheet.flatten([styles.modal, styleModal])}>
+                {data.map((element, index) => (
+                  <View style={styles.tickerWrapper}>
+                    <TouchableOpacity
+                      key={`${element}-${index}`}
+                      style={styles.itemContainer}
+                      onPress={() => {
+                        onChange(element);
+                        onValueChange(element);
+                        toggleModal();
+                      }}>
+                      <Text style={styles.textItem}>{element}</Text>
+                    </TouchableOpacity>
+                    {selectedValue === element ? (
+                      <AntDesign
+                        key={`${element}+${index}`}
+                        name="check"
+                        size={16}
+                        color={palette.black}
+                      />
+                    ) : null}
+                  </View>
+                ))}
+              </View>
+            </Modal>
+          </>
+        );
+      }}
+    />
+  );
+};
+
 const styles = StyleSheet.create({
   picker: {
     borderColor: '#808080',
@@ -114,8 +197,16 @@ const styles = StyleSheet.create({
     marginVertical: '2%',
     paddingLeft: '4%',
   },
+  tickerWrapper: {
+    flexDirection: 'row',
+    flex: 1,
+    width: '100%',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: '3%',
+  },
   txtInput: {
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     fontWeight: 'normal',
     color: '#4c4c4c',
     textAlign: 'left',
@@ -126,7 +217,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     alignSelf: 'flex-end',
     fontStyle: 'italic',
-    fontSize: rf(1.5),
+    fontSize: scale(1.5),
     color: '#ff6666',
     paddingVertical: '0.5%',
     marginRight: '12%',
@@ -134,7 +225,7 @@ const styles = StyleSheet.create({
   textLabel: {
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     color: '#666666',
     paddingVertical: '0.5%',
     marginLeft: '14%',
@@ -142,7 +233,7 @@ const styles = StyleSheet.create({
   textItem: {
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     color: '#4c4c4c',
     paddingVertical: '1.5%',
   },
@@ -158,6 +249,6 @@ const styles = StyleSheet.create({
     marginHorizontal: '3%',
     marginVertical: '2.5%',
     borderBottomColor: '#666666',
-    width: '85%',
+    width: '80%',
   },
 });

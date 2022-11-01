@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosPublic} from '../services';
 import {types, Instance, flow} from 'mobx-state-tree';
 import {API_LIST} from '../utils';
 import * as storage from '../utils/storage';
@@ -33,14 +33,17 @@ export const Auth = types
   .actions(self => ({
     login: flow(function* (body: SignInDataType) {
       try {
-        const response = yield axios.post(API_LIST.login, body);
+        const response = yield axiosPublic.post(API_LIST.login, body);
         if (response.data) {
           self.token = response.data.accessToken;
           self.userID = response.data.id;
           self.role = response.data.roles[0];
           self.fullname = response.data.fullname;
           self.phone = response.data.phone;
-          storage.saveString(STORAGE_KEY.TOKEN, response.data.accessToken);
+          yield storage.saveString(
+            STORAGE_KEY.TOKEN,
+            response.data.accessToken,
+          );
           return response.data;
         }
       } catch (error) {
@@ -49,22 +52,22 @@ export const Auth = types
     }),
     register: flow(function* (body: SignUpDataType) {
       try {
-        const response = yield axios.post(API_LIST.signup, body);
+        const response = yield axiosPublic.post(API_LIST.signup, body);
         return response;
       } catch (error) {
         throw error;
       }
     }),
-    saveToken: () => {
+    saveToken: async () => {
       if (self.token) {
-        storage.saveString(STORAGE_KEY.TOKEN, self.token);
+        await storage.saveString(STORAGE_KEY.TOKEN, self.token);
       }
     },
     updateFullname: (name: string) => {
       self.fullname = name;
     },
-    signOut: () => {
-      storage.clear();
+    signOut: async () => {
+      await storage.clear();
     },
   }))
   .views(self => ({

@@ -27,6 +27,7 @@
     "react-hook-form": "^7.20.0",
     "react-i18next": "^11.15.1",
     "react-native": "0.67.4",
+    "react-native-config": "^1.4.11",
     "react-native-date-picker": "^4.2.2",
     "react-native-gesture-handler": "^2.4.2",
     "react-native-localize": "^2.1.6",

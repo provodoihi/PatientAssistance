@@ -14,10 +14,12 @@ export const palette = {
   red: '#ff3232',
   green: '#329932',
   blue: '#3232ff',
+  aquaBlue: '#00BFFF',
   yellow: '#ffff32',
   buttonPrimary: '#6202EE',
   buttonError: '#EE0202',
   buttonSecondary: '#C7C7C7',
   buttonWaiting: '#F2C94C',
   buttonSuccess: '#219653',
+  backgroundTransparent: 'rgba(0,0,0,0.25)',
 };

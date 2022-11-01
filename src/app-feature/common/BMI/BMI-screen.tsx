@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import {Text, View, Image} from 'react-native';
 import Modal from 'react-native-modal';
-import {Button, TextInputField, HeaderBar} from '../../../components';
+import {Button, TextInputField} from '../../../components';
 import {BMICalculateSchema} from '../../../utils';
 import {Normal, UnderOverWeight} from './component';
 import {styles} from './style';
 import {pic_bmiBig} from '../../../../assets';
 import {useForm} from 'react-hook-form';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 type BMICalculationProps = {
   weight: string | number;
@@ -38,8 +39,7 @@ export const BMIScreen = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <HeaderBar text="BMI Calculator" isBack={true} />
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <View style={styles.container2}>
         <Image style={styles.image} source={pic_bmiBig} />
         <Text style={[styles.textAlignCenter, styles.textBigBoldBlack]}>
@@ -93,6 +93,6 @@ export const BMIScreen = () => {
           textStyle={[styles.textAlignCenter, styles.textBigBoldWhite]}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 };

@@ -3,6 +3,7 @@
     "ok": "OK",
     "cancel": "Cancel",
     "back": "Back",
+    "yes": "Yes",
     "email": "Email",
     "phone": "Phone",
     "username": "Username",
@@ -21,10 +22,13 @@
     "healthAdvice": " Health Advice",
     "updateSoon": "Update Soon",
     "alreadyHasAccount": "Already have an account? Sign In",
-    "somethingWentWrong": "Something went wrong"
+    "somethingWentWrong": "Something went wrong",
+    "error": "Error",
+    "loading": "Loading"
   },
   "errors": {
-    "invalidEmail": "Invalid email address"
+    "invalidEmail": "Invalid email address",
+    "invalidUser": "Invalid username or password"
   },
   "loginScreen": {
     "signIn": "Sign In",
@@ -49,5 +53,9 @@
     "viewMyProfile": "View my profile",
     "whatWillYouDo": "What will you do?",
     "findHealthFacilities": "Find Health Facilities"
+  },
+  "backAction": {
+    "title": "Alert",
+    "content": "Are you sure to exit the app?"
   }
 }

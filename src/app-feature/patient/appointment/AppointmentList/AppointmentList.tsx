@@ -2,13 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Text, View, Image, FlatList, ListRenderItemInfo} from 'react-native';
 import Modal from 'react-native-modal';
 import dayjs from 'dayjs';
-import {
-  showToast,
-  ModalLoad,
-  HeaderBar,
-  ListItem,
-  Button,
-} from '../../../../components';
+import {showToast, ModalLoad, ListItem, Button} from '../../../../components';
 import {styleAppointmentListScreen as style} from './style';
 import {
   pic_appointmentColor,
@@ -106,7 +100,6 @@ export const AppointmentListScreen = observer(() => {
 
   return (
     <View style={style.container}>
-      <HeaderBar text="Appointment" isBack={true} />
       <View style={style.container2}>
         <View style={style.topScreen}>
           <Image style={style.image} source={pic_appointmentColor} />

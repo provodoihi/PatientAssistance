@@ -1,4 +1,4 @@
-import axios from 'axios';
+import {axiosAuth} from '../services';
 import {types, Instance, flow} from 'mobx-state-tree';
 import {API_LIST} from '../utils';
 
@@ -22,13 +22,9 @@ export const User = types
     phone: types.maybeNull(types.string),
   })
   .actions(self => ({
-    getUserInfo: flow(function* (token: string) {
+    getUserInfo: flow(function* () {
       try {
-        let response = yield axios.get(API_LIST.myProfile, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        let response = yield axiosAuth.get(API_LIST.myProfile);
         if (response.data) {
           self.firstname = response.data.firstname;
           self.lastname = response.data.lastname;
@@ -44,13 +40,9 @@ export const User = types
         throw error;
       }
     }),
-    updateProfile: flow(function* (body: UpdateProfileDataType, token: string) {
+    updateProfile: flow(function* (body: UpdateProfileDataType) {
       try {
-        let response = yield axios.put(API_LIST.myProfile, body, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        let response = yield axiosAuth.put(API_LIST.myProfile, body);
         if (response.data) {
           self.fullname =
             response.data.firstname + ' ' + response.data.lastname;

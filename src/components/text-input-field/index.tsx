@@ -10,7 +10,7 @@ import {
   NativeSyntheticEvent,
 } from 'react-native';
 import {Controller, Control} from 'react-hook-form';
-import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {scale} from '../../utils';
 
 export interface TextInputFieldProps extends TextInputProps {
   placeholder?: string;
@@ -81,7 +81,7 @@ export const TextInputField = (props: TextInputFieldProps) => {
 
 const styles = StyleSheet.create({
   txtInput: {
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     fontWeight: 'normal',
     color: '#4c4c4c',
     textAlign: 'left',
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     alignSelf: 'flex-end',
     fontStyle: 'italic',
-    fontSize: rf(1.5),
+    fontSize: scale(1.5),
     color: '#ff6666',
     paddingVertical: '0.5%',
     marginRight: '12%',
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   txtLabel: {
     textAlign: 'left',
     alignSelf: 'flex-start',
-    fontSize: rf(1.8),
+    fontSize: scale(1.8),
     color: '#666666',
     paddingVertical: '0.5%',
     marginLeft: '14%',

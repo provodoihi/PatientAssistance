@@ -1,14 +1,16 @@
 import {StyleSheet} from 'react-native';
 import {responsiveScreenFontSize as rf} from 'react-native-responsive-dimensions';
+import {palette} from '../../../utils';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: palette.white,
   },
 
   container2: {
     flex: 0.93,
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -28,7 +30,7 @@ export const styles = StyleSheet.create({
   },
 
   modal: {
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
     flex: 0.7,
     justifyContent: 'center',
     alignItems: 'center',
@@ -49,32 +51,32 @@ export const styles = StyleSheet.create({
     padding: '2.5%',
     fontSize: rf(2.5),
     fontWeight: 'bold',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textBigBoldWhite: {
     fontSize: rf(2.5),
     padding: '2.5%',
     fontWeight: 'bold',
-    color: '#ffffff',
+    color: palette.white,
   },
 
   textNormalBoldBlack: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'bold',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   textNormalBlack: {
     padding: '2%',
     fontSize: rf(2),
     fontWeight: 'normal',
-    color: '#4c4c4c',
+    color: palette.black,
   },
 
   buttonBlue: {
-    backgroundColor: '#00BFFF',
+    backgroundColor: palette.aquaBlue,
     margin: '3%',
     borderRadius: 24,
     width: '80%',
@@ -83,7 +85,7 @@ export const styles = StyleSheet.create({
   },
 
   buttonModal: {
-    backgroundColor: '#ffffff',
+    backgroundColor: palette.white,
     margin: '3%',
     borderRadius: 24,
     width: '70%',
@@ -92,7 +94,7 @@ export const styles = StyleSheet.create({
   },
 
   shadowBlue: {
-    shadowColor: '#00BFFF',
+    shadowColor: palette.aquaBlue,
     shadowOffset: {
       width: 0,
       height: 7,
@@ -103,7 +105,7 @@ export const styles = StyleSheet.create({
   },
 
   shadowGray: {
-    shadowColor: '#a2a2a2',
+    shadowColor: palette.lightGrey,
     shadowOffset: {
       width: 0,
       height: 5,
