@@ -124,8 +124,7 @@ export const styles = StyleSheet.create({
     elevation: 10,
   },
 
-  paddingNone: {
-    margin: 0,
-    // padding: 0,
+  paddingCustom: {
+    padding: rf(0.75),
   },
 });

@@ -154,7 +154,9 @@ export const PickerWithTicker = (props: CustomPickerProps) => {
             <Modal isVisible={isVisible} onBackdropPress={toggleModal}>
               <View style={StyleSheet.flatten([styles.modal, styleModal])}>
                 {data.map((element, index) => (
-                  <View style={styles.tickerWrapper}>
+                  <View
+                    key={`${element}+${index}`}
+                    style={styles.tickerWrapper}>
                     <TouchableOpacity
                       key={`${element}-${index}`}
                       style={styles.itemContainer}
@@ -166,12 +168,7 @@ export const PickerWithTicker = (props: CustomPickerProps) => {
                       <Text style={styles.textItem}>{element}</Text>
                     </TouchableOpacity>
                     {selectedValue === element ? (
-                      <AntDesign
-                        key={`${element}+${index}`}
-                        name="check"
-                        size={16}
-                        color={palette.black}
-                      />
+                      <AntDesign name="check" size={16} color={palette.black} />
                     ) : null}
                   </View>
                 ))}
@@ -226,7 +223,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'flex-start',
     fontSize: scale(1.8),
-    color: '#666666',
+    color: palette.grey,
     paddingVertical: '0.5%',
     marginLeft: '14%',
   },
@@ -234,7 +231,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     alignSelf: 'flex-start',
     fontSize: scale(1.8),
-    color: '#4c4c4c',
+    color: palette.black,
     paddingVertical: '1.5%',
   },
   dropdownIcon: {

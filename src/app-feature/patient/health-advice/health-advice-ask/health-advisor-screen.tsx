@@ -5,13 +5,7 @@ import {pic_qaColor} from '../../../../../assets';
 import {styleAdviceQuestionScreen as style} from './style';
 import {useForm} from 'react-hook-form';
 import {useStores, QuestionSubmitType} from '../../../../models';
-import {
-  showToast,
-  HeaderBar,
-  Button,
-  TextInputField,
-  Oops,
-} from '../../../../components';
+import {showToast, Button, TextInputField, Oops} from '../../../../components';
 import {QuestionAskingSchema} from '../../../../utils';
 import {observer} from 'mobx-react-lite';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -51,7 +45,6 @@ export const HealthAdvisorScreen = observer(
     if (authStore.role === 'ROLE_PATIENT') {
       return (
         <SafeAreaView edges={['bottom']} style={style.container}>
-          <HeaderBar text="Health Advice" isBack={true} />
           <View style={style.container2}>
             <Image style={style.image} source={pic_qaColor} />
             <Text style={[style.textAlignCenter, style.textBigBoldBlack]}>

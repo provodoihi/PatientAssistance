@@ -111,7 +111,7 @@ export const HomeScreen = observer(
                   textStyle={[
                     styles.textAlignCenter,
                     styles.textSmallWhite,
-                    styles.paddingNone,
+                    styles.paddingCustom,
                   ]}
                 />
               </View>

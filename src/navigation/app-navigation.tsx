@@ -124,7 +124,7 @@ export const AppNavigation = () => {
         name={'Home'}
         component={HomeScreen}
         options={{
-          title: 'Dashboard',
+          title: 'Home',
           drawerIcon: () => <MaterialIcon name="dashboard" size={24} />,
           ...homeDrawerOptions,
         }}
@@ -144,7 +144,7 @@ export const AppNavigation = () => {
         component={AppointmentScreen}
         // initialParams={{token: '', role: ''}}
         options={{
-          title: 'Appointment',
+          title: 'Book Appointment',
           drawerIcon: () => <FontAwesome name="calendar-plus-o" size={24} />,
           ...hiddenDrawerOptions,
           drawerItemStyle: {display: 'flex'},
@@ -170,7 +170,7 @@ export const AppNavigation = () => {
         component={HealthAdvisorScreen}
         initialParams={{token: '', name: '', role: ''}}
         options={{
-          title: 'Health Advisor',
+          title: 'Health Advice',
           drawerIcon: () => <MaterialIcon name="question-answer" size={24} />,
           ...hiddenDrawerOptions,
           drawerItemStyle: {display: 'flex'},
